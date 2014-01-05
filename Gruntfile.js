@@ -20,6 +20,10 @@ module.exports = function(grunt) {
                 src: ['src/<%= pkg.name %>.js'],
                 dest: 'dist/<%= pkg.name %>.js'
             },
+            examples: {
+                src: ['src/<%= pkg.name %>.js'],
+                dest: 'dist/examples/<%= pkg.name %>.js'
+            }
         },
         uglify: {
             options: {
@@ -76,6 +80,26 @@ module.exports = function(grunt) {
                 }
             }
         },
+        copy: {
+            dist: {
+                files: [{
+                   expand: true,
+                   src: ['examples/**'],
+                   dest: 'dist/'
+                },{
+                    cwd: 'libs',
+                    src: ['jquery/**', 'jquery-ui/**', 'underscore/**'],
+                    expand: true,
+                    dest: 'dist/examples/'
+                }]
+            }
+        },
+        'gh-pages': {
+            options: {
+              base: 'dist'
+            },
+            src: ['**']
+          }
     });
 
     // These plugins provide necessary tasks.
@@ -86,13 +110,29 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-connect');
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-gh-pages');
 
     grunt.registerTask('serve', [
         'connect:examples',
         'watch'
     ]);
 
+    grunt.registerTask('build', [
+        'jshint',
+        'clean',
+        'concat:dist',
+        'uglify',
+        'copy:dist',
+        'concat:examples'
+    ]);
+
+    grunt.registerTask('buildsite', [
+        'build',
+        'gh-pages'
+    ]);
+
     // Default task.
     // grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
-    grunt.registerTask('default', ['jshint', 'clean', 'concat', 'uglify']);
+    grunt.registerTask('default', ['build']);
 };
