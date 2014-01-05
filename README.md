@@ -1,6 +1,17 @@
 # Scrollstory
 
-dget to manage scroll-based events.
+jQuery widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
+
+Key features include:
+- 100% style agnostic. Just a collection of scroll-based patterns I often use.
+- Can can you existing DOM or use an array of objects to create markup.
+- 16+ jQueryUI-style events/callbacks for various application state events.
+- Focus and blur event when an individual story becomes active or inactive.
+- Items can be grouped into categories, with event dispatched as categories change.
+- Items filterable by user-specifed tags.
+- Items aware of their in-viewport status.
+- Programatic animated scroll to any item.
+- Throttled scroll events and minimal DOM usage.
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
