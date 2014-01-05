@@ -13,6 +13,12 @@ Key features include:
 - Programatic animated scroll to any item.
 - Throttled scroll events and minimal DOM usage.
 
+## Dependencies
+Any recent version of:
+- jQuery
+- jQueryUI (core, widget and optionally effects core for custom easings)
+- Underscore
+
 ## Getting Started
 Download the [production version][min] or the [development version][max].
 
