@@ -1,29 +1,6 @@
 /*! Scrollstory - v0.0.1 - 2014-01-05
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
-/*
- * scrollstory v0.0.1
- * https://github.com/sjwilliams/scrollstory
- *
- * Basic jQuery widget for scroll-based, stacked stories that need to be aware
- * of a single, in-focus story.
- *
- * Widget can you existing DOM on a page, or accept an array of objects. If
- * using DOM, either pass in a jquery selector with 'content', or specify a selector
- * to search for children of $(this.element). The default is .story.
- *
- * Internally, invidual stories are referred to as an 'item', and the collection of
- * them are stored in 'this._items'.
- *
- * Depends on:
- * jQuery >= 1.7
- * jQueryUI (core + widget. + easing if you want scrollTo effects other than linear or swing)
- * Underscore
- *
- * Copyright (c) 2014 Josh Williams
- * Licensed under the MIT license.
- */
-
 (function($, window, document, undefined) {
     'use strict';
 

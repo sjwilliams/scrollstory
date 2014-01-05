@@ -1,6 +1,6 @@
 # Scrollstory
 
-jQuery widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
+jQuery UI widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
 
 Key features include:
 - 100% style agnostic. Just a collection of scroll-based patterns I often use.
@@ -46,4 +46,6 @@ _(Coming soon)_
 _(Coming soon)_
 
 ## Release History
-_(Nothing yet)_
+*0.0.1*
+
+* Initial Release
