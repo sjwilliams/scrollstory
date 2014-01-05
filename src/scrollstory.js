@@ -50,7 +50,7 @@
             delayFirstActivationToOffset: true,
 
             // Updated offsets on window resize? useful for responsive layouts
-            updateOffsetsOnResize: false,
+            updateOffsetsOnResize: true,
 
             // Automated scroll speed in ms. set to 0 to remove animation
             speed: 800,

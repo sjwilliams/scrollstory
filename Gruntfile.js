@@ -71,10 +71,8 @@ module.exports = function(grunt) {
             examples: {
                 options: {
                     port: 9000,
-                    open: true,
                     livereload: true,
-                    base: 'examples',
-                    hostname: 'localhost'
+                    base: ['src', 'libs', 'examples']
                 }
             }
         },
@@ -90,7 +88,8 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
 
     grunt.registerTask('serve', [
-        'connect:examples'
+        'connect:examples',
+        'watch'
     ]);
 
     // Default task.

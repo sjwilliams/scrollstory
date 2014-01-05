@@ -1,0 +1,35 @@
+body{
+  background-color: #fafafa;
+}
+
+#container{
+    width: 95%;
+    padding: 0 0 100px 0;
+    margin: 30px auto;
+}
+
+.about{
+  padding: 30px;
+  margin: 0 auto;
+  max-width: 700px;
+  text-align: center;
+  font-family: Georgia, serif;
+  font-size: 17px;
+  line-height: 22px;
+  color: #3D3D3D;
+}
+
+.story{
+    margin: 20px 0;
+    font-family: Arial, sans-serif;
+    background-color: #f1f1f1;
+}
+
+.story.active{
+  background-color: #1B6F00;
+}
+
+.story > span{
+    font-size: 36px;
+    line-height: 1.1em;
+}
