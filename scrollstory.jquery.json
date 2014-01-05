@@ -1,0 +1,27 @@
+{
+  "name": "scrollstory",
+  "title": "Scrollstory",
+  "description": "jQuery widget to manage scroll-based events.",
+  "version": "0.0.1",
+  "homepage": "https://github.com/sjwilliams/scrollstory",
+  "author": {
+    "name": "Josh Williams",
+    "email": "contact@joshwilliams.com",
+    "url": "http://joshwilliams.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/sjwilliams/scrollstory.git"
+  },
+  "bugs": "https://github.com/sjwilliams/scrollstory/issues",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "https://github.com/sjwilliams/scrollstory/blob/master/LICENSE-MIT"
+    }
+  ],
+  "dependencies": {
+    "jquery": "*"
+  },
+  "keywords": []
+}
