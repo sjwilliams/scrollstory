@@ -6,18 +6,17 @@
     <title>ScrollStory Basic</title>
     <link rel="stylesheet" href="base.css">
     <style>
-      .story{
-        background-color: #f1f1f1;
-      }
-      .story.active{
-        background-color: #1B6F00;
-      }
+        #status span{
+            cursor: pointer;
+            padding: 7px;
+        }
     </style>
 </head>
 
 <body>
+    <div id="status"><span id="up">Up</span><span id="down">Down</span></div>
     <div id="container">
-        <p class="about">Most basic example: highlight active story after a scroll event.</p>
+        <p class="about">You can trigger an action when new item becomes active.</p>
         <div class="story"><span>1</span></div>
         <div class="story"><span>2</span></div>
         <div class="story"><span>3</span></div>
@@ -43,8 +42,26 @@
             'height': $(window).height() * 0.6
         });
 
-        $('#container').ScrollStory();
+        // save reference to widget.
+        var scrollStory = $('#container').ScrollStory({
+            scrollRate: 'fixed', // fixed or dynamic. dynamic attempts to smooth out speed regardless of distance to travel
+            scrollOffset: 10, // distance from top to scroll item to
+            speed: 600, // scroll time in ms
+            easing: 'swing'
+        }).data('sjwScrollStory');
+
+
+        // make buttons work
+        $('#down').click(function(){
+            scrollStory.next();
+        });
+
+        $('#up').click(function(){
+            scrollStory.previous();
+        });
+
     })(jQuery);
+
     </script>
 </body>
 </html>

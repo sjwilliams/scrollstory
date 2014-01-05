@@ -4,7 +4,7 @@
     'use strict';
 
 
-    $.widget('sjwillams.ScrollStory', {
+    $.widget('sjw.ScrollStory', {
 
         options: {
 
@@ -66,7 +66,7 @@
             // easing type. All jquery UI easings available:
             // http://api.jqueryui.com/easings/
             // 'swing' and 'easeOutQuad' have a natural feel
-            easing: 'easeOutQuad',
+            easing: 'swing',
 
             // Whether to keep track of which individual elements are in the viewport.
             checkViewportVisiblity: false,

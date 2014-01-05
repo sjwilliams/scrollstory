@@ -5,19 +5,11 @@
     <meta charset="utf-8">
     <title>ScrollStory Basic</title>
     <link rel="stylesheet" href="base.css">
-    <style>
-      .story{
-        background-color: #f1f1f1;
-      }
-      .story.active{
-        background-color: #1B6F00;
-      }
-    </style>
 </head>
 
 <body>
     <div id="container">
-        <p class="about">Most basic example: highlight active story after a scroll event.</p>
+        <p class="about">Use a <a href="http://underscorejs.org/#throttle">throttled</a> scroll event to trigger active state on the leading edge of the scroll event instead of the default <a href="http://underscorejs.org/#debounce">debounced</a> event.</p>
         <div class="story"><span>1</span></div>
         <div class="story"><span>2</span></div>
         <div class="story"><span>3</span></div>
@@ -43,7 +35,9 @@
             'height': $(window).height() * 0.6
         });
 
-        $('#container').ScrollStory();
+        $('#container').ScrollStory({
+            throttleType: 'throttle' // debounce is the default
+        });
     })(jQuery);
     </script>
 </body>
