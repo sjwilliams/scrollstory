@@ -16,7 +16,7 @@ Key features include:
 ## Dependencies
 Any recent version of:
 - jQuery
-- jQueryUI (core, widget and optionally effects core for custom easings)
+- jQuery UI (core, widget and optionally effects core for custom easings)
 - Underscore
 
 ## Getting Started
@@ -29,6 +29,8 @@ In your web page:
 
 ```html
 <script src="jquery.js"></script>
+<script src="jquery-ui.js"></script>
+<script src="underscore.js"></script>
 <script src="dist/scrollstory.min.js"></script>
 <script>
 jQuery(function($) {
