@@ -1,4 +1,4 @@
-# Scrollstory
+# ScrollStory
 
 jQuery UI widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
 
