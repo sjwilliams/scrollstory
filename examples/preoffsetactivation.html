@@ -3,14 +3,15 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ScrollStory: Active Item</title>
+    <title>ScrollStory: Preoffset Activation</title>
     <link rel="stylesheet" href="base.css">
 </head>
 
 <body>
     <div id="status">Active item index: <span id="activeIndex"></span></div>
+    <div id="trigger"></div>
     <div id="container">
-        <p class="about">You can trigger an action when new item becomes active.</p>
+        <p class="about">By default, ScrollStory activates the item closest to the trigger offset, indifferent to whether that item is above or below the line. This behavior can be changed.</p>
         <div class="story"><span>1</span></div>
         <div class="story"><span>2</span></div>
         <div class="story"><span>3</span></div>
@@ -36,12 +37,19 @@
             'height': $(window).height() * 0.6
         });
 
+        // make trigger offset be 20% down the page,
+        // instead of the default 0px;
+        var triggerOffset = $(window).height() * 0.2;
+        $('#trigger').css({top: triggerOffset});
+        $('#status').css({top: triggerOffset-($('#status').outerHeight()/2)});
+
         var $activeIndex = $('#activeIndex');
 
         $('#container').ScrollStory({
-            throttleType: 'throttle', // check on leading edge of scroll
+            throttleType: 'throttle',
+            triggerOffset: triggerOffset,
+            preOffsetActivation: false, // default is true. Setting to false forces an item to pass the trigger point to be activated.
             indexchange: function(ev, data){
-                console.log(data);
                 $activeIndex.html(data.item.index);
             }
         });
