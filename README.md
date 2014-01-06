@@ -55,14 +55,32 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
 ### Options
 #### contentSelector
-Specify any jQuery selector to find story items within your widget.
-```javascript
+Type: `String`
+
+Default value: '.story'
+
+```js
 $('#container').ScrollStory({
     contentSelector: '.mySpecialContent'
 });
 ```
+A jQuery selector to find story items within your widget.
 
-[Demo](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
+
+#### throttleType
+Type: `String`
+
+Default value: 'debounce'
+
+```js
+$('#container').ScrollStory({
+    throttleType: 'throttle' // debounce or throttle
+});
+```
+Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's (throttle)[http://underscorejs.org/#throttle] and (debounce)[http://underscorejs.org/#debounce] functions. Use 'throttle' to trigger trigger active state on the leading edge of the scroll event. Use 'debounced' trigger on trailing edge. 
+
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 
 ## Examples
 * 
