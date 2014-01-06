@@ -3,7 +3,7 @@
 jQuery UI widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
 
 Key features include:
-- 100% style agnostic. Just a collection of scroll-based patterns I often use.
+- 100% style agnostic. Just a collection of often-used scroll-based patterns.
 - Can can you existing DOM or use an array of objects to create markup.
 - 16+ jQueryUI-style events/callbacks for various application state events.
 - Focus and blur event when an individual story becomes active or inactive.
@@ -40,7 +40,10 @@ jQuery(function($) {
 ```
 
 ## Documentation
-_(Coming soon)_
+### Basic Use
+```javascript
+     $('#container').ScrollStory();
+```
 
 ## Examples
 * [Basic](http://sjwilliams.github.io/scrollstory/examples/basic.html)
@@ -48,6 +51,8 @@ _(Coming soon)_
 * [Change scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
+* [Move the trigger point](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
+* [Trigger point behavior: preoffset activation](http://sjwilliams.github.io/scrollstory/examples/preoffsetactivation.html)
 
 ## Release History
 *0.0.1*
