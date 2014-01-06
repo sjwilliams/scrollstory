@@ -79,7 +79,7 @@ Data can be dynamically added to individual story items by adding it as data att
 ```
 ```javascript
 $('#container').ScrollStory({
-    content: [{hed:'Headline1'}, {'hed', 'Headline2'}]
+    content: [{hed:'Headline1'}, {hed, 'Headline2'}]
     itembuild: function(ev, data) {
         data.item.el.html('<h2>'+data.item.domData.hed+'</h2>');
     }
