@@ -42,11 +42,12 @@ jQuery(function($) {
 ## Documentation
 ### Basic Use
 ```javascript
-     $('#container').ScrollStory();
+('#container').ScrollStory();
 ```
+[Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 
 ## Examples
-* [Basic](http://sjwilliams.github.io/scrollstory/examples/basic.html)
+* 
 * [Change throttle type](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 * [Change scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
