@@ -34,7 +34,7 @@ In your web page:
 <script src="dist/scrollstory.min.js"></script>
 <script>
 jQuery(function($) {
-  $.awesome(); // "awesome"
+  $('#container').ScrollStory();
 });
 </script>
 ```
@@ -43,7 +43,11 @@ jQuery(function($) {
 _(Coming soon)_
 
 ## Examples
-_(Coming soon)_
+*- [Basic](http://sjwilliams.github.io/scrollstory/examples/basic.html)*
+*- [Change throttle type](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)*
+*- [Change scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)*
+*- [Progrimatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)*
+*- [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)*
 
 ## Release History
 *0.0.1*
