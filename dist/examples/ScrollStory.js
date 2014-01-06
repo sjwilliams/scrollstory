@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.0.1 - 2014-01-05
+/*! ScrollStory - v0.0.1 - 2014-01-06
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {

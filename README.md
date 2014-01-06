@@ -42,7 +42,7 @@ jQuery(function($) {
 ## Documentation
 ### Basic Use
 ```javascript
-('#container').ScrollStory();
+$('#container').ScrollStory();
 ```
 In its most basic form, ScrollStory takes an element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properities, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
 
@@ -52,6 +52,14 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 * A class of 'scrollStory_active' is added to the container if any item is active.
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
+
+### Pass In Data Attributes
+```html
+<div class="story" data-bgcolor="#0000ff"></div>
+```
+Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built. 
+
+[Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
 
 ### Options
 #### contentSelector
