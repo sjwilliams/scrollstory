@@ -46,7 +46,7 @@ _(Coming soon)_
 * [Basic](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 * [Change throttle type](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 * [Change scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
-* [Progrimatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
+* [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
 
 ## Release History
