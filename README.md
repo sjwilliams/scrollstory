@@ -44,6 +44,8 @@ jQuery(function($) {
 ```javascript
 ('#container').ScrollStory();
 ```
+In its most basic form, ScrollStory takes an element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properities, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These will all be covered later.
+
 [Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 
 ## Examples
