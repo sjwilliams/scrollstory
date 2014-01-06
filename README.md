@@ -81,9 +81,14 @@ Data can be dynamically added to individual story items by adding it as data att
 </div>
 ```
 ```javascript
-$('#container').ScrollStory();
+$('#container').ScrollStory({
+    content: [{hed:'Headline1'}, {'hed', 'Headline2'}]
+    itembuild: function(ev, data) {
+        data.item.el.html('<h2>'+data.item.domData.hed+'</h2>');
+    }
+});
 ```
-Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built. 
+The widget can be built with an array of data objects, which will be used to generate all the scrollStory elements. To be useful, you'll most likely need to use an 'itembuild' callback or event to append your data any way you see fit inside a generated item element.
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
 
