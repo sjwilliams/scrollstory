@@ -73,7 +73,7 @@ Data can be dynamically added to individual story items by adding it as data att
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
 
-### Build Widget From Objects
+### Build From Data
 ```html
 <div id="container"></div>
 ```
