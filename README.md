@@ -75,10 +75,7 @@ Data can be dynamically added to individual story items by adding it as data att
 
 ### Build Widget From Objects
 ```html
-<div id="container">
-    <div class="story" data-bgcolor="#0000ff">...</div>
-    ...
-</div>
+<div id="container"></div>
 ```
 ```javascript
 $('#container').ScrollStory({
@@ -88,7 +85,7 @@ $('#container').ScrollStory({
     }
 });
 ```
-The widget can be built with an array of data objects, which will be used to generate all the scrollStory elements. To be useful, you'll most likely need to use an 'itembuild' callback or event to append your data any way you see fit inside a generated item element.
+The widget can be built with an array of data objects, which will be used to generate all the ScrollStory elements. To be useful, you'll most likely need to use an 'itembuild' callback or event to append your data any way you see fit inside a generated item element.
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
 
