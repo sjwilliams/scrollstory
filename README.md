@@ -226,6 +226,11 @@ When on, events are triggered for items entering and leaving the viewport, and c
 
 Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method will alway return the items in the viewport.
 
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/inviewport.html)
+
+## API
+_(TODO)_
+
 ## Examples
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
