@@ -35,7 +35,7 @@
         var triggerOffset = $(window).height() * 0.2;
         $('#trigger').css({top: triggerOffset});
 
-        var scrollStory = $('#container').ScrollStory({
+        $('#container').ScrollStory({
             throttleType: 'throttle',
             triggerOffset: triggerOffset,
             preOffsetActivation: false,
@@ -56,12 +56,12 @@
 
                 data.item.el.css(css);
 
+                // style span
                 if (item.domData.fontsize) {
                     item.el.find('span').css({fontSize:item.domData.fontsize + 'em'});
                 }
-
             }
-        }).data('sjwScrollStory');
+        });
     })(jQuery);
     </script>
 </body>

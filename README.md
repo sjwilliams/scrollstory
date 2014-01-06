@@ -41,6 +41,12 @@ jQuery(function($) {
 
 ## Documentation
 ### Basic Use
+```html
+<div id="container">
+    <div class="story">...</div>
+    ...
+</div>
+```
 ```javascript
 $('#container').ScrollStory();
 ```
@@ -53,9 +59,29 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 
-### Pass In Data Attributes
+### Pass In Data Via Attributes
 ```html
-<div class="story" data-bgcolor="#0000ff"></div>
+<div id="container">
+    <div class="story" data-bgcolor="#0000ff">...</div>
+    ...
+</div>
+```
+```javascript
+$('#container').ScrollStory();
+```
+Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built. 
+
+[Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
+
+### Build Widget From Objects
+```html
+<div id="container">
+    <div class="story" data-bgcolor="#0000ff">...</div>
+    ...
+</div>
+```
+```javascript
+$('#container').ScrollStory();
 ```
 Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built. 
 
