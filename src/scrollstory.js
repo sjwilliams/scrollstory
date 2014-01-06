@@ -38,8 +38,6 @@
             // is ignored.
             autoActivateFirst: true,
 
-            //  topItem.distanceToOffset > 0
-            //
             // If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the
             // first item would activate after a 1px scroll. Usually, we want to delay that
             // first activation until the first item is to the offset, but maintain the activation
@@ -52,7 +50,7 @@
             // Updated offsets on window resize? useful for responsive layouts
             updateOffsetsOnResize: true,
 
-            // Automated scroll speed in ms. set to 0 to remove animation
+            // Automated scroll speed in ms. Set to 0 to remove animation.
             speed: 800,
 
             // dynamic (default) or fixed.
@@ -69,7 +67,7 @@
             easing: 'swing',
 
             // Whether to keep track of which individual elements are in the viewport.
-            checkViewportVisiblity: false,
+            checkViewportVisibility: false,
 
             // scroll-based events are throttled. Choose from either
             // 'debounce' or 'throttle'
@@ -236,8 +234,8 @@
 
 
             // see what items are in the viewport
-            if (this.options.checkViewportVisiblity) {
-                this._checkViewportVisiblity();
+            if (this.options.checkViewportVisibility) {
+                this._checkViewportVisibility();
             }
 
 
@@ -681,8 +679,8 @@
 
 
             // check viewport visibility of items
-            if (this.options.checkViewportVisiblity) {
-                this._checkViewportVisiblity();
+            if (this.options.checkViewportVisibility) {
+                this._checkViewportVisibility();
             }
 
         },
@@ -723,7 +721,7 @@
          * Cycle through items and update
          * their inViewport status
          */
-        _checkViewportVisiblity: function() {
+        _checkViewportVisibility: function() {
             _.each(this.getItems(), _.bind(function(item) {
                 var inViewport = this._isElementInViewport(item.el);
 
@@ -844,8 +842,8 @@
         getItemsInViewport: function() {
 
             // is widget keeping track on scroll?
-            if (!this.options.checkViewportVisiblity) {
-                this._checkViewportVisiblity();
+            if (!this.options.checkViewportVisibility) {
+                this._checkViewportVisibility();
             }
 
             return _.filter(this.getItems(), function(item) {
@@ -1027,8 +1025,8 @@
             this._trigger('offsetschange', null, {});
 
             // check viewport visibility of items
-            if (this.options.checkViewportVisiblity) {
-                this._checkViewportVisiblity();
+            if (this.options.checkViewportVisibility) {
+                this._checkViewportVisibility();
             }
         },
 
@@ -1199,7 +1197,7 @@
                 triggerOffset: false,
 
                 // if any part is viewable in the viewport.
-                // only updated if this.options.checkViewportVisiblity is true
+                // only updated if this.options.checkViewportVisibility is true
                 inViewport: false
             };
 

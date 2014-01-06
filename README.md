@@ -61,7 +61,7 @@ Default value: '.story'
 
 ```js
 $('#container').ScrollStory({
-    contentSelector: '.mySpecialContent'
+    contentSelector: '.story'
 });
 ```
 A jQuery selector to find story items within your widget.
@@ -75,21 +75,161 @@ Default value: 'debounce'
 
 ```js
 $('#container').ScrollStory({
-    throttleType: 'throttle' // debounce or throttle
+    throttleType: 'debounce' // debounce or throttle
 });
 ```
-Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger ctive state on the leading edge of the scroll event. Use 'debounce' trigger on trailing edge. 
+Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' trigger on trailing edge. 
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 
+#### scrollSensitivity
+Type: `Number`
+
+Default value: 100
+
+```js
+$('#container').ScrollStory({
+    scrollSensitivity: 100
+});
+```
+How often in milliseconds to check for the active item during a scroll.
+
+[Example of a lower scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
+
+#### triggerOffset
+Type: `Number`
+
+Default value: 0
+
+```js
+$('#container').ScrollStory({
+    triggerOffset: 0
+});
+```
+The trigger offset is the distance from the top of the page use to determine which item is active.
+
+[Example of trigger point farther down the page](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
+
+#### preOffetActivation
+Type: `Boolean`
+
+Default value: true
+
+```js
+$('#container').ScrollStory({
+    preOffsetActivation: true
+});
+```
+By default, ScrollStory activates the item closest to the trigger offset, indifferent to whether that item is above or below the line. If set to false, the widget will no longer allow items to be active 'pre' the triggerOffset point. Generally, a value of true gives a very natural feel.
+
+[Example set to false](http://sjwilliams.github.io/scrollstory/examples/preoffsetactivation.html)
+
+#### keyboard
+Type: `Boolean`
+
+Default value: true
+
+```js
+$('#container').ScrollStory({
+    keyboard: true
+});
+```
+Enable left and right arrow keys to move between story items.
+
+[Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
+
+#### scrollOffset
+Type: `Number`
+
+Default value: 0
+
+```js
+$('#container').ScrollStory({
+    scrollOffset: 0
+});
+```
+When programatically scrolled, the position from the top the item is scrolled to.
+
+#### autoActivateFirst
+Type: `Boolean`
+
+Default value: true
+
+```js
+$('#container').ScrollStory({
+    delayFirstActivationToOffset: 0
+});
+```
+Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
+
+#### delayFirstActivationToOffset
+Type: `Boolean`
+
+Default value: true
+
+```js
+$('#container').ScrollStory({
+    delayFirstActivationToOffset: 0
+});
+```
+If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the first item would activate after a 1px scroll. Usually, we want to delay that first activation until the first item is to the offset, but maintain the activation behavior of other items. By default, we delay the activation on first item. Set to false otherwise. No effect if 'autoActivateFirst' is true or 'preOffsetActivation' is false.
+
+#### speed
+Type: `Number`
+
+Default value: 800
+
+```js
+$('#container').ScrollStory({
+    speed: 800
+});
+```
+Automated scroll speed in ms. Set to 0 to remove animation.
+
+#### scrollRate
+Type: `String`
+
+Default value: 'dynamic'
+
+```js
+$('#container').ScrollStory({
+    scrollRate: 'dynamic' // 'dynamic' or 'fixed'
+});
+```
+The rate of scroll for programtic scrolls. 'fixed' means travel the full distance over 'speed' time, regardless of distance. 'dynnamic' means the speed is a guide for the target travel time. Longer distances will take longer, and shorter distance will take less time. This is meant to have a more natural feel. Tip: you'll want a  higher speed if you use dynamic than you would for fixed.
+
+#### easing
+Type: `String`
+
+Default value: 'swing'
+
+```js
+$('#container').ScrollStory({
+    easing: 'swing'
+});
+```
+The easing type for programatic scrolls. If jQuery effects core is included in yoru jQuery UI build, all jYuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
+
+#### checkViewportVisibility
+Type: `Boolean`
+
+Default value: false
+
+```js
+$('#container').ScrollStory({
+    checkViewportVisibility: false
+});
+```
+Whether to keep track of which individual elements are in the viewport. This is can be CPU intensive, so is turned off by default. It is checked at the scrollSensitivity rate.
+
+When on, events are triggered for items entering and leaving the viewport, and class of 'inViewport' is added and removed from those items' markup.
+
+Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method will alway return the items in the viewport.
+
 ## Examples
-* 
-* [Change throttle type](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
-* [Change scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
 * [Move the trigger point](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
-* [Trigger point behavior: preoffset activation](http://sjwilliams.github.io/scrollstory/examples/preoffsetactivation.html)
 
 ## Release History
 *0.0.1*
