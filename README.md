@@ -53,13 +53,14 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 
-### Custom Selector
+### Options
+#### contentSelector
+Specify any jQuery selector to find story items within your widget.
 ```javascript
 $('#container').ScrollStory({
     contentSelector: '.mySpecialContent'
 });
 ```
-Specify any jQuery selector to find story items within your widget.
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
 
