@@ -78,7 +78,7 @@ $('#container').ScrollStory({
     throttleType: 'throttle' // debounce or throttle
 });
 ```
-Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's (throttle)[http://underscorejs.org/#throttle] and (debounce)[http://underscorejs.org/#debounce] functions. Use 'throttle' to trigger trigger active state on the leading edge of the scroll event. Use 'debounced' trigger on trailing edge. 
+Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger ctive state on the leading edge of the scroll event. Use 'debounce' trigger on trailing edge. 
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 
