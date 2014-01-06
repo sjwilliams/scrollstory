@@ -83,7 +83,7 @@
             // see: http://underscorejs.org/#throttle && http://underscorejs.org/#debounce
             throttleTypeOptions: null,
 
-            // Add css classes to an item to reflect their order from the active item.
+            // Add css classes to items to reflect their order from the active item.
             verboseItemClasses: false,
 
 

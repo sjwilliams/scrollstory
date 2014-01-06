@@ -228,6 +228,35 @@ Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/inviewport.html)
 
+#### verboseItemClasses
+Type: `Boolean`
+
+Default value: false
+
+```js
+$('#container').ScrollStory({
+    verboseItemClasses: false
+});
+```
+Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'class-1', for the item above, continue on through 'class-2' to 'class-N', and class 'order1' through 'orderN' for the items below.
+
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/verboseitemclasses.html)
+
+#### throttleTypeOptions
+Type: `Boolean\Object`
+
+Default value: null
+
+```js
+$('#container').ScrollStory({
+    throttleTypeOptions: null
+});
+```
+Options to pass to underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
+
+## Events
+_(TODO)_
+
 ## API
 _(TODO)_
 
