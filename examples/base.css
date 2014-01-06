@@ -58,8 +58,20 @@ body{
     background-color: #f1f1f1;
 }
 
+.storyScroll_story.inViewport{
+    background-color: #92BDCA;
+    -webkit-transition: background-color 500ms ease;
+    -moz-transition: background-color 500ms ease;
+    -o-transition: background-color 500ms ease;
+    transition: background-color 500ms ease;
+}
+
 .storyScroll_story.active{
   background-color: #1B6F00;
+  -webkit-transition: background-color 0 ease;
+  -moz-transition: background-color 0 ease;
+  -o-transition: background-color 0 ease;
+  transition: background-color 0 ease;
 }
 
 .storyScroll_story > span{
