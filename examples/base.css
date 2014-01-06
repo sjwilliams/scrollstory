@@ -53,16 +53,16 @@ body{
     font-style: italic;
 }
 
-.story{
+.storyScroll_story{
     margin: 20px 0;
     background-color: #f1f1f1;
 }
 
-.story.active{
+.storyScroll_story.active{
   background-color: #1B6F00;
 }
 
-.story > span{
+.storyScroll_story > span{
     font-size: 36px;
     line-height: 1.1em;
 }
