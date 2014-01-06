@@ -157,7 +157,7 @@ Default value: true
 
 ```js
 $('#container').ScrollStory({
-    delayFirstActivationToOffset: 0
+    autoActivateFirst: true
 });
 ```
 Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
@@ -196,7 +196,7 @@ $('#container').ScrollStory({
     scrollRate: 'dynamic' // 'dynamic' or 'fixed'
 });
 ```
-The rate of scroll for programtic scrolls. 'fixed' means travel the full distance over 'speed' time, regardless of distance. 'dynnamic' means the speed is a guide for the target travel time. Longer distances will take longer, and shorter distance will take less time. This is meant to have a more natural feel. Tip: you'll want a  higher speed if you use dynamic than you would for fixed.
+The rate of scroll for programatic scrolls. 'fixed' means travel the full distance over 'speed' time, regardless of distance. 'dynamic' means the speed is a guide for the target travel time. Longer distances will take longer, and shorter distance will take less time. This is meant to have a more natural feel. Tip: you'll want a  higher speed if you use 'dynamic' than you would for 'fixed'.
 
 #### easing
 Type: `String`
@@ -208,7 +208,7 @@ $('#container').ScrollStory({
     easing: 'swing'
 });
 ```
-The easing type for programatic scrolls. If jQuery effects core is included in yoru jQuery UI build, all jYuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
+The easing type for programatic scrolls. If jQuery effects core is included in your jQuery UI build, all jQuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
 
 #### checkViewportVisibility
 Type: `Boolean`
@@ -220,9 +220,9 @@ $('#container').ScrollStory({
     checkViewportVisibility: false
 });
 ```
-Whether to keep track of which individual elements are in the viewport. This is can be CPU intensive, so is turned off by default. It is checked at the scrollSensitivity rate.
+Whether to keep track of which individual elements are in the viewport. This is can be CPU intensive, so is turned off by default. It is checked at the 'scrollSensitivity 'rate.
 
-When on, events are triggered for items entering and leaving the viewport, and class of 'inViewport' is added and removed from those items' markup.
+When enabled, events are triggered for items entering and leaving the viewport, and class of 'inViewport' is added and removed from those items' markup.
 
 Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method will alway return the items in the viewport.
 
@@ -238,7 +238,7 @@ $('#container').ScrollStory({
     verboseItemClasses: false
 });
 ```
-Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'class-1', for the item above, continue on through 'class-2' to 'class-N', and class 'order1' through 'orderN' for the items below.
+Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'class-1', for the item above, continuing on through 'class-2' to 'class-N', and class 'order1' through 'orderN' for the items below.
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/verboseitemclasses.html)
 
