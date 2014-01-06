@@ -87,7 +87,7 @@ $('#container').ScrollStory({
 ```
 The widget can be built with an array of data objects, which will be used to generate all the ScrollStory elements. To be useful, you'll most likely need to use an 'itembuild' callback or event to append your data any way you see fit inside a generated item element.
 
-[Demo](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
+[Demo](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 
 ### Options
 #### contentSelector
