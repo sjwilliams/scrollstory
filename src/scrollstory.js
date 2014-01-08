@@ -934,6 +934,42 @@
             });
         },
 
+        /**
+         * Return items that pass an abritrary truth test
+         *
+         * For example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
+         *
+         * @param {Function} truthTest The function to chech all items against
+         * @return {Array} Array of item objects
+         */
+        getItemsBy: function(truthTest) {
+            if (typeof truthTest !== 'function') {
+                throw new Error('You must provide a truthTest function');
+            }
+
+            return _.filter(this._items, function(item) {
+                return truthTest(item);
+            });
+        },
+
+        /**
+         * Filter items that pass an abritrary truth test
+         *
+         * For example: this.filterBy(function(item){return item.domData.geo=='africa'})
+         *
+         * @param {Function} testTest The function to chech all items against
+         * @param {Function} cb Callback to execute after all filter actions
+         * @return {Array} Array of item objects
+         */
+        filterBy: function(truthTest, cb) {
+            _.each(this.getItemsBy(truthTest), _.bind(function(item) {
+                this.filter(item);
+            }, this));
+
+            if (typeof cb === 'function') {
+                cb();
+            }
+        },
 
         /**
          * Given an item or item id, change
