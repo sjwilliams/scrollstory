@@ -450,11 +450,15 @@
             _.each(this._items, function(item) {
                 var localOffsetAdjustment = (item.triggerOffset) ? item.triggerOffset : 0; // per-item adjustment to its offset
                 item.distanceToOffset = item.topOffset - opts.offset - localOffsetAdjustment;
-                distancesFromTop.push({
-                    id: item.id,
-                    difference: item.distanceToOffset,
-                    absoluteDifference: Math.abs(item.distanceToOffset) // the closest, even if it's above the offset.
-                });
+
+                // only remember items that aren't filtered
+                if (!item.filtered) {
+                    distancesFromTop.push({
+                        id: item.id,
+                        difference: item.distanceToOffset,
+                        absoluteDifference: Math.abs(item.distanceToOffset) // the closest, even if it's above the offset.
+                    });
+                }
             });
 
             var itemNearestOffset;
