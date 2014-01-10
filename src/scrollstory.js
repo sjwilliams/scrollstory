@@ -870,6 +870,29 @@
 
 
         /**
+         * Return all items that haven't been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getUnfilteredItems: function(){
+          return this.getItemsBy(function(item){
+            return !item.filtered;
+          });
+        },
+
+        /**
+         * Return all items that have been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getFilteredItems: function(){
+          return this.getItemsBy(function(item){
+            return item.filtered;
+          });
+        },
+
+
+        /**
          * All category ids
          * @return {Array}
          */
