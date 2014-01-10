@@ -473,7 +473,7 @@
             } else {
 
                 // items above offset
-                var aboveOffset = _.filter(this._items, function(item) {
+                var aboveOffset = _.filter(this.getUnfilteredItems(), function(item) {
                     return item.distanceToOffset <= 0;
                 });
 
@@ -874,10 +874,10 @@
          *
          * @return {Array} Array of items
          */
-        getUnfilteredItems: function(){
-          return this.getItemsBy(function(item){
-            return !item.filtered;
-          });
+        getUnfilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return !item.filtered;
+            });
         },
 
         /**
@@ -885,10 +885,10 @@
          *
          * @return {Array} Array of items
          */
-        getFilteredItems: function(){
-          return this.getItemsBy(function(item){
-            return item.filtered;
-          });
+        getFilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return item.filtered;
+            });
         },
 
 
