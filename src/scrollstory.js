@@ -962,7 +962,7 @@
          *
          * For example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
          *
-         * @param {Function} truthTest The function to chech all items against
+         * @param {Function} truthTest The function to check all items against
          * @return {Array} Array of item objects
          */
         getItemsBy: function(truthTest) {

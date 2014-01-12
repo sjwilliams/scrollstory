@@ -514,7 +514,6 @@ The primary methods include:
 * <a href="#scrollToCategory">scrollStory.<code>scrollToCategory()</code></a>
 * <a href="#scrollToCategoryIndex">scrollStory.<code>scrollToCategoryIndex()</code></a>
 * <a href="#getTags">scrollStory.<code>getTags()</code></a>
-* <a href="#getTags">scrollStory.<code>getTags()</code></a>
 * <a href="#getItemsByTag">scrollStory.<code>getItemsByTag()</code></a>
 * <a href="#getItemsBy">scrollStory.<code>getItemsBy()</code></a>
 * <a href="#filter">scrollStory.<code>filter()</code></a>
@@ -566,8 +565,130 @@ The primary methods include:
   * **opts** (optional Object) - Allows you to pass in the <code>easing</code> type, <code>speed</code> and <code>scrollOffset</code> for the scroll, overriding the global and item-specific settings already established.
   * **cb** (optional Function) - Callback to execute after scroll.
 
+<a name="scrollToIndex"></a>
+### scrollToIndex(index, opts, cb)
+<code>scrollStory.scrollToIndex()</code>: Given a zero-based index, scroll to it.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
+**Arguments**
+
+* **index** (Number) - The index to scroll to
+* **opts** (optional Object) - Allows you to pass in the <code>easing</code> type, <code>speed</code> and <code>scrollOffset</code> for the scroll, overriding the global and item-specific settings already established.
+* **cb** (optional Function) - Callback to execute after scroll.
+
+
+<a name="getItems"></a>
+### getItems()
+<code>scrollStory.getItems()</code>: Return an array of all item objects.
+
+<a name="getItemsInViewport"></a>
+### getItemsInViewport()
+<code>scrollStory.getItemsInViewport()</code>: Return an array of all item objects currently visible on the screen.
+
+<a name="getItemsByCategory"></a>
+### getItemsByCategory(slug)
+<code>scrollStory.getItemsByCategory()</code>: Return an array of all item objects in the given category.
+
+**Arguments**
+
+* **slug** (String) - The category slug
+
+<a name="getFilteredItems"></a>
+### getFilteredItems()
+<code>scrollStory.getFilteredItems()</code>: Return an array of all item objects whose filtered state has been set to true.
+
+<a name="getUnfilteredItems"></a>
+### getUnfilteredItems()
+<code>scrollStory.getUnfilteredItems()</code>: Return an array of all item objects whose filtered state has been not been set to true.
+
+
+<a name="getItemById"></a>
+### getItemById(id)
+<code>scrollStory.getItemById()</code>: Given an <code>item.id</code>, return its data.
+
+**Arguments**
+
+* **id** (String) - The item.id
+
+<a name="getItemByIndex"></a>
+### getItemByIndex(index)
+<code>scrollStory.getItemByIndex()</code>:  Given an item's zero-based index, return its data.
+
+**Arguments**
+
+* **index** (Number) - Zero-based index.
+
+<a name="getTopItem"></a>
+### getTopItem()
+<code>scrollStory.getTopItem()</code>:  Return the active <code>item</code> object. False it there isn't one.
+
+<a name="getTopItemId"></a>
+### getTopItemId()
+<code>scrollStory.getTopItemId()</code>:  Return the active <code>item.id</code>. False it there isn't one.
+
+<a name="getNextItem"></a>
+### getNextItem()
+<code>scrollStory.getNextItem()</code>:  Return the <code>item</code> object for item after the active on. False it there isn't one.
+
+<a name="getPreviousItem"></a>
+### getPreviousItem()
+<code>scrollStory.getPreviousItem()</code>:  Return the <code>item</code> object for item before the active on. False it there isn't one.
+
+<a name="getLength"></a>
+### getLength()
+<code>scrollStory.getLength()</code>:  Return the number of items.
+
+<a name="getCategoryIds"></a>
+### getCategoryIds()
+<code>scrollStory.getCategoryIds()</code>:  Return array of category slugs.
+
+<a name="getActiveCategory"></a>
+### getActiveCategory()
+<code>scrollStory.getActiveCategory()</code>:  Return the slug of the active category.
+
+
+<a name="scrollToCategory"></a>
+### scrollToCategory(id)
+<code>scrollStory.scrollToCategory()</code>: Scroll to the first item in given category
+
+**Arguments**
+
+  * **id** (String) - Category slug
+
+<a name="scrollToCategoryIndex"></a>
+### scrollToCategoryIndex(index)
+<code>scrollStory.scrollToCategoryIndex()</code>: Scroll to the first item in the category, which are tracked by the order in which they appear in items, at the index specified. <code>getCategoryIds</code> lists the categorys in order.
+
+**Arguments**
+
+* **index** (Number) - The index to scroll to
+
+<a name="getTags"></a>
+### getTags()
+<code>scrollStory.getTags()</code>:  Return array of tag slugs.
+
+<a name="getItemsByTag"></a>
+### getItemsByTag(tags, all)
+<code>scrollStory.getItemsByTag()</code>: Return an array of item objects that contain the given tag.
+
+**Arguments**
+
+* **tags** (String/Array) - The slug or array of slugs
+* **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
+
+<a name="getItemsBy"></a>
+### getItemsBy(truthTest)
+<code>scrollStory.getItemsBy()</code>: Return an array of item objects that pass an aribitrary truth test.
+
+**Arguments**
+
+* **tags** (Function) - The function to check all items against
+
+```js
+scrollStory.getItemsBy(function(item){
+    return item.domData.slug=='josh_williams';
+});
+```
+
 
 ## Examples
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
