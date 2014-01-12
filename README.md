@@ -518,10 +518,9 @@ The primary methods include:
 * <a href="#getItemsBy">scrollStory.<code>getItemsBy()</code></a>
 * <a href="#filter">scrollStory.<code>filter()</code></a>
 * <a href="#unfilter">scrollStory.<code>unfilter()</code></a>
-* <a href="#filterBy">scrollStory.<code>filterBy()</code></a>
-* <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
 * <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
 * <a href="#unfilterByTag">scrollStory.<code>unfilterByTag()</code></a>
+* <a href="#filterBy">scrollStory.<code>filterBy()</code></a>
 * <a href="#unfilterAllItems">scrollStory.<code>unfilterAllItems()</code></a>
 
 --------------------------------------------------------
@@ -645,7 +644,6 @@ The primary methods include:
 ### getActiveCategory()
 <code>scrollStory.getActiveCategory()</code>:  Return the slug of the active category.
 
-
 <a name="scrollToCategory"></a>
 ### scrollToCategory(id)
 <code>scrollStory.scrollToCategory()</code>: Scroll to the first item in given category
@@ -683,11 +681,65 @@ The primary methods include:
 
 * **tags** (Function) - The function to check all items against
 
+***Example***
 ```js
 scrollStory.getItemsBy(function(item){
     return item.domData.slug=='josh_williams';
 });
 ```
+
+<a name="filter"></a>
+### filter(item)
+<code>scrollStory.filter()</code>:  Given an item or item id, change its state to filtered.
+
+**Arguments**
+
+* **item** (Object/String) - <code>item</code> or <code>item.id</code>
+
+<a name="unfilter"></a>
+### unfilter(item)
+<code>scrollStory.unfilter()</code>:  Given an item or item id, change its state to unfiltered.
+
+**Arguments**
+
+* **item** (Object/String) - <code>item</code> or <code>item.id</code>
+
+<a name="filterByTag"></a>
+### filterByTag(tag,all)
+<code>scrollStory.filterByTag()</code>:  Given a tag slug, change all matching items' state to filtered.
+
+**Arguments**
+
+* **tag** (String/Array) - The slug or array of slugs to filter
+* **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
+
+<a name="unfilterByTag"></a>
+### unfilterByTag(tag,all)
+<code>scrollStory.unfilterByTag()</code>: Given a tag slug, change all matching items' state to unfiltered.
+
+**Arguments**
+
+* **tag** (String/Array) - The slug or array of slugs to filter
+* **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
+
+<a name="filterItemsBy"></a>
+### filterItemsBy(truthTest)
+<code>scrollStory.filterItemsBy()</code>: Filter items that pass an abritrary truth test.
+
+**Arguments**
+
+* **tags** (Function) - The function to check all items against
+
+***Example***
+```js
+scrollStory.filterItemsBy(function(item){
+    return item.domData.slug=='josh_williams';
+});
+```
+
+<a name="unfilterAllItems"></a>
+### unfilterAllItems()
+<code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 
 ## Examples
