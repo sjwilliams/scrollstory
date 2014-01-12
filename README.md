@@ -294,7 +294,7 @@ Options to pass to underscore's throttle or debounce for scroll. Type/functional
 
 At its core, ScrollStory simply manages an array of 'item' objects, keeping track of various properties and states. The entire object is user accessible, but generally should be thought of in two parts: 
 
-* The object root, which ScrollStory uses to maintain state,
+* The object root, which ScrollStory uses to maintain state.
 * The domData object within the 'item' for user data. 
 
 The 'item' object looks like this:
@@ -307,7 +307,7 @@ The 'item' object looks like this:
     el: ot.fn.ot.init[1], // the jQuery object that contains the item's markup
     filtered: false, // is this item filtered from the list? by default, that includes no styling, only logic to exclude it from being set to active.
     id: "scrollStory_story_0", // user assigned or auto-generated.
-    inViewport: true, // in this item in the viewport
+    inViewport: true, // is this item in the viewport?
     index: 0, // its index in the list array of ojects
     nextItem: Object, // reference to the item immediately after this one
     previousItem: false, // reference to the item immediately after this one
@@ -329,7 +329,143 @@ Fired when an item gains 'focus', which can happen from a scroll-based activatio
 ```js
 $('#container').ScrollStory({
     indexchange: function(ev, data) {
-        var item = data.item; // most events put the affected item at data.item
+        var item = data.item; // most events put the affected item at data.item. This is the newly activated item.
+    }
+})
+```
+
+#### itemblur
+Fired when an item loses 'focus'.
+
+```js
+$('#container').ScrollStory({
+    itemblur: function(ev, data) {
+        var item = data.item; // newly un-activated item
+    }
+})
+```
+
+#### itemfilter
+Fired when an item is filtered, which means it is no longer considered ScrollStory determines which item is active. Intended to be combined with visual changes or hidind so you can visually filter the item from the list.
+
+```js
+$('#container').ScrollStory({
+    itemfilter: function(ev, data) {
+        var item = data.item;
+})
+```
+
+#### itemunfilter
+Fired when an item is unfiltered.
+
+```js
+$('#container').ScrollStory({
+    itemunfilter: function(ev, data) {
+        var item = data.item;
+    }
+})
+```
+
+#### enterviewport
+Fired when an item enters the visible portion of the screen. This is great for triggering things like lazy loads.
+
+```js
+$('#container').ScrollStory({
+    enterviewport: function(ev, data) {
+        var item = data.item;
+})
+```
+
+#### exitviewport
+Fired when an item leaves the visible portion of the screen.
+
+```js
+$('#container').ScrollStory({
+    exitviewport: function(ev, data) {
+        var item = data.item;
+    }
+})
+```
+
+#### itembuild
+Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item now, as the item hasn't yet been added to the page and the render will be faster.
+
+```js
+$('#container').ScrollStory({
+    content: items, // array of objects that'll be passed into item.domData.
+    itembuild: function(ev, data) {
+        var item = data.item;
+        item.el.html('<p>My new content!</p>');
+    }
+})
+```
+
+
+#### categorychange
+Fired when new active item is in a differnt category than previously active item.
+
+```js
+$('#container').ScrollStory({
+    categorychange: function(ev, data) {
+        var category = data.category;
+        var previousCategory: data.previousCategory;
+    }
+})
+```
+
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/categories.html)
+
+#### active
+Fired when the widget changes states from have no active item to an active item. Depending on instantation options, this may or not be on instantation. 'autoActivateFirst' and 'delayFirstActivationToOffset' may delay this event until a certain scroll position has been reached.
+
+```js
+$('#container').ScrollStory({
+    active: function(ev) {
+        
+    }
+})
+```
+
+#### inactive
+Fired when the widget changes states from an active item to not having an active item.
+
+```js
+$('#container').ScrollStory({
+    inactive: function(ev) {
+        
+    }
+})
+```
+
+#### aboveoffset
+Scrolling above global scroll offset
+
+```js
+$('#container').ScrollStory({
+    aboveoffset: function(ev) {
+        
+    }
+})
+```
+
+#### belowoffset
+Scrolling below global scroll offset
+
+```js
+$('#container').ScrollStory({
+    inactive: function(ev) {
+        
+    }
+})
+```
+
+#### scroll
+Throttled scroll event. The current active element is passed in.
+
+```js
+$('#container').ScrollStory({
+    scroll: function(ev, data) {
+        var activeItem = data.item;
     }
 })
 ```

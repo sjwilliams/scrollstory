@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.0.1 - 2014-01-08
+/*! ScrollStory - v0.0.1 - 2014-01-12
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
@@ -474,7 +474,7 @@
             } else {
 
                 // items above offset
-                var aboveOffset = _.filter(this._items, function(item) {
+                var aboveOffset = _.filter(this.getUnfilteredItems(), function(item) {
                     return item.distanceToOffset <= 0;
                 });
 
@@ -866,6 +866,29 @@
         getItemsByCategory: function(category) {
             return _.filter(this._items, function(item) {
                 return item.category === category;
+            });
+        },
+
+
+        /**
+         * Return all items that haven't been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getUnfilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return !item.filtered;
+            });
+        },
+
+        /**
+         * Return all items that have been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getFilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return item.filtered;
             });
         },
 
