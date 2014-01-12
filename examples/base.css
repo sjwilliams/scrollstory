@@ -24,6 +24,7 @@ body{
     -o-user-select: none;
     user-select: none;
     z-index: 11;
+    -webkit-transform: translateZ(0);
 }
 
 #trigger{
@@ -34,6 +35,7 @@ body{
     left: 0px;
     background-color: #ff0000;
     z-index: 10;
+    -webkit-transform: translateZ(0);
 }
 
 .about{

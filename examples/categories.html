@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Categories</title>
+    <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+    <div id="status">Active item index: <span id="activeIndex"></span><br>Category: <span id="category"></span=></div>
+    <div id="trigger"></div>
+    <div id="container">
+        <p class="about">Update category name on scroll.</p>
+        <div class="story" data-category="fruit"><span>Apple</span></div>
+        <div class="story" data-category="fruit"><span>Orange</span></div>
+        <div class="story" data-category="fruit"><span>Bananna</span></div>
+        <div class="story" data-category="fruit"><span>Pear</span></div>
+        <div class="story" data-category="fruit"><span>Peach</span></div>
+        <div class="story" data-category="vegetable"><span>Squash</span></div>
+        <div class="story" data-category="vegetable"><span>Broccoli</span></div>
+        <div class="story" data-category="vegetable"><span>Spinach</span></div>
+        <div class="story" data-category="vegetable"><span>Carrots</span></div>
+        <div class="story" data-category="yummy"><span>Pizza</span></div>
+        <div class="story" data-category="yummy"><span>Pancakes</span></div>
+        <div class="story" data-category="yummy"><span>Subs</span></div>
+        <div class="story" data-category="yummy"><span>Cake</span></div>
+    </div>
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery-ui/jquery-ui.js"></script>
+    <script src="underscore/underscore.js"></script>
+    <script src="scrollstory.js"></script>
+    <script>
+    (function($) {
+
+        // make trigger offset be 20% down the page,
+        // instead of the default 0px;
+        var triggerOffset = $(window).height() * 0.2;
+        $('#trigger').css({top: triggerOffset});
+        $('#status').css({top: triggerOffset-($('#status').outerHeight()/2)});
+
+        var $activeIndex = $('#activeIndex');
+        var $category = $('#category')
+
+        var scrollStory = $('#container').ScrollStory({
+            throttleType: 'throttle',
+            triggerOffset: triggerOffset,
+            preOffsetActivation: false,
+            checkViewportVisibility: true,
+            itembuild: function(ev,data){
+                // make element a random height between 10 and 70% height of the viewport
+                var height = Math.round($(window).height() * ( _.random(10, 70)/100 ));
+                data.item.el.css({height:height});
+            },
+            indexchange: function(ev, data){
+                $activeIndex.html(data.item.index);
+            },
+            categorychange: function(ev, data){
+                $category.html(data.category)
+            }
+        }).data('sjwScrollStory');
+    })(jQuery);
+    </script>
+</body>
+</html>

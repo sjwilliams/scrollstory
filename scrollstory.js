@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.0.1 - 2014-01-06
+/*! ScrollStory - v0.0.1 - 2014-01-12
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
@@ -451,11 +451,15 @@
             _.each(this._items, function(item) {
                 var localOffsetAdjustment = (item.triggerOffset) ? item.triggerOffset : 0; // per-item adjustment to its offset
                 item.distanceToOffset = item.topOffset - opts.offset - localOffsetAdjustment;
-                distancesFromTop.push({
-                    id: item.id,
-                    difference: item.distanceToOffset,
-                    absoluteDifference: Math.abs(item.distanceToOffset) // the closest, even if it's above the offset.
-                });
+
+                // only remember items that aren't filtered
+                if (!item.filtered) {
+                    distancesFromTop.push({
+                        id: item.id,
+                        difference: item.distanceToOffset,
+                        absoluteDifference: Math.abs(item.distanceToOffset) // the closest, even if it's above the offset.
+                    });
+                }
             });
 
             var itemNearestOffset;
@@ -470,7 +474,7 @@
             } else {
 
                 // items above offset
-                var aboveOffset = _.filter(this._items, function(item) {
+                var aboveOffset = _.filter(this.getUnfilteredItems(), function(item) {
                     return item.distanceToOffset <= 0;
                 });
 
@@ -867,6 +871,29 @@
 
 
         /**
+         * Return all items that haven't been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getUnfilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return !item.filtered;
+            });
+        },
+
+        /**
+         * Return all items that have been filtered
+         *
+         * @return {Array} Array of items
+         */
+        getFilteredItems: function() {
+            return this.getItemsBy(function(item) {
+                return item.filtered;
+            });
+        },
+
+
+        /**
          * All category ids
          * @return {Array}
          */
@@ -931,6 +958,42 @@
             });
         },
 
+        /**
+         * Return items that pass an abritrary truth test
+         *
+         * For example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
+         *
+         * @param {Function} truthTest The function to chech all items against
+         * @return {Array} Array of item objects
+         */
+        getItemsBy: function(truthTest) {
+            if (typeof truthTest !== 'function') {
+                throw new Error('You must provide a truthTest function');
+            }
+
+            return _.filter(this._items, function(item) {
+                return truthTest(item);
+            });
+        },
+
+        /**
+         * Filter items that pass an abritrary truth test
+         *
+         * For example: this.filterBy(function(item){return item.domData.geo=='africa'})
+         *
+         * @param {Function} testTest The function to chech all items against
+         * @param {Function} cb Callback to execute after all filter actions
+         * @return {Array} Array of item objects
+         */
+        filterBy: function(truthTest, cb) {
+            _.each(this.getItemsBy(truthTest), _.bind(function(item) {
+                this.filter(item);
+            }, this));
+
+            if (typeof cb === 'function') {
+                cb();
+            }
+        },
 
         /**
          * Given an item or item id, change
