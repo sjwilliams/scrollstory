@@ -473,21 +473,25 @@ $('#container').ScrollStory({
 ```
 
 ## API
-ScrollStory exposes many methods for interacting with the widget. The API is avaiable, like other jQuery UI widgets, by accessing via its namespace and name on the element you instantiate on. You should probaby cache the object like so:
+ScrollStory exposes many methods for interacting with the widget. The API is avaiable, like other jQuery UI widgets, by accessing it via its namespace and name on the element you instantiate on. You should probaby cache the object like so:
 
 ```js
+// save to an object
 var scrollStory = $('#container').ScrollStory({
     itembuild: function(ev,data){
         data.item.el.html('<p>hi</p>');
     }
 }).data('sjwScrollStory');
 
+// use a method
 scrollStory.index(3);
 
 ```
 
 The primary methods include:
 
+* <a href="#isActive">scrollStory.<code>isActive()</code></a>
+* <a href="#updateOffsets">scrollStory.<code>updateOffsets()</code></a>
 * <a href="#index">scrollStory.<code>index()</code></a>
 * <a href="#next">scrollStory.<code>next()</code></a>
 * <a href="#previous">scrollStory.<code>previous()</code></a>
@@ -520,8 +524,6 @@ The primary methods include:
 * <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
 * <a href="#unfilterByTag">scrollStory.<code>unfilterByTag()</code></a>
 * <a href="#unfilterAllItems">scrollStory.<code>unfilterAllItems()</code></a>
-* <a href="#updateOffsets">scrollStory.<code>updateOffsets()</code></a>
-* <a href="#isActive">scrollStory.<code>isActive()</code></a>
 
 ## Examples
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
