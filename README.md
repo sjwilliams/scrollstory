@@ -290,8 +290,49 @@ $('#container').ScrollStory({
 ```
 Options to pass to underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
 
+## The 'item' object
+
+At its core, ScrollStory simply manages an array of 'item' objects, keeping track of various properties and states. The entire object is user accessible, but generally should be thought of in two parts: 
+
+* The object root, which ScrollStory uses to maintain state,
+* The domData object within the 'item' for user data. 
+
+The 'item' object looks like this:
+```
+{
+    active: true, // is this item, exclusively, the current item?
+    category: undefined, // optionally, the single category does this belong to?
+    tags: Array[1], // optionally, an array of tags associated with this item
+    domData: Object, // User-specifed data, either via data-* attributes or the object used when instantiating from an array of objects. 
+    el: ot.fn.ot.init[1], // the jQuery object that contains the item's markup
+    filtered: false, // is this item filtered from the list? by default, that includes no styling, only logic to exclude it from being set to active.
+    id: "scrollStory_story_0", // user assigned or auto-generated.
+    inViewport: true, // in this item in the viewport
+    index: 0, // its index in the list array of ojects
+    nextItem: Object, // reference to the item immediately after this one
+    previousItem: false, // reference to the item immediately after this one
+    topOffset: 322, // distance in pixels from this item's trigger offset
+    scrollOffset: false, // a scroll offset that differs from the global offset
+    triggerOffset: false, // a trigger offset that differs from the global offset
+    height: 1035,
+    width: 676
+}
+```
+
 ## Events
-_(TODO)_
+
+Most of ScrollStory's functionality can be used via the widget's callbacks and events. For details on how jQuery UI events work, see their [documentation](http://api.jqueryui.com/jquery.widget/).
+
+#### indexchange
+Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index(), this.scrollTo*(), or a call to this.focus().
+
+```js
+$('#container').ScrollStory({
+    indexchange: function(ev, data) {
+        var item = data.item; // most events put the affected item at data.item
+    }
+})
+```
 
 ## API
 _(TODO)_
