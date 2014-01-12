@@ -525,6 +525,51 @@ The primary methods include:
 * <a href="#unfilterByTag">scrollStory.<code>unfilterByTag()</code></a>
 * <a href="#unfilterAllItems">scrollStory.<code>unfilterAllItems()</code></a>
 
+--------------------------------------------------------
+<a name="isActive"></a>
+### isActive()
+<code>scrollStory.isActive()</code>: Whether or not any of the items are active. If so, the entire widget is considered to be 'active.'
+
+**Arguments**
+
+  * **element / object** (DOM Element or Object) - an HTML DOM element or any JavaScript Object
+  * **event type(s)** (String) - an event (or multiple events, space separated) to listen to
+  * **selector** (optional String) - a CSS DOM Element selector string to bind the listener to child elements matching the selector
+  * **handler** (Function) - the callback function
+  * **args** (optional) - additional arguments to pas to the callback function when triggered
+
+Optionally, event types and handlers can be passed in an object of the form `{ 'eventType': handler }` as the second argument.
+
+
+<a name="updateOffsets"></a>
+### updateOffsets()
+<code>scrollStory.updateOffsets()</code>: Update the widget's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position on the page, like when filtering changes the size of an element.
+
+<a name="isActive"></a>
+### isActive()
+<code>scrollStory.isActive()</code>: Whether or not any of the items are active. If so, the entire widget is considered to be 'active.'
+
+<a name="index"></a>
+### index(index)
+<code>scrollStory.index()</code>: Get or set the current index of the active item. On set, also scroll to that item.
+
+**Arguments**
+
+  * **index** (optional Number) - The zero-based index you want to activate.
+
+
+<a name="next"></a>
+### next()
+<code>scrollStory.next()</code>: Convience method to navigate to the item after the active one.
+
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
+
+<a name="previous"></a>
+### previous()
+<code>scrollStory.previous()</code>: Convience method to navigate to the item before the active one.
+
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
+
 ## Examples
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
