@@ -324,7 +324,7 @@ The 'item' object looks like this:
 Most of ScrollStory's functionality can be used via the widget's callbacks and events. For details on how jQuery UI events work, see their [documentation](http://api.jqueryui.com/jquery.widget/).
 
 #### indexchange
-Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index(), this.scrollTo*(), or a call to this.focus().
+Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index(), or this.scrollTo*().
 
 ```js
 $('#container').ScrollStory({
@@ -473,7 +473,55 @@ $('#container').ScrollStory({
 ```
 
 ## API
-_(TODO)_
+ScrollStory exposes many methods for interacting with the widget. The API is avaiable, like other jQuery UI widgets, by accessing via its namespace and name on the element you instantiate on. You should probaby cache the object like so:
+
+```js
+var scrollStory = $('#container').ScrollStory({
+    itembuild: function(ev,data){
+        data.item.el.html('<p>hi</p>');
+    }
+}).data('sjwScrollStory');
+
+scrollStory.index(3);
+
+```
+
+The primary methods include:
+
+* <a href="#index">scrollStory.<code>index()</code></a>
+* <a href="#next">scrollStory.<code>next()</code></a>
+* <a href="#previous">scrollStory.<code>previous()</code></a>
+* <a href="#scrollToItem">scrollStory.<code>scrollToItem()</code></a>
+* <a href="#scrollToIndex">scrollStory.<code>scrollToIndex()</code></a>
+* <a href="#getItems">scrollStory.<code>getItems()</code></a>
+* <a href="#getItemsInViewport">scrollStory.<code>getItemsInViewport()</code></a>
+* <a href="#getItemsByCategory">scrollStory.<code>getItemsByCategory()</code></a>
+* <a href="#getFilteredItems">scrollStory.<code>getFilteredItems()</code></a>
+* <a href="#getUnfilteredItems">scrollStory.<code>getUnfilteredItems()</code></a>
+* <a href="#getItemById">scrollStory.<code>getItemById()</code></a>
+* <a href="#getItemByIndex">scrollStory.<code>getItemByIndex()</code></a>
+* <a href="#getTopItem">scrollStory.<code>getTopItem()</code></a>
+* <a href="#getTopItemId">scrollStory.<code>getTopItemId()</code></a>
+* <a href="#getNextItem">scrollStory.<code>getNextItem()</code></a>
+* <a href="#getPreviousItem">scrollStory.<code>getPreviousItem()</code></a>
+* <a href="#getLength">scrollStory.<code>getLength()</code></a>
+* <a href="#getCategoryIds">scrollStory.<code>getCategoryIds()</code></a>
+* <a href="#getActiveCategory">scrollStory.<code>getActiveCategory()</code></a>
+* <a href="#scrollToCategory">scrollStory.<code>scrollToCategory()</code></a>
+* <a href="#scrollToCategoryIndex">scrollStory.<code>scrollToCategoryIndex()</code></a>
+* <a href="#getTags">scrollStory.<code>getTags()</code></a>
+* <a href="#getTags">scrollStory.<code>getTags()</code></a>
+* <a href="#getItemsByTag">scrollStory.<code>getItemsByTag()</code></a>
+* <a href="#getItemsBy">scrollStory.<code>getItemsBy()</code></a>
+* <a href="#filter">scrollStory.<code>filter()</code></a>
+* <a href="#unfilter">scrollStory.<code>unfilter()</code></a>
+* <a href="#filterBy">scrollStory.<code>filterBy()</code></a>
+* <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
+* <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
+* <a href="#unfilterByTag">scrollStory.<code>unfilterByTag()</code></a>
+* <a href="#unfilterAllItems">scrollStory.<code>unfilterAllItems()</code></a>
+* <a href="#updateOffsets">scrollStory.<code>updateOffsets()</code></a>
+* <a href="#isActive">scrollStory.<code>isActive()</code></a>
 
 ## Examples
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
