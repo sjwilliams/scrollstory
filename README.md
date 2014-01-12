@@ -1,6 +1,6 @@
 # ScrollStory
 
-jQuery UI widget for stacked, scroll-based stories (or items) that need to give focus to a single item at a time.
+jQuery UI widget for stacked, scroll-based elements that need to give focus to a single item at a time.
 
 Key features include:
 - 100% style agnostic. Just a collection of often-used scroll-based patterns.
@@ -50,7 +50,7 @@ jQuery(function($) {
 ```javascript
 $('#container').ScrollStory();
 ```
-In its most basic form, ScrollStory takes an element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properities, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
+In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properities, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
 
 In addition to object properties, ScrollStory modifies the DOM in a few ways: 
 * A class of 'storyScroll_story' is added to every item
@@ -400,9 +400,11 @@ $('#container').ScrollStory({
 })
 ```
 
+[Example usage](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
+
 
 #### categorychange
-Fired when new active item is in a differnt category than previously active item.
+Fired when new active item is in a different category than previously active item.
 
 ```js
 $('#container').ScrollStory({
