@@ -8,9 +8,9 @@ Key features include:
 - 16+ jQueryUI-style events/callbacks for various application state events.
 - Focus and blur event when an individual story becomes active or inactive.
 - Items can be grouped into categories, with event dispatched as categories change.
-- Items filterable by user-specifed tags.
+- Items filterable by user-specified tags.
 - Items aware of their in-viewport status.
-- Programatic animated scroll to any item.
+- Programmatically animated scroll to any item.
 - Throttled scroll events and minimal DOM usage.
 
 ## Dependencies
@@ -50,7 +50,7 @@ jQuery(function($) {
 ```javascript
 $('#container').ScrollStory();
 ```
-In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properities, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
+In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properties, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
 
 In addition to object properties, ScrollStory modifies the DOM in a few ways: 
 * A class of 'storyScroll_story' is added to every item
@@ -288,7 +288,7 @@ $('#container').ScrollStory({
     throttleTypeOptions: null
 });
 ```
-Options to pass to underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
+Options to pass to Underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
 
 ## The 'item' object
 
@@ -418,7 +418,7 @@ $('#container').ScrollStory({
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/categories.html)
 
 #### active
-Fired when the widget changes states from have no active item to an active item. Depending on instantation options, this may or not be on instantation. 'autoActivateFirst' and 'delayFirstActivationToOffset' may delay this event until a certain scroll position has been reached.
+Fired when the widget changes states from have no active item to an active item. Depending on instantiation options, this may or not be on instantiation. 'autoActivateFirst' and 'delayFirstActivationToOffset' may delay this event until a certain scroll position has been reached.
 
 ```js
 $('#container').ScrollStory({
@@ -473,7 +473,7 @@ $('#container').ScrollStory({
 ```
 
 ## API
-ScrollStory exposes many methods for interacting with the widget. The API is avaiable, like other jQuery UI widgets, by accessing it via its namespace and name on the element you instantiate on. You should probaby cache the object like so:
+ScrollStory exposes many methods for interacting with the widget. The API is available, like other jQuery UI widgets, by accessing it via its namespace and name on the element you instantiate on. You should probably cache the object like so:
 
 ```js
 // save to an object
@@ -543,13 +543,13 @@ The primary methods include:
 
 <a name="next"></a>
 ### next()
-<code>scrollStory.next()</code>: Convience method to navigate to the item after the active one.
+<code>scrollStory.next()</code>: Convenience method to navigate to the item after the active one.
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 
 <a name="previous"></a>
 ### previous()
-<code>scrollStory.previous()</code>: Convience method to navigate to the item before the active one.
+<code>scrollStory.previous()</code>: Convenience method to navigate to the item before the active one.
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 
@@ -654,7 +654,7 @@ The primary methods include:
 
 <a name="scrollToCategoryIndex"></a>
 ### scrollToCategoryIndex(index)
-<code>scrollStory.scrollToCategoryIndex()</code>: Scroll to the first item in the category, which are tracked by the order in which they appear in items, at the index specified. <code>getCategoryIds</code> lists the categorys in order.
+<code>scrollStory.scrollToCategoryIndex()</code>: Scroll to the first item in the category, which are tracked by the order in which they appear in items, at the index specified. <code>getCategoryIds</code> lists the categories in order.
 
 **Arguments**
 
@@ -742,7 +742,7 @@ scrollStory.filterItemsBy(function(item){
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 
-## Example Useage
+## Example Usage
 * [Basic instantiation via existing page elements](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 * [Basic instantiation using custom item selectors](http://sjwilliams.github.io/scrollstory/examples/customselectors.html)
 * [Pass data in via data attributes](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
