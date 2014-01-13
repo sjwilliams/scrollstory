@@ -1301,7 +1301,10 @@
         },
 
         _onReady: function() {
-            this._trigger('complete');
+            var that = this;
+            this._trigger('complete', null, {
+                scrollStory: that
+            });
         }
     });
 

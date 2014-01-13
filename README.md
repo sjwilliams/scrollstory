@@ -742,10 +742,16 @@ scrollStory.filterItemsBy(function(item){
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 
-## Examples
+## Example Useage
+* [Basic instantiation via existing page elements](http://sjwilliams.github.io/scrollstory/examples/basic.html)
+* [Basic instantiation using custom item selectors](http://sjwilliams.github.io/scrollstory/examples/customselectors.html)
+* [Pass data in via data attributes](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html.html)
+* [Basic instantiation via array of objects](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 * [Item active event](http://sjwilliams.github.io/scrollstory/examples/activeevent.html)
 * [Move the trigger point](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
+* [Using categories](http://sjwilliams.github.io/scrollstory/examples/categories.html)
+* [Lazy load images on enterviewport](http://sjwilliams.github.io/scrollstory/examples/lazyload.html)
 
 ## Release History
 *0.0.1*
