@@ -387,7 +387,7 @@
 
 
         /**
-         * Convience method to navigate to next item
+         * Convenience method to navigate to next item
          */
         next: function() {
             this.index(this.index() + 1);
@@ -395,7 +395,7 @@
 
 
         /**
-         * Convience method to navigate to previous item
+         * Convenience method to navigate to previous item
          */
         previous: function() {
             this.index(this.index() - 1);
