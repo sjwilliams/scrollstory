@@ -1,0 +1,24 @@
+{
+    "name": "scrollstory",
+    "version": "0.0.1",
+    "homepage": "https://github.com/sjwilliams/scrollstory",
+    "authors": [
+        "Josh Williams <contact@joshwilliams.com>"
+    ],
+    "description": "jQuery UI widget for stacked, scroll-based elements that need to give focus to a single item at a time.",
+    "main": "dist/scrollstory.js",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "jquery": "~1.9.0",
+        "jquery-ui": "~1.10.3",
+        "underscore": "~1.5.2"
+    },
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
