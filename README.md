@@ -91,21 +91,21 @@ The widget can be built with an array of data objects, which will be used to gen
 
 ### Options
 
-* <a href="#contentSelector">scrollStory.<code>contentSelector()</code></a>
-* <a href="#throttleType">scrollStory.<code>throttleType()</code></a>
-* <a href="#scrollSensitivity">scrollStory.<code>scrollSensitivity()</code></a>
-* <a href="#triggerOffset">scrollStory.<code>triggerOffset()</code></a>
-* <a href="#preOffetActivation">scrollStory.<code>preOffetActivation()</code></a>
-* <a href="#keyboard">scrollStory.<code>keyboard()</code></a>
-* <a href="#scrollOffset">scrollStory.<code>scrollOffset()</code></a>
-* <a href="#autoActivateFirst">scrollStory.<code>autoActivateFirst()</code></a>
-* <a href="# delayFirstActivationToOffset">scrollStory.<code> delayFirstActivationToOffset()</code></a>
-* <a href="#speed">scrollStory.<code>speed()</code></a>
-* <a href="#scrollRate">scrollStory.<code>scrollRate()</code></a>
-* <a href="#easing">scrollStory.<code>easing()</code></a>
-* <a href="#checkViewportVisibility">scrollStory.<code>checkViewportVisibility()</code></a>
-* <a href="#verboseItemClasses">scrollStory.<code>verboseItemClasses()</code></a>
-* <a href="#throttleTypeOptions">scrollStory.<code>throttleTypeOptions()</code></a>
+* <a href="#contentSelector"><code>contentSelector</code></a>
+* <a href="#throttleType"><code>throttleType</code></a>
+* <a href="#scrollSensitivity"><code>scrollSensitivity</code></a>
+* <a href="#triggerOffset"><code>triggerOffset</code></a>
+* <a href="#preOffetActivation"><code>preOffetActivation</code></a>
+* <a href="#keyboard"><code>keyboard</code></a>
+* <a href="#scrollOffset"><code>scrollOffset</code></a>
+* <a href="#autoActivateFirst"><code>autoActivateFirst</code></a>
+* <a href="# delayFirstActivationToOffset"><code> delayFirstActivationToOffset</code></a>
+* <a href="#speed"><code>speed</code></a>
+* <a href="#scrollRate"><code>scrollRate</code></a>
+* <a href="#easing"><code>easing</code></a>
+* <a href="#checkViewportVisibility"><code>checkViewportVisibility</code></a>
+* <a href="#verboseItemClasses"><code>verboseItemClasses</code></a>
+* <a href="#throttleTypeOptions"><code>throttleTypeOptions</code></a>
 
 --------------------------------------------------------
 <a name="contentSelector"></a>
@@ -359,18 +359,18 @@ Most of ScrollStory's functionality can be used via the widget's callbacks and e
 
 The events are:
 
-* <a href="#indexchange">scrollStory.<code>indexchange()</code></a>
-* <a href="#itemblur">scrollStory.<code>itemblur()</code></a>
-* <a href="#itemfilter">scrollStory.<code>itemfilter()</code></a>
-* <a href="#enterviewport">scrollStory.<code>enterviewport()</code></a>
-* <a href="#exitviewport">scrollStory.<code>exitviewport()</code></a>
-* <a href="#itembuild">scrollStory.<code>itembuild()</code></a>
-* <a href="#categorychange">scrollStory.<code>categorychange()</code></a>
-* <a href="#active">scrollStory.<code>active()</code></a>
-* <a href="#inactive">scrollStory.<code>inactive()</code></a>
-* <a href="#aboveoffset">scrollStory.<code>aboveoffset()</code></a>
-* <a href="#belowoffset">scrollStory.<code>belowoffset()</code></a>
-* <a href="#scroll">scrollStory.<code>scroll()</code></a>
+* <a href="#indexchange"><code>indexchange</code></a>
+* <a href="#itemblur"><code>itemblur</code></a>
+* <a href="#itemfilter"><code>itemfilter</code></a>
+* <a href="#enterviewport"><code>enterviewport</code></a>
+* <a href="#exitviewport"><code>exitviewport</code></a>
+* <a href="#itembuild"><code>itembuild</code></a>
+* <a href="#categorychange"><code>categorychange</code></a>
+* <a href="#active"><code>active</code></a>
+* <a href="#inactive"><code>inactive</code></a>
+* <a href="#aboveoffset"><code>aboveoffset</code></a>
+* <a href="#belowoffset"><code>belowoffset</code></a>
+* <a href="#scroll"><code>scroll</code></a>
 
 --------------------------------------------------------
 <a name="indexchange"></a>
