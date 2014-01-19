@@ -1,5 +1,3 @@
-/*globals _ */
-
 (function($, window, document, undefined) {
     'use strict';
 
