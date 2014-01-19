@@ -34,9 +34,6 @@ module.exports = function(grunt) {
                 dest: 'dist/<%= pkg.name %>.min.js'
             },
         },
-        qunit: {
-            files: ['test/**/*.html']
-        },
         jshint: {
             gruntfile: {
                 options: {
@@ -133,6 +130,5 @@ module.exports = function(grunt) {
     ]);
 
     // Default task.
-    // grunt.registerTask('default', ['jshint', 'qunit', 'clean', 'concat', 'uglify']);
     grunt.registerTask('default', ['build']);
 };
