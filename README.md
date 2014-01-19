@@ -323,6 +323,24 @@ The 'item' object looks like this:
 
 Most of ScrollStory's functionality can be used via the widget's callbacks and events. For details on how jQuery UI events work, see their [documentation](http://api.jqueryui.com/jquery.widget/).
 
+
+The events are:
+
+* <a href="#indexchange">scrollStory.<code>indexchange()</code></a>
+* <a href="#itemblur">scrollStory.<code>itemblur()</code></a>
+* <a href="#itemfilter">scrollStory.<code>itemfilter()</code></a>
+* <a href="#enterviewport">scrollStory.<code>enterviewport()</code></a>
+* <a href="#exitviewport">scrollStory.<code>exitviewport()</code></a>
+* <a href="#itembuild">scrollStory.<code>itembuild()</code></a>
+* <a href="#categorychange">scrollStory.<code>categorychange()</code></a>
+* <a href="#active">scrollStory.<code>active()</code></a>
+* <a href="#inactive">scrollStory.<code>inactive()</code></a>
+* <a href="#aboveoffset">scrollStory.<code>aboveoffset()</code></a>
+* <a href="#belowoffset">scrollStory.<code>belowoffset()</code></a>
+* <a href="#scroll">scrollStory.<code>scroll()</code></a>
+
+--------------------------------------------------------
+<a name="indexchange"></a>
 #### indexchange
 Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index(), or this.scrollTo*().
 
@@ -334,6 +352,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="itemblur"></a>
 #### itemblur
 Fired when an item loses 'focus'.
 
@@ -345,6 +364,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="itemfilter"></a>
 #### itemfilter
 Fired when an item is filtered, which means it is no longer considered ScrollStory determines which item is active. Intended to be combined with visual changes or hidind so you can visually filter the item from the list.
 
@@ -355,6 +375,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="itemunfilter"></a>
 #### itemunfilter
 Fired when an item is unfiltered.
 
@@ -366,6 +387,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="enterviewport"></a>
 #### enterviewport
 Fired when an item enters the visible portion of the screen. This is great for triggering things like lazy loads.
 
@@ -376,6 +398,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="exitviewport"></a>
 #### exitviewport
 Fired when an item leaves the visible portion of the screen.
 
@@ -387,6 +410,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="itembuild"></a>
 #### itembuild
 Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item now, as the item hasn't yet been added to the page and the render will be faster.
 
@@ -403,6 +427,7 @@ $('#container').ScrollStory({
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 
 
+<a name="categorychange"></a>
 #### categorychange
 Fired when new active item is in a different category than previously active item.
 
@@ -417,6 +442,7 @@ $('#container').ScrollStory({
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/categories.html)
 
+<a name="active"></a>
 #### active
 Fired when the widget changes states from have no active item to an active item. Depending on instantiation options, this may or not be on instantiation. 'autoActivateFirst' and 'delayFirstActivationToOffset' may delay this event until a certain scroll position has been reached.
 
@@ -428,6 +454,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="inactive"></a>
 #### inactive
 Fired when the widget changes states from an active item to not having an active item.
 
@@ -439,6 +466,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="aboveoffset"></a>
 #### aboveoffset
 Scrolling above global scroll offset
 
@@ -450,6 +478,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="belowoffset"></a>
 #### belowoffset
 Scrolling below global scroll offset
 
@@ -461,6 +490,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="scroll"></a>
 #### scroll
 Throttled scroll event. The current active element is passed in.
 
