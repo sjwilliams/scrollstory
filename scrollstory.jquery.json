@@ -1,7 +1,7 @@
 {
   "name": "scrollstory",
   "title": "ScrollStory",
-  "description": "jQuery widget to manage scroll-based events.",
+  "description": "A jQuery UI widget for building simple, scroll-based pages and interactions.",
   "version": "0.0.1",
   "homepage": "https://github.com/sjwilliams/scrollstory",
   "author": {

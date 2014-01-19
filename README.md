@@ -1,6 +1,6 @@
 # ScrollStory
 
-jQuery UI widget for stacked, scroll-based elements that need to give focus to a single item at a time.
+A jQuery UI widget for building simple, scroll-based pages and interactions.
 
 Key features include:
 - 100% style agnostic. Just a collection of often-used scroll-based patterns.
