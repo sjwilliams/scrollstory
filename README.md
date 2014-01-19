@@ -21,7 +21,7 @@ Any recent version of:
 
 ## Example Usage
 * [Basic instantiation via existing page elements](http://sjwilliams.github.io/scrollstory/examples/basic.html)
-* [Basic instantiation using custom item selectors](http://sjwilliams.github.io/scrollstory/examples/customselectors.html)
+* [Basic instantiation using custom item selector](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
 * [Pass data in via data attributes](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
 * [Basic instantiation via array of objects](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 * [Programmatically scroll up and down](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
