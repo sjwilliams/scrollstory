@@ -90,6 +90,25 @@ The widget can be built with an array of data objects, which will be used to gen
 [Demo](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 
 ### Options
+
+* <a href="#contentSelector">scrollStory.<code>contentSelector()</code></a>
+* <a href="#throttleType">scrollStory.<code>throttleType()</code></a>
+* <a href="#scrollSensitivity">scrollStory.<code>scrollSensitivity()</code></a>
+* <a href="#triggerOffset">scrollStory.<code>triggerOffset()</code></a>
+* <a href="#preOffetActivation">scrollStory.<code>preOffetActivation()</code></a>
+* <a href="#keyboard">scrollStory.<code>keyboard()</code></a>
+* <a href="#scrollOffset">scrollStory.<code>scrollOffset()</code></a>
+* <a href="#autoActivateFirst">scrollStory.<code>autoActivateFirst()</code></a>
+* <a href="# delayFirstActivationToOffset">scrollStory.<code> delayFirstActivationToOffset()</code></a>
+* <a href="#speed">scrollStory.<code>speed()</code></a>
+* <a href="#scrollRate">scrollStory.<code>scrollRate()</code></a>
+* <a href="#easing">scrollStory.<code>easing()</code></a>
+* <a href="#checkViewportVisibility">scrollStory.<code>checkViewportVisibility()</code></a>
+* <a href="#verboseItemClasses">scrollStory.<code>verboseItemClasses()</code></a>
+* <a href="#throttleTypeOptions">scrollStory.<code>throttleTypeOptions()</code></a>
+
+--------------------------------------------------------
+<a name="contentSelector"></a>
 #### contentSelector
 Type: `String`
 
@@ -104,6 +123,7 @@ A jQuery selector to find story items within your widget.
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
 
+<a name="throttleType"></a>
 #### throttleType
 Type: `String`
 
@@ -118,6 +138,7 @@ Set the throttle -- or rate-limiting -- method used when testing items' active s
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 
+<a name="scrollSensitivity"></a>
 #### scrollSensitivity
 Type: `Number`
 
@@ -132,6 +153,7 @@ How often in milliseconds to check for the active item during a scroll.
 
 [Example of a lower scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
 
+<a name="triggerOffset"></a>
 #### triggerOffset
 Type: `Number`
 
@@ -146,6 +168,7 @@ The trigger offset is the distance from the top of the page use to determine whi
 
 [Example of trigger point farther down the page](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
 
+<a name="preOffetActivation"></a>
 #### preOffetActivation
 Type: `Boolean`
 
@@ -160,6 +183,7 @@ By default, ScrollStory activates the item closest to the trigger offset, indiff
 
 [Example set to false](http://sjwilliams.github.io/scrollstory/examples/preoffsetactivation.html)
 
+<a name="keyboard"></a>
 #### keyboard
 Type: `Boolean`
 
@@ -174,6 +198,7 @@ Enable left and right arrow keys to move between story items.
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 
+<a name="scrollOffset"></a>
 #### scrollOffset
 Type: `Number`
 
@@ -186,6 +211,7 @@ $('#container').ScrollStory({
 ```
 When programatically scrolled, the position from the top the item is scrolled to.
 
+<a name="autoActivateFirst"></a>
 #### autoActivateFirst
 Type: `Boolean`
 
@@ -198,6 +224,7 @@ $('#container').ScrollStory({
 ```
 Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
 
+<a name="delayFirstActivationToOffset"></a>
 #### delayFirstActivationToOffset
 Type: `Boolean`
 
@@ -210,6 +237,7 @@ $('#container').ScrollStory({
 ```
 If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the first item would activate after a 1px scroll. Usually, we want to delay that first activation until the first item is to the offset, but maintain the activation behavior of other items. By default, we delay the activation on first item. Set to false otherwise. No effect if 'autoActivateFirst' is true or 'preOffsetActivation' is false.
 
+<a name="speed"></a>
 #### speed
 Type: `Number`
 
@@ -222,6 +250,7 @@ $('#container').ScrollStory({
 ```
 Automated scroll speed in ms. Set to 0 to remove animation.
 
+<a name="scrollRate"></a>
 #### scrollRate
 Type: `String`
 
@@ -234,6 +263,7 @@ $('#container').ScrollStory({
 ```
 The rate of scroll for programatic scrolls. 'fixed' means travel the full distance over 'speed' time, regardless of distance. 'dynamic' means the speed is a guide for the target travel time. Longer distances will take longer, and shorter distance will take less time. This is meant to have a more natural feel. Tip: you'll want a  higher speed if you use 'dynamic' than you would for 'fixed'.
 
+<a name="easing"></a>
 #### easing
 Type: `String`
 
@@ -246,6 +276,7 @@ $('#container').ScrollStory({
 ```
 The easing type for programatic scrolls. If jQuery effects core is included in your jQuery UI build, all jQuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
 
+<a name="checkViewportVisibility"></a>
 #### checkViewportVisibility
 Type: `Boolean`
 
@@ -264,6 +295,7 @@ Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/inviewport.html)
 
+<a name="verboseItemClasses"></a>
 #### verboseItemClasses
 Type: `Boolean`
 
@@ -278,6 +310,7 @@ Add css classes to items to reflect their order from the active item. Class 'ord
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/verboseitemclasses.html)
 
+<a name="throttleTypeOptions"></a>
 #### throttleTypeOptions
 Type: `Boolean\Object`
 
