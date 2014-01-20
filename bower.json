@@ -1,6 +1,6 @@
 {
     "name": "scrollstory",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "homepage": "https://github.com/sjwilliams/scrollstory",
     "authors": [
         "Josh Williams <contact@joshwilliams.com>"
@@ -8,7 +8,7 @@
     "description": "A jQuery UI widget for building simple, scroll-based pages and interactions.",
     "main": "dist/scrollstory.js",
     "license": "MIT",
-    "private": true,
+    "private": false,
     "devDependencies": {
         "jquery": "~1.9.0",
         "jquery-ui": "~1.10.3",
