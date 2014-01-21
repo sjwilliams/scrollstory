@@ -816,6 +816,14 @@ scrollStory.filterItemsBy(function(item){
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 ## Release History
+*0.0.3*
+
+* In-viewport bug
+
+*0.0.2*
+
+* Bower release
+
 *0.0.1*
 
-* Initial Release
+* Initial release

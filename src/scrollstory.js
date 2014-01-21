@@ -753,7 +753,7 @@
         _isElementFullyInViewport: function(el) {
 
             // ensure it's *not* a jquery object
-            el = (el instanceof jQuery) ? el[0] : el;
+            el = (el instanceof $) ? el[0] : el;
             var rect = el.getBoundingClientRect();
             return (
                 rect.top >= 0 &&
@@ -772,7 +772,7 @@
         _isElementInViewport: function(el) {
 
             // make sure el it *is* a jquery obj
-            el = (el instanceof jQuery) ? el : $(el);
+            el = (el instanceof $) ? el : $(el);
 
             var viewport = this._viewport;
 

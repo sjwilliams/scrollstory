@@ -1,6 +1,6 @@
 {
   "name": "scrollstory",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "engines": {
     "node": ">= 0.8.0"
   },
