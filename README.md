@@ -818,7 +818,8 @@ scrollStory.filterItemsBy(function(item){
 ## Release History
 *0.0.3*
 
-* In-viewport bug
+* Fixed in-viewport bug caused by assumed global jQuery variable.
+* Trigger resize event
 
 *0.0.2*
 
