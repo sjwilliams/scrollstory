@@ -820,6 +820,7 @@ scrollStory.filterItemsBy(function(item){
 
 * Fixed in-viewport bug caused by assumed global jQuery variable.
 * Trigger resize event
+* Debug mode to visually show trigger point
 
 *0.0.2*
 
