@@ -753,7 +753,7 @@ The primary methods include:
 
 **Arguments**
 
-* **tags** (Function) - The function to check all items against
+* **truthTest** (Function) - The function to check all items against
 
 ***Example***
 ```js
