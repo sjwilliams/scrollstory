@@ -831,4 +831,4 @@ scrollStory.filterItemsBy(function(item){
 * Initial release
 
 ###License
-LaziestLoader is licensed under the [MIT license](http://opensource.org/licenses/MIT).
+ScrollStory is licensed under the [MIT license](http://opensource.org/licenses/MIT).
