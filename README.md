@@ -816,6 +816,9 @@ scrollStory.filterItemsBy(function(item){
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 ## Release History
+*0.1.0*
+* Fixed a bug that allowed widget to go inactive but leave an item active.
+
 *0.0.3*
 
 * Fixed in-viewport bug caused by assumed global jQuery variable.

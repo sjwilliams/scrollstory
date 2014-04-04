@@ -690,6 +690,7 @@
 
             // widget newly changed to an inactive state?
             if (checkInactive && this._isActive) {
+                this.blurAll();
                 this._isActive = false;
                 this._trigger('inactive');
             }
