@@ -832,3 +832,6 @@ scrollStory.filterItemsBy(function(item){
 *0.0.1*
 
 * Initial release
+
+###License
+ScrollStory is licensed under the [MIT license](http://opensource.org/licenses/MIT).
