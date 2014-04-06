@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.0.1 - 2014-01-18
+/*! ScrollStory - v0.1.0 - 2014-04-05
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
@@ -131,6 +131,9 @@
             // scroll event
             scoll: function() {},
 
+            // window resize event
+            resize: function() {},
+
             // scrolling above global scroll offset
             aboveoffset: function() {},
 
@@ -144,6 +147,19 @@
             this.$element = $(this.element).addClass('scrollStoryContainer');
             var content = this.options.content;
 
+            /**
+             * Debugging trigger point
+             */
+            this.$triggerPoint = $('<div class="photoStory-triggerpoint"></div>').css({
+                display: 'none',
+                position: 'fixed',
+                width: '100%',
+                height: '1px',
+                top: this.options.triggerOffset+'px',
+                left: '0px',
+                backgroundColor: '#ff0000',
+                zIndex: 10
+            }).prependTo(this.$element);
 
             /**
              * List of all items, and a quick lockup hash
@@ -160,7 +176,6 @@
              */
             this._activeIndex = 0;
 
-
             /**
              * Tracks if any items are yet
              * active. Events dispatched when
@@ -168,8 +183,6 @@
              * @type {Boolean}
              */
             this._isActive = false;
-
-
 
             /**
              * Various viewport properties
@@ -617,6 +630,8 @@
             if (this.options.updateOffsetsOnResize) {
                 this.updateOffsets();
             }
+
+            this._trigger('resize');
         },
 
 
@@ -678,6 +693,7 @@
 
             // widget newly changed to an inactive state?
             if (checkInactive && this._isActive) {
+                this.blurAll();
                 this._isActive = false;
                 this._trigger('inactive');
             }
@@ -756,7 +772,7 @@
         _isElementFullyInViewport: function(el) {
 
             // ensure it's *not* a jquery object
-            el = (el instanceof jQuery) ? el[0] : el;
+            el = (el instanceof $) ? el[0] : el;
             var rect = el.getBoundingClientRect();
             return (
                 rect.top >= 0 &&
@@ -775,7 +791,7 @@
         _isElementInViewport: function(el) {
 
             // make sure el it *is* a jquery obj
-            el = (el instanceof jQuery) ? el : $(el);
+            el = (el instanceof $) ? el : $(el);
 
             var viewport = this._viewport;
 
@@ -1173,6 +1189,19 @@
             });
         },
 
+        /**
+         * Show trigger point
+         */
+        enableDebug: function() {
+            this.$triggerPoint.show();
+        },
+
+        /**
+         * Hide trigger point
+         */
+        disableDebug: function() {
+            this.$triggerPoint.hide();
+        },
 
         /**
          * Build out items from exisiting DOM. DOM data- attributes
