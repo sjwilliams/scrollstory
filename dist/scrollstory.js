@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.0.3 - 2014-01-24
+/*! ScrollStory - v0.1.0 - 2014-04-04
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
@@ -693,6 +693,7 @@
 
             // widget newly changed to an inactive state?
             if (checkInactive && this._isActive) {
+                this.blurAll();
                 this._isActive = false;
                 this._trigger('inactive');
             }
