@@ -4,7 +4,7 @@ A jQuery UI widget for building simple, scroll-based pages and interactions.
 
 Key features include:
 - 100% style agnostic. Just a collection of often-used scroll-based patterns.
-- Can can you existing DOM or use an array of objects to create markup.
+- Use existing DOM, or use an array of objects to create markup.
 - 16+ jQueryUI-style events/callbacks for various application state events.
 - Focus and blur event when an individual story becomes active or inactive.
 - Items can be grouped into categories, with event dispatched as categories change.
@@ -13,13 +13,14 @@ Key features include:
 - Programmatically animated scroll to any item.
 - Throttled scroll events and minimal DOM usage.
 
-## Dependencies
-Any recent version of:
-- jQuery
-- jQuery UI (core, widget and optionally effects core for custom easings)
-- Underscore
 
-## Example Usage
+## In Use
+* Triggering Charts in [Fewer Helmets, More Deaths](http://www.nytimes.com/interactive/2014/03/31/science/motorcycle-helmet-laws.html), nytimes.com
+* Lazy image loading and video playing in [Still Life in Motion From a Road Trip Across South America](http://www.nytimes.com/interactive/2014/02/18/magazine/guttenfelder-south-america-road-trip.html) , nytimes.com
+* Filtering, tagging, lazy loading and video playing in [52 Places to Go in 2013](http://www.nytimes.com/interactive/2014/01/10/travel/2014-places-to-go.html), nytimes.com
+* Lazy loading, transition triggers and stepper navigation in [Gun Country](http://www.nytimes.com/projects/2013/gun-country/), nytimes.com
+
+## Code Examples
 * [Basic instantiation via existing page elements](http://sjwilliams.github.io/scrollstory/examples/basic.html)
 * [Basic instantiation using custom item selector](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
 * [Pass data in via data attributes](http://sjwilliams.github.io/scrollstory/examples/dataattributes.html)
@@ -30,7 +31,14 @@ Any recent version of:
 * [Using categories](http://sjwilliams.github.io/scrollstory/examples/categories.html)
 * [Lazy load images on enterviewport](http://sjwilliams.github.io/scrollstory/examples/lazyload.html)
 
+## Dependencies
+Any recent version of:
+- jQuery
+- jQuery UI (core, widget and optionally effects core for custom easings)
+- Underscore
+
 ## Getting Started
+
 Download the [production version][min] or the [development version][max].
 
 [min]: https://raw.github.com/sjwilliams/scrollstory/master/dist/scrollstory.min.js
@@ -39,9 +47,9 @@ Download the [production version][min] or the [development version][max].
 In your web page:
 
 ```html
-<script src="jquery.js"></script>
-<script src="jquery-ui.js"></script>
-<script src="underscore.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.6.0/underscore-min.js"></script>
 <script src="dist/scrollstory.min.js"></script>
 <script>
 jQuery(function($) {
@@ -51,7 +59,15 @@ jQuery(function($) {
 ```
 
 ## Documentation
-### Basic Use
+
+* <a href="#basics">Basics</a>
+* <a href="#options">Options</a>
+* <a href="#item">The `item` Object</a>
+* <a href="#events">Events</a>
+* <a href="#api">API</a>
+
+<a name="basics"></a>
+### Basics
 ```html
 <div id="container">
     <div class="story">...</div>
@@ -100,6 +116,7 @@ The widget can be built with an array of data objects, which will be used to gen
 
 [Demo](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 
+<a name="options"></a>
 ### Options
 
 * <a href="#contentSelector"><code>contentSelector</code></a>
@@ -334,6 +351,7 @@ $('#container').ScrollStory({
 ```
 Options to pass to Underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
 
+<a name="item"></a>
 ## The 'item' object
 
 At its core, ScrollStory simply manages an array of 'item' objects, keeping track of various properties and states. The entire object is user accessible, but generally should be thought of in two parts: 
@@ -363,10 +381,10 @@ The 'item' object looks like this:
 }
 ```
 
+<a name="events"></a>
 ## Events
 
 Most of ScrollStory's functionality can be used via the widget's callbacks and events. For details on how jQuery UI events work, see their [documentation](http://api.jqueryui.com/jquery.widget/).
-
 
 The events are:
 
@@ -546,6 +564,7 @@ $('#container').ScrollStory({
 })
 ```
 
+<a name="api"></a>
 ## API
 ScrollStory exposes many methods for interacting with the widget. The API is available, like other jQuery UI widgets, by accessing it via its namespace and name on the element you instantiate on. You should probably cache the object like so:
 
