@@ -1,4 +1,4 @@
-/*! ScrollStory - v0.1.0 - 2014-04-04
+/*! ScrollStory - v0.1.0 - 2014-05-09
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2014 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
@@ -234,6 +234,7 @@
                     var captured = true;
                     switch (e.keyCode) {
                         case 37:
+                            if (e.metaKey) {return;}
                             that.previous();
                             break; // left arrow
                         case 39:

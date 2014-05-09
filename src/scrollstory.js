@@ -231,6 +231,7 @@
                     var captured = true;
                     switch (e.keyCode) {
                         case 37:
+                            if (e.metaKey) {return;}
                             that.previous();
                             break; // left arrow
                         case 39:
