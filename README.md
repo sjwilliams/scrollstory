@@ -14,7 +14,7 @@ Key features include:
 - Throttled scroll events and minimal DOM usage.
 
 
-## In Use
+## Real-world Examples
 * Triggering Charts in [Fewer Helmets, More Deaths](http://www.nytimes.com/interactive/2014/03/31/science/motorcycle-helmet-laws.html), nytimes.com
 * Lazy image loading and video playing in [Still Life in Motion From a Road Trip Across South America](http://www.nytimes.com/interactive/2014/02/18/magazine/guttenfelder-south-america-road-trip.html) , nytimes.com
 * Filtering, tagging, lazy loading and video playing in [52 Places to Go in 2013](http://www.nytimes.com/interactive/2014/01/10/travel/2014-places-to-go.html), nytimes.com
@@ -77,7 +77,7 @@ jQuery(function($) {
 ```javascript
 $('#container').ScrollStory();
 ```
-In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into 'item' objects and assigns them lots of default properties, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
+In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into <a href="#item">'item' objects</a> and assigns them several default properties, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.
 
 In addition to object properties, ScrollStory modifies the DOM in a few ways: 
 * A class of 'storyScroll_story' is added to every item
@@ -162,7 +162,7 @@ $('#container').ScrollStory({
     throttleType: 'debounce' // debounce or throttle
 });
 ```
-Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' trigger on trailing edge. 
+Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' to trigger on the trailing edge. 
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
 
@@ -192,7 +192,7 @@ $('#container').ScrollStory({
     triggerOffset: 0
 });
 ```
-The trigger offset is the distance from the top of the page use to determine which item is active.
+The trigger offset is the distance from the top of the page used to determine which item is active.
 
 [Example of trigger point farther down the page](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
 
@@ -237,7 +237,7 @@ $('#container').ScrollStory({
     scrollOffset: 0
 });
 ```
-When programatically scrolled, the position from the top the item is scrolled to.
+When programatically scrolled, this is the position in pixels from the top the item is scrolled to.
 
 <a name="autoActivateFirst"></a>
 #### autoActivateFirst
@@ -315,7 +315,7 @@ $('#container').ScrollStory({
     checkViewportVisibility: false
 });
 ```
-Whether to keep track of which individual elements are in the viewport. This is can be CPU intensive, so is turned off by default. It is checked at the 'scrollSensitivity 'rate.
+Whether to keep track of which individual elements are in the viewport. This is can be CPU intensive, so it is turned off by default. It is checked at the 'scrollSensitivity 'rate.
 
 When enabled, events are triggered for items entering and leaving the viewport, and class of 'inViewport' is added and removed from those items' markup.
 
@@ -334,7 +334,7 @@ $('#container').ScrollStory({
     verboseItemClasses: false
 });
 ```
-Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'class-1', for the item above, continuing on through 'class-2' to 'class-N', and class 'order1' through 'orderN' for the items below.
+Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'order-1', for the item above, continuing on through 'order-2' to 'order-N', and class 'order1' through 'orderN' for the items below.
 
 [Example usage](http://sjwilliams.github.io/scrollstory/examples/verboseitemclasses.html)
 
@@ -428,7 +428,7 @@ $('#container').ScrollStory({
 
 <a name="itemfilter"></a>
 #### itemfilter
-Fired when an item is filtered, which means it is no longer considered ScrollStory determines which item is active. Intended to be combined with visual changes or hidind so you can visually filter the item from the list.
+Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css rules.
 
 ```js
 $('#container').ScrollStory({
@@ -451,7 +451,7 @@ $('#container').ScrollStory({
 
 <a name="enterviewport"></a>
 #### enterviewport
-Fired when an item enters the visible portion of the screen. This is great for triggering things like lazy loads.
+Fired when an item enters the visible portion of the screen. This is useful for triggering things like lazy loads.
 
 ```js
 $('#container').ScrollStory({
@@ -474,7 +474,7 @@ $('#container').ScrollStory({
 
 <a name="itembuild"></a>
 #### itembuild
-Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item now, as the item hasn't yet been added to the page and the render will be faster.
+Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item here, as the item hasn't yet been added to the page and the render will be faster.
 
 ```js
 $('#container').ScrollStory({
@@ -530,7 +530,7 @@ $('#container').ScrollStory({
 
 <a name="aboveoffset"></a>
 #### aboveoffset
-Scrolling above global scroll offset
+Fired when scrolling above global scroll offset
 
 ```js
 $('#container').ScrollStory({
@@ -542,7 +542,7 @@ $('#container').ScrollStory({
 
 <a name="belowoffset"></a>
 #### belowoffset
-Scrolling below global scroll offset
+Fired when scrolling below global scroll offset
 
 ```js
 $('#container').ScrollStory({
@@ -719,11 +719,11 @@ The primary methods include:
 
 <a name="getNextItem"></a>
 ### getNextItem()
-<code>scrollStory.getNextItem()</code>:  Return the <code>item</code> object for item after the active on. False it there isn't one.
+<code>scrollStory.getNextItem()</code>:  Return the <code>item</code> object for the item after the currently active one. False it there isn't one.
 
 <a name="getPreviousItem"></a>
 ### getPreviousItem()
-<code>scrollStory.getPreviousItem()</code>:  Return the <code>item</code> object for item before the active on. False it there isn't one.
+<code>scrollStory.getPreviousItem()</code>:  Return the <code>item</code> object for item before the currently active one. False it there isn't one.
 
 <a name="getLength"></a>
 ### getLength()
@@ -731,7 +731,7 @@ The primary methods include:
 
 <a name="getCategoryIds"></a>
 ### getCategoryIds()
-<code>scrollStory.getCategoryIds()</code>:  Return array of category slugs.
+<code>scrollStory.getCategoryIds()</code>:  Return an array of category slugs.
 
 <a name="getActiveCategory"></a>
 ### getActiveCategory()
@@ -739,7 +739,7 @@ The primary methods include:
 
 <a name="scrollToCategory"></a>
 ### scrollToCategory(id)
-<code>scrollStory.scrollToCategory()</code>: Scroll to the first item in given category
+<code>scrollStory.scrollToCategory()</code>: Scroll to the first item in a given category
 
 **Arguments**
 
@@ -836,7 +836,7 @@ scrollStory.filterItemsBy(function(item){
 
 ## Release History
 *0.1.1*
-* Fixed [Issue 6](https://github.com/sjwilliams/scrollstory/issues/6): Prevent back arrow key from navigating back if the meta key is down, which browsers use to navigated previous history. 
+* Fixed [Issue 6](https://github.com/sjwilliams/scrollstory/issues/6): Prevent back arrow key from navigating back if the meta key is down, which browsers use to navigate previous history. 
 
 *0.1.0*
 * Fixed a bug that allowed widget to go inactive but leave an item active.
