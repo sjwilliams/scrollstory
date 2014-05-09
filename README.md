@@ -816,6 +816,9 @@ scrollStory.filterItemsBy(function(item){
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 
 ## Release History
+*0.1.1*
+* Fixed [Issue 6](https://github.com/sjwilliams/scrollstory/issues/6): Prevent back arrow key from navigating back if the meta key is down, which browsers use to navigated previous history. 
+
 *0.1.0*
 * Fixed a bug that allowed widget to go inactive but leave an item active.
 
