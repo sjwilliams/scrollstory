@@ -807,11 +807,28 @@
 
 
         /**
-         * How many items are in this ScollStory
+         * How many items are in this instance.
          * @return {Number}
          */
         getLength: function() {
             return this.getItems().length;
+        },
+
+
+        /**
+         * Iterate over each item, passing the item to a callback.
+         * Each invocation of the callback is called with two
+         * arguments: item and index;
+         *
+         * this.each(function(item, index){ console.log(item.id) });
+         *
+         * @type {Function}
+         */
+        each: function(cb) {
+            cb = (typeof cb === 'function') ? cb : function(){};
+            _.each(this.getItems(), function(item, index){
+                cb(item, index);
+            });
         },
 
 
