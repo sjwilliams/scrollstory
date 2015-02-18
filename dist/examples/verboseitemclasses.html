@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Verbose Item Classes</title>
+    <link rel="stylesheet" href="base.css">
+
+    <style>
+        .storyScroll_story{
+            opacity: 0.3;
+        }
+
+        .order1, .order-1{
+            opacity: 0.7;
+            background-color: #f3f3f3;
+            text-align: center;
+        }
+
+        .order0{
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="trigger"></div>
+    <div id="container">
+        <p class="about">Add css classes to an item to reflect their order from the active item.</p>
+        <div class="story"><span>1</span></div>
+        <div class="story"><span>2</span></div>
+        <div class="story"><span>3</span></div>
+        <div class="story"><span>4</span></div>
+        <div class="story"><span>5</span></div>
+        <div class="story"><span>6</span></div>
+        <div class="story"><span>7</span></div>
+        <div class="story"><span>8</span></div>
+        <div class="story"><span>9</span></div>
+        <div class="story"><span>10</span></div>
+        <div class="story"><span>11</span></div>
+        <div class="story"><span>12</span></div>
+        <div class="story"><span>13</span></div>
+    </div>
+    <script src="jquery/jquery.js"></script>
+    <script src="jquery-ui/jquery-ui.js"></script>
+    <script src="underscore/underscore.js"></script>
+    <script src="scrollstory.js"></script>
+    <script>
+    (function($) {
+
+        // make trigger offset be 35% down the page,
+        // instead of the default 0px;
+        var triggerOffset = $(window).height() * 0.35;
+        $('#trigger').css({top: triggerOffset});
+
+        $('#container').ScrollStory({
+            throttleType: 'throttle',
+            triggerOffset: triggerOffset,
+            verboseItemClasses: true,
+            preOffsetActivation: false,
+            itembuild: function(ev,data){
+                // make element a random height between 5 and 20% height of the viewport
+                var height = Math.round($(window).height() * ( _.random(5, 20)/100 ));
+                data.item.el.css({height:height});
+            },
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>
