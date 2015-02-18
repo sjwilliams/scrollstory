@@ -1,6 +1,6 @@
-/*! ScrollStory - v0.2.0 - 2014-12-09
+/*! ScrollStory - v0.2.1 - 2015-02-18
 * https://github.com/sjwilliams/scrollstory
-* Copyright (c) 2014 Josh Williams; Licensed MIT */
+* Copyright (c) 2015 Josh Williams; Licensed MIT */
 (function($, window, document, undefined) {
     'use strict';
 
@@ -129,7 +129,7 @@
             offsetschange: function() {},
 
             // scroll event
-            scoll: function() {},
+            scroll: function() {},
 
             // window resize event
             resize: function() {},

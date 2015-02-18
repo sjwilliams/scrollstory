@@ -126,7 +126,7 @@
             offsetschange: function() {},
 
             // scroll event
-            scoll: function() {},
+            scroll: function() {},
 
             // window resize event
             resize: function() {},
