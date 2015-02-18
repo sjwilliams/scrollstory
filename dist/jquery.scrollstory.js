@@ -6,61 +6,103 @@
  *  Made by Josh Williams
  *  Under MIT License
  */
-// the semi-colon before function invocation is a safety net against concatenated
-// scripts and/or other plugins which may not be closed properly.
-;(function ( $, window, document, undefined ) {
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    define(['jquery', window, document, undefined], factory);
+  } else {
+    factory(jQuery, window, document, undefined);
+  }
+}(function($, window, document, undefined) {
+  var pluginName = 'scrollStory',
+    defaults = {
 
-		// undefined is used here as the undefined global variable in ECMAScript 3 is
-		// mutable (ie. it can be changed by someone else). undefined isn't really being
-		// passed in so we can ensure the value of it is truly undefined. In ES5, undefined
-		// can no longer be modified.
+      // jquery object, dom element, or array of values, or null (to use existing DOM)
+      content: null,
 
-		// window and document are passed through as local variable rather than global
-		// as this (slightly) quickens the resolution process and can be more efficiently
-		// minified (especially when both are regularly referenced in your plugin).
+      // Only used if content is a dom element or null
+      contentSelector: '.story',
 
-		// Create the defaults once
-		var pluginName = "defaultPluginName",
-				defaults = {
-				propertyName: "value"
-		};
+      // Enables keys to navigate menu
+      keyboard: true,
 
-		// The actual plugin constructor
-		function Plugin ( element, options ) {
-				this.element = element;
-				// jQuery has an extend method which merges the contents of two or
-				// more objects, storing the result in the first object. The first object
-				// is generally empty as we don't want to alter the default options for
-				// future instances of the plugin
-				this.options = $.extend( {}, defaults, options );
-				this._defaults = defaults;
-				this._name = pluginName;
-				this.init();
-		}
+      // Offset from top used in the programatic scrolling of an
+      // item to the focus position. Useful in the case of thinks like
+      // top nav that might obscure part of an item if it goes to 0.
+      scrollOffset: 0,
 
-		Plugin.prototype = {
-				init: function () {
-						// Place initialization logic here
-						// You already have access to the DOM element and
-						// the options via the instance, e.g. this.element
-						// and this.options
-						// you can add more functions like the one below and
-						// call them like so: this.yourOtherFunction(this.element, this.options).
-						console.log("xD");
-				},
-				yourOtherFunction: function () {
-						// some logic
-				}
-		};
+      // Offset from top to trigger a change
+      triggerOffset: 0
 
-		// A really lightweight plugin wrapper around the constructor,
-		// preventing against multiple instantiations
-		$.fn[ pluginName ] = function ( options ) {
-				return this.each(function() {
-						if ( !$.data( this, "plugin_" + pluginName ) ) {
-								$.data( this, "plugin_" + pluginName, new Plugin( this, options ) );
-						}
-				});
-		};
+      // // Activate the item closest to the offset, even if it's below the offset.
+      // preOffsetActivation: false,
 
-})( jQuery, window, document );
+      // // Automatically activate the first item on page load, regardless of its position
+      // // relative to the offset and the 'preOffsetActivation' setting.
+      // // With 'preOffsetActivation:true', this is ignored.
+      // autoActivateFirst: true,
+
+      // // If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the
+      // // first item would activate after a 1px scroll. Usually, we want to delay that
+      // // first activation until the first item is to the offset, but maintain the activation
+      // // behavior of other items.
+      // //
+      // // By default, we delay the activation on first item. Set to false otherwise. No effect
+      // // if 'autoActivateFirst' is true or 'preOffsetActivation' is false.
+      // delayFirstActivationToOffset: true,
+
+      // // Updated offsets on window resize? useful for responsive layouts
+      // updateOffsetsOnResize: true,
+
+      // // Automated scroll speed in ms. Set to 0 to remove animation.
+      // speed: 800,
+
+      // // Whether to keep track of which individual elements are in the viewport.
+      // checkViewportVisibility: false,
+
+      // // scroll-based events are either 'debounce' or 'throttle'
+      // throttleType: 'debounce',
+
+      // // frequency in milliseconds to perform scroll-based functions.
+      // // Scrolling functions can be CPU intense, so higher number can
+      // // help performance.
+      // scrollSensitivity: 100
+    };
+
+  function Plugin(element, options) {
+    this.element = element;
+    this.$element = $(element);
+    this.options = $.extend({}, defaults, options);
+    this._defaults = defaults;
+    this._name = pluginName;
+    this.init();
+  }
+
+  Plugin.prototype = {
+    init: function() {
+      // Place initialization logic here
+      // You already have access to the DOM element and
+      // the options via the instance, e.g. this.element
+      // and this.options
+      // you can add more functions like the one below and
+      // call them like so: this.yourOtherFunction(this.element, this.options).
+      console.log(this.$element);
+      console.log('xD');
+
+
+      this.$element.addClass('scrollStoryContainer');
+    },
+    yourOtherFunction: function() {
+      // some logic
+    }
+  };
+
+  // A really lightweight plugin wrapper around the constructor,
+  // preventing against multiple instantiations
+  $.fn[pluginName] = function(options) {
+    return this.each(function() {
+      if (!$.data(this, 'plugin_' + pluginName)) {
+        $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+      }
+    });
+  };
+}));
