@@ -68,7 +68,9 @@
     // scrollSensitivity: 100
   };
 
-  var totalItems = 0; // static, across all plugin instance so we can uniquely ID elements
+  // static across all plugin instance 
+  // so we can uniquely ID elements
+  var totalItems = 0;
 
   function Plugin(element, options) {
     this.element = element;
@@ -110,7 +112,7 @@
       /**
        * Various viewport properties cached to this_.viewport
        */
-      this.updateViewport();
+      this.setViewport();
 
       /**
        * Convert data from outside of widget into
@@ -120,10 +122,11 @@
 
       console.log(this.getItems());
     },
+
     /**
     * Update viewport rectangle coords cache
     */
-    updateViewport: function() {
+    setViewport: function() {
       var width = this.$window.width();
       var height = this.$window.height();
       var top = this.$window.scrollTop();
@@ -139,6 +142,14 @@
         bottom: bottom,
         right: right
       };
+    },
+
+    getViewport: function() {
+      if (typeof this.viewport.width === 'undefined') {
+        this.setViewport();
+      }
+
+      return this.viewport();
     },
 
     getItems: function() {
@@ -200,8 +211,14 @@
       this.$element.append($items);
     },
 
+    /**
+     * Given item user data, and an aleady appended
+     * jQuery object, create an item for internal items array.
+     * 
+     * @param {Object} data
+     * @param {jQuery Object} $el
+     */
     _addItem: function(data, $el) {
-
       var item = {
         index: this.items.length,
 
@@ -242,6 +259,7 @@
 
       };
 
+      // ensure ID exist
       if (!$el.attr('id')) {
         $el.attr('id', item.id);
       }
