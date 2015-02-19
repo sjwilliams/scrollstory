@@ -23,7 +23,7 @@
     scrollOffset: 0,
 
     // Offset from top to trigger a change
-    triggerOffset: 0
+    triggerOffset: 0,
 
     // // Activate the item closest to the offset, even if it's below the offset.
     // preOffsetActivation: false,
@@ -58,6 +58,10 @@
     // // Scrolling functions can be CPU intense, so higher number can
     // // help performance.
     // scrollSensitivity: 100
+    // 
+    // 
+  
+    itembuild: function(){}
   };
 
   // static across all plugin instance 
@@ -65,9 +69,9 @@
   var totalItems = 0;
 
   function Plugin(element, options) {
-    this.element = element;
-    this.$element = $(element);
-    this.$window = $(window);
+    this.el = element;
+    this.$el = $(element);
+    this.$win = $(window);
     this.options = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
@@ -76,7 +80,7 @@
 
   Plugin.prototype = {
     init: function() {
-      this.$element.addClass('scrollStoryContainer');
+      this.$el.addClass('scrollStoryContainer');
 
       /**
        * List of all items, and a quick lockup hash
@@ -112,17 +116,17 @@
        */
       this.addItems(this.options.content);
 
-      console.log(this.getItems());
+      // console.log(this.getItems());
     },
 
     /**
     * Update viewport rectangle coords cache
     */
     setViewport: function() {
-      var width = this.$window.width();
-      var height = this.$window.height();
-      var top = this.$window.scrollTop();
-      var left = this.$window.scrollLeft();
+      var width = this.$win.width();
+      var height = this.$win.height();
+      var top = this.$win.scrollTop();
+      var left = this.$win.scrollLeft();
       var bottom = height + top;
       var right = left + width;
 
@@ -156,7 +160,7 @@
 
       // a custom selector to use within our container
       } else if (typeof items === 'string') {
-        this._prepItemsFromSelection(this.$element.find(items));
+        this._prepItemsFromSelection(this.$el.find(items));
 
       // array objects, which will be used to create markup
       } else if ($.isArray(items)) {
@@ -164,7 +168,7 @@
 
       // search for elements with the default selector
       } else {
-        this._prepItemsFromSelection(this.$element.find(this.options.contentSelector));
+        this._prepItemsFromSelection(this.$el.find(this.options.contentSelector));
       }
     },
 
@@ -200,7 +204,7 @@
         $items = $items.add($item);
       });
 
-      this.$element.append($items);
+      this.$el.append($items);
     },
 
     /**
@@ -251,13 +255,54 @@
 
       };
 
-      // ensure ID exist
+      // ensure id exist in dom
       if (!$el.attr('id')) {
         $el.attr('id', item.id);
       }
 
       this.items.push(item);
       totalItems = totalItems + 1;
+
+      this._trigger('itembuild', null, {
+        item: item
+      });
+    },
+
+
+    /**
+     * Manage callbacks and event dispatching.
+     * @param  {[type]} eventName [description]
+     * @param  {[type]} d         [description]
+     * @param  {[type]} data      [description]
+     * @return {[type]}           [description]
+     */
+    _trigger: function(eventType, event, data) {
+      var callback = this.options[eventType];
+      var prop, orig;
+
+      if ($.isFunction(callback)) {
+        data = data || {};
+        
+        event = $.Event( event );
+        event.target = this.el;
+        event.type = eventType;
+
+        // copy original event properties over to the new event
+        orig = event.originalEvent;
+        if ( orig ) {
+          for ( prop in orig ) {
+            if ( !( prop in event ) ) {
+              event[ prop ] = orig[ prop ];
+            }
+          }
+        }
+
+        // fire event
+        this.$el.trigger(event, data);
+
+        // fire the callback
+        this.options[eventType](event, data);
+      }
     }
   };
 

@@ -79,7 +79,10 @@
 
                 // custom selection
                 $("#example5").scrollStory({
-                    content: '.custom'
+                    content: '.custom',
+                    itembuild: function(ev, data){
+                        console.log('item build', ev, data);
+                    }
                 });
 			});
 		</script>
