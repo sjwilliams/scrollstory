@@ -60,6 +60,8 @@
     // scrollSensitivity: 100
   };
 
+  var totalItems = 0; // static, across all plugin instance so we can uniquely ID elements
+
   function Plugin(element, options) {
     this.element = element;
     this.$element = $(element);
@@ -181,9 +183,9 @@
       var selector = this.options.contentSelector.replace(/\./g, '');
 
       var $items = $();
-      items.forEach(function(item){
+      items.forEach(function(data){
         var $item = $('<div class="'+selector+'"></div>');
-        that._addItem(item, $item);
+        that._addItem(data, $item);
         $items = $items.add($item);
       });
 
@@ -196,7 +198,7 @@
         index: this.items.length,
 
         // id is from markup id attribute, domData or dynamically generated
-        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-'+this.items.length,
+        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-'+totalItems,
 
         // item's domData is from client data or data-* attrs
         domData: $.extend({}, data, $el.data()),
@@ -232,7 +234,12 @@
 
       };
 
+      if (!$el.attr('id')) {
+        $el.attr('id', item.id);
+      }
+
       this.items.push(item);
+      totalItems = totalItems + 1;
     }
   };
 
