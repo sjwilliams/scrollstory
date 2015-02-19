@@ -107,6 +107,8 @@
        * items and, if needed, categories of items
        */
       this.addItems(this.options.content);
+
+      console.log(this.getItems());
     },
     /**
     * Update viewport rectangle coords cache
@@ -129,27 +131,28 @@
       };
     },
 
+    getItems: function() {
+      return this.items;
+    },
+
     addItems: function(items) {
 
       // use an existing jQuery selection
       if (items instanceof jQuery) {
-        items = this._prepItemsFromSelection(items);
+        this._prepItemsFromSelection(items);
 
       // a custom selector to use within our container
       } else if (typeof items === 'string') {
-        items = this._prepItemsFromSelection(this.$element.find(items));
+        this._prepItemsFromSelection(this.$element.find(items));
 
       // array objects, which will be used to create markup
       } else if ($.isArray(items)) {
-        items = this._prepItemsFromData(items);
-        this.$element.append(items.el);
+        this._prepItemsFromData(items);
 
       // search for elements with the default selector
       } else {
-        items = this._prepItemsFromSelection(this.$element.find(this.options.contentSelector));
+        this._prepItemsFromSelection(this.$element.find(this.options.contentSelector));
       }
-
-      this.items = this.items.concat(items.models);
     },
 
     /**
@@ -157,40 +160,79 @@
      * to the internal items array.
      * 
      * @param  {Object} $jQuerySelection
-     * @return {Array}
      */
-    _prepItemsFromSelection: function($jQuerySelection) {
-      var items = [];
-      $jQuerySelection.each(function(){
-        items.push({
-
-        });
+    _prepItemsFromSelection: function($selection) {
+      var that = this;
+      $selection.each(function(){
+        that._addItem({}, $(this));
       });
-
-      return {
-        models: items,
-        el: $jQuerySelection
-      };
     },
 
+    /**
+     * Given array of data, append markup and add
+     * data to internal items array.
+     * @param  {Array} items
+     */
     _prepItemsFromData: function(items) {
+      var that = this;
 
-      // drop period from the default selector, so we can add it to the class attr in markup
+      // drop period from the default selector, so we can 
+      // add it to the class attr in markup
       var selector = this.options.contentSelector.replace(/\./g, '');
 
       var $items = $();
-      items.forEach(function(){
-        $items = $items.add('<div class="'+selector+'"></div>');
+      items.forEach(function(item){
+        var $item = $('<div class="'+selector+'"></div>');
+        that._addItem(item, $item);
+        $items = $items.add($item);
       });
 
-      return {
-        models: items,
-        el: $items
-      };
+      this.$element.append($items);
     },
 
-    yourOtherFunction: function() {
-      // some logic
+    _addItem: function(data, $el) {
+
+      var item = {
+        index: this.items.length,
+
+        // id is from markup id attribute, domData or dynamically generated
+        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-'+this.items.length,
+
+        // item's domData is from client data or data-* attrs
+        domData: $.extend({}, data, $el.data()),
+
+        category: data.category, // optional category this item belongs to
+        tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
+        el: $el,
+        width: $el.width(),
+        height: $el.height(),
+
+        // previousItem: previousItem,
+        nextItem: false,
+
+        // in-focus item
+        active: false,
+
+        // has item been filtered
+        filtered: false,
+
+        // cached distance from top. May need occasional updating if DOM or styling change
+        // topOffset: $el.offset().top,
+
+        // on occassion, the scrollToItem() offset may need to be adjusted for a
+        // particular item. this overrides this.options.scrollOffset set on instantiation
+        scrollOffset: false,
+
+        // on occassion we want to trigger an item at a non-standard offset.
+        triggerOffset: false,
+
+        // if any part is viewable in the viewport.
+        // only updated if this.options.checkViewportVisibility is true
+        inViewport: false
+
+      };
+
+      this.items.push(item);
     }
   };
 

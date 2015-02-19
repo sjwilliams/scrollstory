@@ -31,11 +31,11 @@
 
         <div id="example2" class="example markup-example">
             <h2>Second List</h2>
-            <div class="story">Josh</div>
-            <div class="story">Bob</div>
-            <div class="story">Susan</div>
-            <div class="story">Jane</div>
-            <div class="story">Craig</div>
+            <div class="story" data-age="11">Josh</div>
+            <div class="story" data-age="19">Bob</div>
+            <div class="story" data-age="30">Susan</div>
+            <div class="story" data-age="22">Jane</div>
+            <div class="story" data-age="54">Craig</div>
         </div>
 
         <div id="example3" class="example">
@@ -45,7 +45,7 @@
         <div id="example4" class="example">
             <h2>Fourth List</h2>
             <div class="custom">Africa</div>
-            <div class="custom">Europe</div>
+            <div class="custom" id="europe">Europe</div>
             <div class="custom">South America</div>
         </div>
 
@@ -65,7 +65,7 @@
                 // data only
                 $("#example3").scrollStory({
                     content: [{
-                        id:'first',
+                        id:'josh',
                         name:'josh'
                     }, {
                         name:'bob'
