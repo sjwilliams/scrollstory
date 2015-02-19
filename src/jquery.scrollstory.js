@@ -271,10 +271,13 @@
 
     /**
      * Manage callbacks and event dispatching.
-     * @param  {[type]} eventName [description]
-     * @param  {[type]} d         [description]
-     * @param  {[type]} data      [description]
-     * @return {[type]}           [description]
+     *
+     * Based very heavily on jQuery UI's implementaiton
+     * https://github.com/jquery/jquery-ui/blob/9d0f44fd7b16a66de1d9b0d8c5e4ab954d83790f/ui/widget.js#L492
+     * 
+     * @param  {String} eventType
+     * @param  {Object} event
+     * @param  {Object} data
      */
     _trigger: function(eventType, event, data) {
       var callback = this.options[eventType];
