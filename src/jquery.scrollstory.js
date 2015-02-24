@@ -60,8 +60,8 @@
     // scrollSensitivity: 100
     // 
     // 
-  
-    itembuild: function(){}
+
+    itembuild: function() {}
   };
 
   // static across all plugin instance 
@@ -120,8 +120,8 @@
     },
 
     /**
-    * Update viewport rectangle coords cache
-    */
+     * Update viewport rectangle coords cache
+     */
     setViewport: function() {
       var width = this.$win.width();
       var height = this.$win.height();
@@ -148,8 +148,59 @@
       return this.viewport();
     },
 
+    /**
+     * Return array of all items
+     * @return {Array}
+     */
     getItems: function() {
       return this.items;
+    },
+
+
+    /**
+     * Given an item id, return its data
+     * @param  {string} id
+     * @return {Object/Boolean}
+     */
+    getItemById: function(id) {
+      var item = this.itemsById[id];
+      if (item) {
+        return this.items[item.index];
+      } else {
+        return false;
+      }
+    },
+
+
+    /**
+     * Given an item index, return it.
+     * @param  {Integer} index
+     * @return {Object/Boolean}
+     */
+    getItemByIndex: function(index) {
+      if (index >= 0 && index < this.items.length) {
+        return this.items[index];
+      } else {
+        return false;
+      }
+    },
+
+
+    /**
+     * Get items that are atleast partially
+     * visible in viewport
+     * @return {[type]} [description]
+     */
+    getItemsInViewport: function() {
+
+      // is widget keeping track on scroll?
+      // if (!this.options.checkViewportVisibility) {
+      //   this._checkViewportVisibility();
+      // }
+
+      // return _.filter(this.getItems(), function(item) {
+      //   return item.inViewport;
+      // });
     },
 
     addItems: function(items) {
@@ -158,29 +209,31 @@
       if (items instanceof jQuery) {
         this._prepItemsFromSelection(items);
 
-      // a custom selector to use within our container
+        // a custom selector to use within our container
       } else if (typeof items === 'string') {
         this._prepItemsFromSelection(this.$el.find(items));
 
-      // array objects, which will be used to create markup
+        // array objects, which will be used to create markup
       } else if ($.isArray(items)) {
         this._prepItemsFromData(items);
 
-      // search for elements with the default selector
+        // search for elements with the default selector
       } else {
         this._prepItemsFromSelection(this.$el.find(this.options.contentSelector));
       }
     },
 
+
+
     /**
      * Given a jQuery selection, add those elements
      * to the internal items array.
-     * 
+     *
      * @param  {Object} $jQuerySelection
      */
     _prepItemsFromSelection: function($selection) {
       var that = this;
-      $selection.each(function(){
+      $selection.each(function() {
         that._addItem({}, $(this));
       });
     },
@@ -198,8 +251,8 @@
       var selector = this.options.contentSelector.replace(/\./g, '');
 
       var $items = $();
-      items.forEach(function(data){
-        var $item = $('<div class="'+selector+'"></div>');
+      items.forEach(function(data) {
+        var $item = $('<div class="' + selector + '"></div>');
         that._addItem(data, $item);
         $items = $items.add($item);
       });
@@ -210,7 +263,7 @@
     /**
      * Given item user data, and an aleady appended
      * jQuery object, create an item for internal items array.
-     * 
+     *
      * @param {Object} data
      * @param {jQuery Object} $el
      */
@@ -219,7 +272,7 @@
         index: this.items.length,
 
         // id is from markup id attribute, domData or dynamically generated
-        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-'+totalItems,
+        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-' + totalItems,
 
         // item's domData is from client data or data-* attrs
         domData: $.extend({}, data, $el.data()),
@@ -260,7 +313,15 @@
         $el.attr('id', item.id);
       }
 
+      // global record
       this.items.push(item);
+
+      // quick lookup
+      this.itemsById[item.id] = {
+        index: item.index,
+        id: item.id
+      };
+
       totalItems = totalItems + 1;
 
       this._trigger('itembuild', null, {
@@ -274,7 +335,7 @@
      *
      * Based very heavily on jQuery UI's implementaiton
      * https://github.com/jquery/jquery-ui/blob/9d0f44fd7b16a66de1d9b0d8c5e4ab954d83790f/ui/widget.js#L492
-     * 
+     *
      * @param  {String} eventType
      * @param  {Object} event
      * @param  {Object} data
@@ -285,17 +346,17 @@
 
       if ($.isFunction(callback)) {
         data = data || {};
-        
-        event = $.Event( event );
+
+        event = $.Event(event);
         event.target = this.el;
         event.type = eventType;
 
         // copy original event properties over to the new event
         orig = event.originalEvent;
-        if ( orig ) {
-          for ( prop in orig ) {
-            if ( !( prop in event ) ) {
-              event[ prop ] = orig[ prop ];
+        if (orig) {
+          for (prop in orig) {
+            if (!(prop in event)) {
+              event[prop] = orig[prop];
             }
           }
         }
@@ -311,7 +372,7 @@
 
 
   // A really lightweight plugin wrapper around the constructor,
-  // preventing against multiple instantiations
+  // preventing multiple instantiations
   $.fn[pluginName] = function(options) {
     return this.each(function() {
       if (!$.data(this, 'plugin_' + pluginName)) {

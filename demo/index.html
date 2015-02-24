@@ -78,12 +78,15 @@
                 });
 
                 // custom selection
-                $("#example5").scrollStory({
+                window.example5 = $("#example5").scrollStory({
                     content: '.custom',
                     itembuild: function(ev, data){
                         console.log('item build', ev, data);
                     }
-                });
+                }).data('plugin_scrollStory');
+
+                console.log(example5);
+
 			});
 		</script>
 	</body>
