@@ -52,14 +52,15 @@
     // checkViewportVisibility: false,
 
     // // scroll-based events are either 'debounce' or 'throttle'
-    // throttleType: 'debounce',
+    throttleType: 'throttle',
 
-    // // frequency in milliseconds to perform scroll-based functions.
-    // // Scrolling functions can be CPU intense, so higher number can
-    // // help performance.
-    // scrollSensitivity: 100
-    // 
-    // 
+    // frequency in milliseconds to perform scroll-based functions. Scrolling functions 
+    // can be CPU intense, so higher number can help performance.
+    scrollSensitivity: 100,
+
+    // options to pass to underscore's throttle or debounce for scroll
+    // see: http://underscorejs.org/#throttle && http://underscorejs.org/#debounce
+    throttleTypeOptions: null,
 
     itembuild: function() {}
   };
@@ -116,7 +117,10 @@
        */
       this.addItems(this.options.content);
 
-      // console.log(this.getItems());
+      // scroll is throttled and bound to plugin
+      var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
+      var boundScroll = scrollThrottle(this.onScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+      $(window, 'body').scroll(boundScroll);
     },
 
     /**
@@ -223,6 +227,10 @@
       }
     },
 
+
+    onScroll: function() {
+      console.log('scroll2');
+    },
 
 
     /**
@@ -368,8 +376,99 @@
         this.options[eventType](event, data);
       }
     }
+  }; // end plugin.prototype
+
+  
+  /**
+   * Utility methods
+   * 
+   * now(), debounce() and throttle() are from on Underscore.js:
+   * https://github.com/jashkenas/underscore
+   */
+  
+
+  var now = Date.now || function() {
+    return new Date().getTime();
   };
 
+  console.log(typeof now);
+
+  var debounce = function(func, wait, immediate) {
+    var timeout, args, context, timestamp, result;
+
+    var later = function() {
+      var last = now() - timestamp;
+
+      if (last < wait && last >= 0) {
+        timeout = setTimeout(later, wait - last);
+      } else {
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+          if (!timeout) {
+            context = args = null;
+          }
+        }
+      }
+    };
+
+    return function() {
+      context = this;
+      args = arguments;
+      timestamp = now();
+      var callNow = immediate && !timeout;
+      if (!timeout) {
+        timeout = setTimeout(later, wait);
+      }
+      if (callNow) {
+        result = func.apply(context, args);
+        context = args = null;
+      }
+
+      return result;
+    };
+  };
+
+
+  var throttle = function(func, wait, options) {
+    var context, args, result;
+    var timeout = null;
+    var previous = 0;
+    if (!options) {
+      options = {};
+    }
+    var later = function() {
+      previous = options.leading === false ? 0 : now();
+      timeout = null;
+      result = func.apply(context, args);
+      if (!timeout) {
+        context = args = null;
+      }
+    };
+    return function() {
+      var timestamp = now();
+      if (!previous && options.leading === false) {
+        previous = timestamp;
+      }
+      var remaining = wait - (timestamp - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = null;
+        }
+        previous = timestamp;
+        result = func.apply(context, args);
+        if (!timeout) {
+          context = args = null;
+        }
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining);
+      }
+      return result;
+    };
+  };
 
   // A really lightweight plugin wrapper around the constructor,
   // preventing multiple instantiations
