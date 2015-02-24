@@ -65,9 +65,9 @@
     itembuild: function() {}
   };
 
-  // static across all plugin instance 
+  // static across all plugin instances
   // so we can uniquely ID elements
-  var totalItems = 0;
+  var instanceCounter = 0;
 
   function Plugin(element, options) {
     this.el = element;
@@ -76,6 +76,9 @@
     this.options = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
+    this._instanceId = (function(){
+      return 'scrollStory_'+instanceCounter;
+    })();
     this.init();
   }
 
@@ -117,10 +120,14 @@
        */
       this.addItems(this.options.content);
 
-      // scroll is throttled and bound to plugin
+      /**
+       * scroll is throttled and bound to plugin
+       */
       var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
       var boundScroll = scrollThrottle(this.onScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
       $(window, 'body').scroll(boundScroll);
+
+      instanceCounter = instanceCounter + 1;
     },
 
     /**
@@ -189,7 +196,6 @@
       }
     },
 
-
     /**
      * Get items that are atleast partially
      * visible in viewport
@@ -205,6 +211,20 @@
       // return _.filter(this.getItems(), function(item) {
       //   return item.inViewport;
       // });
+    },
+
+    getActiveItem: function() {
+
+    },
+
+    setActiveItem: function() {
+      console.log('set', this._instanceId);
+
+      var activeItem;
+
+      this.getItems().forEach(function(item){
+        console.log(item);
+      });
     },
 
     addItems: function(items) {
@@ -229,7 +249,7 @@
 
 
     onScroll: function() {
-      console.log('scroll2');
+      this.setActiveItem();
     },
 
 
@@ -280,7 +300,7 @@
         index: this.items.length,
 
         // id is from markup id attribute, domData or dynamically generated
-        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story-' + totalItems,
+        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story' + instanceCounter + '-' + this.items.length,
 
         // item's domData is from client data or data-* attrs
         domData: $.extend({}, data, $el.data()),
@@ -329,8 +349,6 @@
         index: item.index,
         id: item.id
       };
-
-      totalItems = totalItems + 1;
 
       this._trigger('itembuild', null, {
         item: item
@@ -390,8 +408,6 @@
   var now = Date.now || function() {
     return new Date().getTime();
   };
-
-  console.log(typeof now);
 
   var debounce = function(func, wait, immediate) {
     var timeout, args, context, timestamp, result;
