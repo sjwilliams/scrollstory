@@ -132,7 +132,7 @@
 
 
     /**
-     * Update viewport rectangle coords cache
+     * Update viewport rectangle coordinates cache
      */
     setViewport: function() {
       var width = this.$win.width();
@@ -142,7 +142,7 @@
       var bottom = height + top;
       var right = left + width;
 
-      this.viewport = {
+      this._viewport = {
         width: width,
         height: height,
         top: top,
@@ -153,12 +153,17 @@
     },
 
 
+    /**
+     * Return viewport coordinates
+     * 
+     * @return {Object}
+     */
     getViewport: function() {
-      if (typeof this.viewport.width === 'undefined') {
+      if (typeof this._viewport === 'undefined') {
         this.setViewport();
       }
 
-      return this.viewport();
+      return this._viewport();
     },
 
 
@@ -172,7 +177,8 @@
 
 
     /**
-     * Given an item id, return its data
+     * Given an item id, return it.
+     * 
      * @param  {string} id
      * @return {Object/Boolean}
      */
@@ -188,6 +194,7 @@
 
     /**
      * Given an item index, return it.
+     * 
      * @param  {Integer} index
      * @return {Object/Boolean}
      */
@@ -256,7 +263,6 @@
 
               // type 2, method that runs a value
               if (typeof match !== 'boolean') {
-                console.log('type2', match);
                 match = item[key] === match;
               }
 
@@ -311,8 +317,8 @@
 
     /**
      * Iterate through items and update their top
-     * offset. Useful if items have been added,
-     * removed, repositioned externally, or after resize
+     * offset. Useful if items have been added,  removed, 
+     * repositioned externally, and after window resize
      */
     updateOffsets: function() {
       var items = this.getItems(),
@@ -336,6 +342,33 @@
       }
     },
 
+    /**
+     * Add items to the running list given any of the 
+     * following inputs:
+     *
+     * 1. jQuery selection. Items will be generated
+     * from the selection, and any data-* attributes
+     * will be added to the item's domData object.
+     * 
+     * 2. A string selector to search for elements 
+     * within our container. Items will be generated
+     * from that selection, and any data-* attributes
+     * will be added to the item's domData object.
+     * 
+     * 3. Array of objects. All needed markup will
+     * be generated, and the data in each object will 
+     * be added to the item's domData object.
+     *
+     * 4. If no 'items' param, we search for items
+     * using the options.contentSelector string.
+     *
+     *
+     * TODO: ensure existing items aren't re-added.
+     * This is expecially important for the empty items
+     * option
+     *
+     * @param {jQuery Object/String/Array} items
+     */
     addItems: function(items) {
 
       // use an existing jQuery selection
@@ -499,7 +532,7 @@
         // fire event
         this.$el.trigger(event, data);
 
-        // fire the callback
+        // call the callback
         this.options[eventType](event, data);
       }
     }
@@ -513,11 +546,19 @@
    * https://github.com/jashkenas/underscore
    */
   
-
+  /**
+   * Underscore's now():
+   * http://underscorejs.org/#now
+   * @return {Function}
+   */
   var now = Date.now || function() {
     return new Date().getTime();
   };
 
+  /**
+   * Underscore's debounce:
+   * http://underscorejs.org/#debounce
+   */
   var debounce = function(func, wait, immediate) {
     var timeout, args, context, timestamp, result;
 
@@ -554,7 +595,10 @@
     };
   };
 
-
+  /**
+   * Underscore's throttle:
+   * http://underscorejs.org/#throttle
+   */
   var throttle = function(func, wait, options) {
     var context, args, result;
     var timeout = null;
