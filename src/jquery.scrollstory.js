@@ -5,7 +5,7 @@
     factory(jQuery, window, document, undefined);
   }
 }(function($, window, document, undefined) {
-  
+
   var pluginName = 'scrollStory';
   var defaults = {
 
@@ -26,31 +26,15 @@
     // Offset from top to trigger a change
     triggerOffset: 0,
 
-    // // Activate the item closest to the offset, even if it's below the offset.
-    // preOffsetActivation: false,
+    // Automatically activate the first item on load, 
+    // regardless of its position relative to the offset
+    autoActivateFirstItem: false,
 
-    // // Automatically activate the first item on page load, regardless of its position
-    // // relative to the offset and the 'preOffsetActivation' setting.
-    // // With 'preOffsetActivation:true', this is ignored.
-    // autoActivateFirst: true,
+    // Disable last item once it's scroll beyond the trigger point
+    disablePastLastItem: true,
 
-    // // If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the
-    // // first item would activate after a 1px scroll. Usually, we want to delay that
-    // // first activation until the first item is to the offset, but maintain the activation
-    // // behavior of other items.
-    // //
-    // // By default, we delay the activation on first item. Set to false otherwise. No effect
-    // // if 'autoActivateFirst' is true or 'preOffsetActivation' is false.
-    // delayFirstActivationToOffset: true,
-
-    // // Updated offsets on window resize? useful for responsive layouts
-    // updateOffsetsOnResize: true,
-
-    // // Automated scroll speed in ms. Set to 0 to remove animation.
+    // Automated scroll speed in ms. Set to 0 to remove animation.
     // speed: 800,
-
-    // // Whether to keep track of which individual elements are in the viewport.
-    // checkViewportVisibility: false,
 
     // // scroll-based events are either 'debounce' or 'throttle'
     throttleType: 'throttle',
@@ -79,8 +63,8 @@
     this.options = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
-    this._instanceId = (function(){
-      return 'scrollStory_'+instanceCounter;
+    this._instanceId = (function() {
+      return 'scrollStory_' + instanceCounter;
     })();
     this.init();
   }
@@ -105,20 +89,22 @@
 
       /**
        * Convert data from outside of widget into
-       * items and, if needed, categories of items
+       * items and, if needed, categories of items.
+       *
+       * It also updates offsets and sets the active item.
        */
       this.addItems(this.options.content);
 
       if (this.options.debug) {
-        var $triggerPoint = $('<div class="scrollStoryTrigger"></div>').css({
+        $('<div class="scrollStoryTrigger"></div>').css({
           position: 'fixed',
           width: '100%',
           height: '1px',
-          top: this.options.triggerOffset+'px',
+          top: this.options.triggerOffset + 'px',
           left: '0px',
           backgroundColor: '#ff0000',
           zIndex: 1000
-        }).attr('id', 'scrollStoryTrigger-'+this._instanceId).appendTo('body');
+        }).attr('id', 'scrollStoryTrigger-' + this._instanceId).appendTo('body');
       }
 
       /**
@@ -157,7 +143,7 @@
 
     /**
      * Return viewport coordinates
-     * 
+     *
      * @return {Object}
      */
     getViewport: function() {
@@ -180,7 +166,7 @@
 
     /**
      * Given an item id, return it.
-     * 
+     *
      * @param  {string} id
      * @return {Object/Boolean}
      */
@@ -196,7 +182,7 @@
 
     /**
      * Given an item index, return it.
-     * 
+     *
      * @param  {Integer} index
      * @return {Object/Boolean}
      */
@@ -210,19 +196,19 @@
 
 
     /**
-    * Return an array of items that pass an abritrary truth test.
-    *
-    * Example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
-    *
-    * @param {Function} truthTest The function to check all items against
-    * @return {Array} Array of item objects
-    */
+     * Return an array of items that pass an abritrary truth test.
+     *
+     * Example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
+     *
+     * @param {Function} truthTest The function to check all items against
+     * @return {Array} Array of item objects
+     */
     getItemsBy: function(truthTest) {
       if (typeof truthTest !== 'function') {
         throw new Error('You must provide a truthTest function');
       }
 
-      return this.getItems().filter(function(item){
+      return this.getItems().filter(function(item) {
         return truthTest(item);
       });
     },
@@ -237,26 +223,26 @@
      * this.getItemsWhere({filtered:false});
      * this.getItemsWhere({category:'cats', width: 300});
      *
-     * 2. Methods that return a value 
+     * 2. Methods that return a value
      * this.getItemsWhere({width: function(width){ return 216 + 300;}});
-     * 
+     *
      * 3. Methods that return a boolean
      * this.getItemsWhere({index: function(index){ return index > 2; } });
      *
      * Mix and match:
      * this.getItemsWehre({filtered:false, index: function(index){ return index < 30;} })
-     * 
+     *
      * @param  {Object} properties
      * @return {Array} Array of item objects
      */
     getItemsWhere: function(properties) {
       var keys,
-          items =[]; // empty if properties obj not passed in
+        items = []; // empty if properties obj not passed in
 
       if ($.isPlainObject(properties)) {
         keys = Object.keys(properties); // properties to check in each item
-        items = this.getItemsBy(function(item){
-          var isMatch = keys.every(function(key){
+        items = this.getItemsBy(function(item) {
+          var isMatch = keys.every(function(key) {
             var match;
 
             // type 3, method that runs a boolean
@@ -306,21 +292,28 @@
 
     },
 
-    // TODO - take into account preOffsetActivation
-    // TODO - take into account autoActivateFirst
-    // TODO - take into account 
-    // TODO - short circut break? move out of forEach and use regular for loop with the filtered items..
     setActiveItem: function() {
+      var blurAll = true;
       var activeItem;
+      
+      // whether the top of the container is above the trigger point,
+      // and the bottom of the container is still below trigger point. 
+      var containerInActiveArea = (this.distanceToFirstItemTopOffset <= 0 && (Math.abs(this.distanceToOffset) - this.height) < 0);
 
       // only check items that aren't filtered
-      this.getItemsBy(function(item){return !item.filtered;}).forEach(function(item){
-        if (!activeItem) {
-          activeItem = item;
-        } else {
-          
-          // item has to have cross the trigger offset
-          if (item.adjustedDistanceToOffset <= 0) {
+      var items = this.getItemsBy(function(item) {
+        return !item.filtered;
+      });
+
+      items.forEach(function(item) {
+
+        // item has to have crossed the trigger offset
+        if (item.adjustedDistanceToOffset <= 0) {
+          if (!activeItem) {
+            activeItem = item;
+          } else {
+
+            // closer to trigger point that previously found item?
             if (activeItem.adjustedDistanceToOffset < item.adjustedDistanceToOffset) {
               activeItem = item;
             }
@@ -328,22 +321,152 @@
         }
       });
 
-      console.log('active', this._instanceId, activeItem.id);
+      // double check conditions around an active item
+      if (activeItem) {
 
-      // set active, via applyToAll
+        // make sure we haven't scrolled beyond last item, or that 
+        // scrolling beyond is allowed
+        if (containerInActiveArea || !containerInActiveArea && !this.options.disablePastLastItem) {
+          this.focus(activeItem);
+          blurAll = false;
+        }
 
+      // not yet scrolled in, but auto-activate is set to true
+      } else if (this.options.autoActivateFirstItem && items.length > 0) {
+        this.focus(items[0]);
+        blurAll = false;
+      }
+
+      if (blurAll) {
+        this.blurAll();
+      }
+    },
+
+
+    /**
+     * Excecute a callback function that expects an
+     * item id as its paramamter for each items.
+     *
+     * Optionally, a id or array of ids of exceptions
+     * can be passed in. They'll not call the callback.
+     *
+     * @param  {Function} cb         Method to call, and pass in exepctions
+     * @param  {String/Array}   exceptions
+     */
+    applyToAllItems: function(cb, exceptions) {
+      exceptions = ($.isArray(exceptions)) ? exceptions : [exceptions];
+
+      var items = this.getItems();
+      var i = 0;
+      var length = items.length;
+      var item;
+
+      for (i = 0; i < length; i++) {
+        item = items[i];
+        // console.log(item);
+        // if (!_.contains(exceptions, item.id)) {
+        cb(item);
+        // }
+      }
+    },
+
+
+    /**
+     * Unfocus all items.
+     *
+     * @param  {String/Array} exceptions id or array of ids to not blur
+     */
+    blurAll: function(exceptions) {
+      this.applyToAllItems(this.blur.bind(this), exceptions);
     },
 
     /**
-     * Iterate through items and update their top offset. 
-     * Useful if items have been added, removed, 
+     * Unfocus an item
+     * @param  {Object/String} item object or item id
+     */
+    blur: function(item) {
+      console.log('blur', item.id);
+      // item = (typeof item === 'string') ? this.getItemById(item) : item;
+
+      if (item.active) {
+        item.el.removeClass('active');
+        item.active = false;
+        this._trigger('itemblur', null, {
+          item: item
+        });
+      }
+    },
+
+
+    /**
+     * Given an item, give it focus. Focus is exclusive
+     * so we unfocus any other item.
+     *
+     * @param  {Object/String} item object or item id
+     */
+    focus: function(item) {
+      // item = (typeof item === 'string') ? this.getItemById(item) : item;
+      console.log('focus started');
+      if (!item.active && !item.filtered) {
+        console.log('focus done', item.id, item.active);
+        var $item = item.el,
+          previousActiveIndex = this._activeIndex;
+
+        // blur all the other items
+        this.blurAll();
+
+        // make active
+        this._activeIndex = item.index;
+        item.active = true;
+        $item.addClass('active');
+
+        // notify clients of changes
+        var previousItem = this.getItemByIndex(previousActiveIndex);
+        this._trigger('indexchange', null, {
+          item: item,
+          index: item.index,
+          id: item.id,
+          previousItem: previousItem,
+          previousIndex: previousItem.index,
+          previousId: previousItem.id
+        });
+
+
+        // update order classes if necessary
+        if (this.options.verboseItemClasses) {
+          // this._verboseItemClasses();
+        }
+
+        // trigger catgory change if not previously active or
+        // this item's category is different from the last
+        if (item.category !== previousItem.category || !this._isActive) {
+          this._trigger('categorychange', null, {
+            category: item.category,
+            previousCategory: previousItem.category
+          });
+        }
+
+        if (!this._isActive) {
+          this._isActive = true;
+          this._trigger('active');
+        }
+      }
+    },
+
+    /**
+     * Iterate through items and update their top offset.
+     * Useful if items have been added, removed,
      * repositioned externally, and after window resize
+     *
+     * Based on:
+     * http://javascript.info/tutorial/coordinates
+     * http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport/7557433#7557433
      */
     updateItemOffsets: function() {
       console.log('update offsets');
       var bodyElem = document.body;
       var docElem = document.documentElement;
-      
+
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
       var clientTop = docElem.clientTop || bodyElem.clientTop || 0;
       var items = this.getItems();
@@ -352,15 +475,22 @@
       var item;
       var box;
 
+      // individual items
       for (i = 0; i < length; i++) {
         item = items[i];
         box = item.el[0].getBoundingClientRect();
-        
+
         // add or update item properties
         item.width = box.width;
         item.height = box.height;
-        item.topOffset = box.top +  scrollTop - clientTop;
+        item.topOffset = box.top + scrollTop - clientTop;
       }
+
+      // container
+      box = this.el.getBoundingClientRect();
+      this.height = box.height;
+      this.width = box.width;
+      this.topOffset = box.top + scrollTop - clientTop;
     },
 
 
@@ -381,24 +511,31 @@
         item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
       }
+
+      // update container scroll position
+      this.distanceToFirstItemTopOffset = items[0].adjustedDistanceToOffset;
+
+      // takes into account other elements that might make the top of the 
+      // container different than the topoffset of the first item.
+      this.distanceToOffset = this.topOffset - scrollTop - triggerOffset;
     },
 
 
     /**
-     * Add items to the running list given any of the 
+     * Add items to the running list given any of the
      * following inputs:
      *
      * 1. jQuery selection. Items will be generated
      * from the selection, and any data-* attributes
      * will be added to the item's domData object.
-     * 
-     * 2. A string selector to search for elements 
+     *
+     * 2. A string selector to search for elements
      * within our container. Items will be generated
      * from that selection, and any data-* attributes
      * will be added to the item's domData object.
-     * 
+     *
      * 3. Array of objects. All needed markup will
-     * be generated, and the data in each object will 
+     * be generated, and the data in each object will
      * be added to the item's domData object.
      *
      * 4. If no 'items' param, we search for items
@@ -485,7 +622,6 @@
      * @param {jQuery Object} $el
      */
     _addItem: function(data, $el) {
-      var offset = $el.offset();
       var item = {
         index: this.items.length,
 
@@ -580,14 +716,14 @@
     }
   }; // end plugin.prototype
 
-  
+
   /**
    * Utility methods
-   * 
+   *
    * now(), debounce() and throttle() are from on Underscore.js:
    * https://github.com/jashkenas/underscore
    */
-  
+
   /**
    * Underscore's now():
    * http://underscorejs.org/#now
