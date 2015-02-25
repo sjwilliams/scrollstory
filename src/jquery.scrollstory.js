@@ -130,6 +130,7 @@
       instanceCounter = instanceCounter + 1;
     },
 
+
     /**
      * Update viewport rectangle coords cache
      */
@@ -151,6 +152,7 @@
       };
     },
 
+
     getViewport: function() {
       if (typeof this.viewport.width === 'undefined') {
         this.setViewport();
@@ -158,6 +160,7 @@
 
       return this.viewport();
     },
+
 
     /**
      * Return array of all items
@@ -196,6 +199,83 @@
       }
     },
 
+
+    /**
+    * Return an array of items that pass an abritrary truth test.
+    *
+    * Example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
+    *
+    * @param {Function} truthTest The function to check all items against
+    * @return {Array} Array of item objects
+    */
+    getItemsBy: function(truthTest) {
+      if (typeof truthTest !== 'function') {
+        throw new Error('You must provide a truthTest function');
+      }
+
+      return this.getItems().filter(function(item){
+        return truthTest(item);
+      });
+    },
+
+    /**
+     * Returns an array of items where all the properties
+     * match an item's properties. Property tests can be
+     * any combination of:
+     *
+     * 1. Values
+     * this.getItemsWhere({index:2});
+     * this.getItemsWhere({filtered:false});
+     * this.getItemsWhere({category:'cats', width: 300});
+     *
+     * 2. Methods that return a value 
+     * this.getItemsWhere({width: function(item){ return 216 + 300;}});
+     * 
+     * 3. Methods that return a boolean
+     * this.getItemsWhere({index: function(index){ return index > 2; } });
+     *
+     * Mix and match:
+     * this.getItemsWehre({filtered:false, index: function(index){ return index < 30;} })
+     * 
+     * @param  {Object} properties
+     * @return {Array} Array of item objects
+     */
+    getItemsWhere: function(properties) {
+      var keys,
+          items =[]; // empty if properties obj not passed in
+
+      if ($.isPlainObject(properties)) {
+        keys = Object.keys(properties); // properties to check in each item
+        items = this.getItemsBy(function(item){
+          var isMatch = keys.every(function(key){
+            var match;
+
+            // type 3, method that runs a boolean
+            if (typeof properties[key] === 'function') {
+              match = properties[key](item[key]);
+
+              // type 2, method that runs a value
+              if (typeof match !== 'boolean') {
+                console.log('type2', match);
+                match = item[key] === match;
+              }
+
+            } else {
+              // type 1, value
+              match = item[key] === properties[key];
+            }
+            return match;
+          });
+
+          if (isMatch) {
+            return item;
+          }
+        });
+      }
+
+      return items;
+    },
+
     /**
      * Get items that are atleast partially
      * visible in viewport
@@ -213,6 +293,7 @@
       // });
     },
 
+
     getActiveItem: function() {
 
     },
@@ -222,9 +303,37 @@
 
       var activeItem;
 
-      this.getItems().forEach(function(item){
+      // only check items that aren't filtered
+      this.getItemsBy(function(item){return !item.filtered;}).forEach(function(item){
         console.log(item);
       });
+    },
+
+    /**
+     * Iterate through items and update their top
+     * offset. Useful if items have been added,
+     * removed, repositioned externally, or after resize
+     */
+    updateOffsets: function() {
+      var items = this.getItems(),
+          i = 0,
+          length = items.length,
+          item;
+
+      for (i = 0; i < length; i++) {
+          item = items[i];
+          item.el = $('#' + item.id);
+          item.topOffset = item.el.offset().top;
+          item.width = item.el.width();
+          item.height = item.el.height();
+      }
+
+      this._trigger('offsetschange', null, {});
+
+      // check viewport visibility of items
+      if (this.options.checkViewportVisibility) {
+          // this._checkViewportVisibility();
+      }
     },
 
     addItems: function(items) {
@@ -321,7 +430,7 @@
         filtered: false,
 
         // cached distance from top. May need occasional updating if DOM or styling change
-        // topOffset: $el.offset().top,
+        topOffset: $el.offset().top,
 
         // on occassion, the scrollToItem() offset may need to be adjusted for a
         // particular item. this overrides this.options.scrollOffset set on instantiation
