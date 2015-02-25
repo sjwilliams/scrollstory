@@ -5,6 +5,7 @@
     factory(jQuery, window, document, undefined);
   }
 }(function($, window, document, undefined) {
+  
   var pluginName = 'scrollStory';
   var defaults = {
 
@@ -62,6 +63,8 @@
     // see: http://underscorejs.org/#throttle && http://underscorejs.org/#debounce
     throttleTypeOptions: null,
 
+    debug: false,
+
     itembuild: function() {}
   };
 
@@ -96,20 +99,6 @@
       this.tags = [];
 
       /**
-       * Index of active item. Maintained by .focus
-       * @type {Number}
-       */
-      this.activeIndex = 0;
-
-      /**
-       * Tracks if any items are yet
-       * active. Events dispatched when
-       * this changes.
-       * @type {Boolean}
-       */
-      this.isActive = false;
-
-      /**
        * Various viewport properties cached to this_.viewport
        */
       this.setViewport();
@@ -120,7 +109,17 @@
        */
       this.addItems(this.options.content);
 
-      this.updateOffsets();
+      if (this.options.debug) {
+        var $triggerPoint = $('<div class="scrollStoryTrigger"></div>').css({
+          position: 'fixed',
+          width: '100%',
+          height: '1px',
+          top: this.options.triggerOffset+'px',
+          left: '0px',
+          backgroundColor: '#ff0000',
+          zIndex: 1000
+        }).attr('id', 'scrollStoryTrigger-'+this._instanceId).appendTo('body');
+      }
 
       /**
        * scroll is throttled and bound to plugin
@@ -135,6 +134,7 @@
 
     /**
      * Update viewport rectangle coordinates cache
+     * TODO: remove this?
      */
     setViewport: function() {
       var width = this.$win.width();
@@ -306,32 +306,46 @@
 
     },
 
+    // TODO - take into account preOffsetActivation
+    // TODO - take into account autoActivateFirst
+    // TODO - take into account 
+    // TODO - short circut break? move out of forEach and use regular for loop with the filtered items..
     setActiveItem: function() {
-      console.log('set', this._instanceId);
-      
-
-      // var triggerOffset = this.options.triggerOffset;
-      // var activeItem;
-
-
+      var activeItem;
 
       // only check items that aren't filtered
       this.getItemsBy(function(item){return !item.filtered;}).forEach(function(item){
-        var rect = item.el[0].getBoundingClientRect();
-
-        console.log(rect.top - item.topOffset);
+        if (!activeItem) {
+          activeItem = item;
+        } else {
+          
+          // item has to have cross the trigger offset
+          if (item.adjustedDistanceToOffset <= 0) {
+            if (activeItem.adjustedDistanceToOffset < item.adjustedDistanceToOffset) {
+              activeItem = item;
+            }
+          }
+        }
       });
+
+      console.log('active', this._instanceId, activeItem.id);
+
+      // set active, via applyToAll
+
     },
 
-
-    updateOffsets: function() {
+    /**
+     * Iterate through items and update their top offset. 
+     * Useful if items have been added, removed, 
+     * repositioned externally, and after window resize
+     */
+    updateItemOffsets: function() {
       console.log('update offsets');
-      var body = document.body;
+      var bodyElem = document.body;
       var docElem = document.documentElement;
-      var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-      var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-      var clientTop = docElem.clientTop || body.clientTop || 0;
-      var clientLeft = docElem.clientLeft || body.clientLeft || 0;
+      
+      var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
+      var clientTop = docElem.clientTop || bodyElem.clientTop || 0;
       var items = this.getItems();
       var i = 0;
       var length = items.length;
@@ -339,41 +353,36 @@
       var box;
 
       for (i = 0; i < length; i++) {
-          item = items[i];
-          box = item.el[0].getBoundingClientRect();
-          item.width = box.width;
-          item.height = box.height;
-          item.topOffset = box.top +  scrollTop - clientTop;
-          item.leftOffset = box.left + scrollLeft - clientLeft;
+        item = items[i];
+        box = item.el[0].getBoundingClientRect();
+        
+        // add or update item properties
+        item.width = box.width;
+        item.height = box.height;
+        item.topOffset = box.top +  scrollTop - clientTop;
       }
     },
 
-    /**
-     * Iterate through items and update their top
-     * offset. Useful if items have been added,  removed, 
-     * repositioned externally, and after window resize
-     */
-    // updateOffsets: function() {
-    //   var items = this.getItems(),
-    //       i = 0,
-    //       length = items.length,
-    //       item;
 
-    //   for (i = 0; i < length; i++) {
-    //       item = items[i];
-    //       item.el = $('#' + item.id);
-    //       item.topOffset = item.el.offset().top;
-    //       item.width = item.el.width();
-    //       item.height = item.el.height();
-    //   }
+    updateItemScrollPositions: function() {
+      var bodyElem = document.body;
+      var docElem = document.documentElement;
+      var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
+      var triggerOffset = this.options.triggerOffset;
 
-    //   this._trigger('offsetschange', null, {});
+      // update item scroll positions
+      var items = this.getItems();
+      var i = 0;
+      var length = items.length;
+      var item;
 
-    //   // check viewport visibility of items
-    //   if (this.options.checkViewportVisibility) {
-    //       // this._checkViewportVisibility();
-    //   }
-    // },
+      for (i = 0; i < length; i++) {
+        item = items[i];
+        item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
+        item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
+      }
+    },
+
 
     /**
      * Add items to the running list given any of the 
@@ -420,10 +429,15 @@
       } else {
         this._prepItemsFromSelection(this.$el.find(this.options.contentSelector));
       }
+
+      this.updateItemOffsets(); // must be called first
+      this.updateItemScrollPositions(); // must be called second
+      this.setActiveItem(); // must be called third
     },
 
 
     onScroll: function() {
+      this.updateItemScrollPositions();
       this.setActiveItem();
     },
 
@@ -484,13 +498,6 @@
         category: data.category, // optional category this item belongs to
         tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
         el: $el,
-        width: $el.width(),
-        height: $el.height(),
-
-        // cached distance from top and left. 
-        // Needs updating on DOM changes/repaints
-        topOffset: offset.top,
-        leftOffset: offset.left,
 
         // previousItem: previousItem,
         nextItem: false,
@@ -509,7 +516,6 @@
         triggerOffset: false,
 
         // if any part is viewable in the viewport.
-        // only updated if this.options.checkViewportVisibility is true
         inViewport: false
 
       };

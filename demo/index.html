@@ -10,8 +10,10 @@
                 margin: 30px auto;
             }
             .example > div{
+                background-color: #ccc;
+                border-top:1px solid #000;
                 padding: 30px;
-                min-height: 600px;
+                min-height: 1800px;
             }
         </style>
 	</head>
@@ -81,6 +83,8 @@
                 // custom selection
                 window.example5 = $("#example5").scrollStory({
                     content: '.custom',
+                    debug: true,
+                    triggerOffset: 10,
                     itembuild: function(ev, data){
                         // console.log('item build', ev, data);
                     }
