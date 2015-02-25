@@ -229,7 +229,7 @@
      * this.getItemsWhere({category:'cats', width: 300});
      *
      * 2. Methods that return a value 
-     * this.getItemsWhere({width: function(item){ return 216 + 300;}});
+     * this.getItemsWhere({width: function(width){ return 216 + 300;}});
      * 
      * 3. Methods that return a boolean
      * this.getItemsWhere({index: function(index){ return index > 2; } });
