@@ -308,7 +308,7 @@
     _setActiveItem: function() {
       
       // top of the container is above the trigger point and the bottom is still below trigger point. 
-      var containerInActiveArea = (this.distanceToFirstItemTopOffset <= 0 && (Math.abs(this.distanceToOffset) - this.height) < 0);
+      var containerInActiveArea = (this._distanceToFirstItemTopOffset <= 0 && (Math.abs(this._distanceToOffset) - this._height) < 0);
 
       // only check items that aren't filtered
       var items = this.getItemsBy(function(item) {
@@ -413,7 +413,6 @@
     _blurItem: function(item) {
 
       if (item.active) {
-        console.log('blur', item.id);
         item.active = false;
         this._trigger('itemblur', null, {
           item: item
@@ -431,7 +430,6 @@
     _focusItem: function(item) {
 
       if (!item.active && !item.filtered) {
-        console.log('focus', item.id);
         this._previousItem = this._activeItem;
 
         // blur all the other items
@@ -496,8 +494,8 @@
 
       // container
       box = this.el.getBoundingClientRect();
-      this.height = box.height;
-      this.width = box.width;
+      this._height = box.height;
+      this._width = box.width;
       this.topOffset = box.top + scrollTop - clientTop;
     },
 
@@ -521,11 +519,11 @@
       }
 
       // update container scroll position
-      this.distanceToFirstItemTopOffset = items[0].adjustedDistanceToOffset;
+      this._distanceToFirstItemTopOffset = items[0].adjustedDistanceToOffset;
 
       // takes into account other elements that might make the top of the 
       // container different than the topoffset of the first item.
-      this.distanceToOffset = this.topOffset - scrollTop - triggerOffset;
+      this._distanceToOffset = this.topOffset - scrollTop - triggerOffset;
     },
 
 
@@ -595,10 +593,12 @@
     },
 
     onItemFocus: function(ev, data) {
+      console.log('focus', data.item.id);
       data.item.el.addClass('active');
     },
 
     onItemBlur: function(ev, data) {
+      console.log('blur', data.item.id);
       data.item.el.removeClass('active');
     },
 
