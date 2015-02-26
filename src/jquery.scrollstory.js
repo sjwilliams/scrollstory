@@ -127,6 +127,14 @@
       var boundScroll = scrollThrottle(this.onScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
       $(window, 'body').scroll(boundScroll);
 
+
+      // TODO 
+      // onResize, update offsets, etc
+
+      // TODO
+      // When refreshed in middle of page, make sure 
+      // an item activates on first scoll
+
       instanceCounter = instanceCounter + 1;
     },
 
@@ -280,21 +288,14 @@
      * @return {[type]} [description]
      */
     getItemsInViewport: function() {
-
-      // is widget keeping track on scroll?
-      // if (!this.options.checkViewportVisibility) {
-      //   this._checkViewportVisibility();
-      // }
-
-      // return _.filter(this.getItems(), function(item) {
-      //   return item.inViewport;
-      // });
+      return this.getItemsWhere({inViewport: true});
     },
 
 
     getActiveItem: function() {
       return this._activeItem;
     },
+
 
     _setActiveItem: function() {
       
@@ -459,7 +460,7 @@
      * http://javascript.info/tutorial/coordinates
      * http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport/7557433#7557433
      */
-    updateItemOffsets: function() {
+    updateOffsets: function() {
       console.log('update offsets');
       var bodyElem = document.body;
       var docElem = document.documentElement;
@@ -491,7 +492,7 @@
     },
 
 
-    _updateItemScrollPositions: function() {
+    _updateScrollPositions: function() {
       var bodyElem = document.body;
       var docElem = document.documentElement;
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
@@ -502,11 +503,18 @@
       var i = 0;
       var length = items.length;
       var item;
+      var rect;
 
       for (i = 0; i < length; i++) {
         item = items[i];
+        rect = item.el[0].getBoundingClientRect();
         item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
+
+        // TODO
+        // make this work for partially in viewport, not just fully in viewport
+        item.inViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || docElem.clientHeight) && rect.right <= (window.innerWidth || docElem.clientWidth);
+        // console.log(rect, item.inViewport);
       }
 
       // update container scroll position
@@ -564,14 +572,14 @@
         this._prepItemsFromSelection(this.$el.find(this.options.contentSelector));
       }
 
-      this.updateItemOffsets(); // must be called first
-      this._updateItemScrollPositions(); // must be called second
+      this.updateOffsets(); // must be called first
+      this._updateScrollPositions(); // must be called second
       this._setActiveItem(); // must be called third
     },
 
 
     onScroll: function() {
-      this._updateItemScrollPositions();
+      this._updateScrollPositions();
       this._setActiveItem();
     },
 
