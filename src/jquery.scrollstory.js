@@ -66,7 +66,7 @@
   // so we can uniquely ID elements
   var instanceCounter = 0;
 
-  function Plugin(element, options) {
+  function ScrollStory(element, options) {
     this.el = element;
     this.$el = $(element);
     this.$win = $(window);
@@ -79,7 +79,7 @@
     this.init();
   }
 
-  Plugin.prototype = {
+  ScrollStory.prototype = {
     init: function() {
       this.$el.addClass(pluginName);
 
@@ -849,7 +849,7 @@
   $.fn[pluginName] = function(options) {
     return this.each(function() {
       if (!$.data(this, 'plugin_' + pluginName)) {
-        $.data(this, 'plugin_' + pluginName, new Plugin(this, options));
+        $.data(this, 'plugin_' + pluginName, new ScrollStory(this, options));
       }
     });
   };
