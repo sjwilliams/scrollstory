@@ -67,14 +67,14 @@
     this._defaults = defaults;
     this._name = pluginName;
     this._instanceId = (function() {
-      return 'scrollStory_' + instanceCounter;
+      return pluginName+'_' + instanceCounter;
     })();
     this.init();
   }
 
   Plugin.prototype = {
     init: function() {
-      this.$el.addClass('scrollStoryContainer');
+      this.$el.addClass(pluginName);
 
       /**
        * List of all items, and a quick lockup hash
@@ -102,7 +102,7 @@
       this.addItems(this.options.content);
 
       if (this.options.debug) {
-        $('<div class="scrollStoryTrigger"></div>').css({
+        $('<div class="'+pluginName+'Trigger"></div>').css({
           position: 'fixed',
           width: '100%',
           height: '1px',
@@ -110,7 +110,7 @@
           left: '0px',
           backgroundColor: '#ff0000',
           zIndex: 1000
-        }).attr('id', 'scrollStoryTrigger-' + this._instanceId).appendTo('body');
+        }).attr('id', pluginName+'Trigger-' + this._instanceId).appendTo('body');
       }
 
 
@@ -283,9 +283,9 @@
     },
 
     /**
-     * Get items that are atleast partially
-     * visible in viewport
-     * @return {[type]} [description]
+     * Get items that are atleast partially visible 
+     * 
+     * @return {Array}
      */
     getItemsInViewport: function() {
       return this.getItemsWhere({inViewport: true});
@@ -577,11 +577,11 @@
     },
 
     onActive: function() {
-      this.$el.addClass('scrollStoryActive');
+      this.$el.addClass(pluginName+'Active');
     },
 
     onInactive: function() {
-      this.$el.removeClass('scrollStoryActive');
+      this.$el.removeClass(pluginName+'Active');
     },
 
     onItemFocus: function(ev, data) {
