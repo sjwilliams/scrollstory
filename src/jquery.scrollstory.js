@@ -82,6 +82,9 @@
       this.categories = [];
       this.tags = [];
 
+      this._activeItem;
+      this._previousItem;
+
       /**
        * Various viewport properties cached to this_.viewport
        */
@@ -289,15 +292,12 @@
 
 
     getActiveItem: function() {
-
+      return this._activeItem;
     },
 
-    setActiveItem: function() {
-      var blurAll = true;
-      var activeItem;
+    _setActiveItem: function() {
       
-      // whether the top of the container is above the trigger point,
-      // and the bottom of the container is still below trigger point. 
+      // top of the container is above the trigger point and the bottom is still below trigger point. 
       var containerInActiveArea = (this.distanceToFirstItemTopOffset <= 0 && (Math.abs(this.distanceToOffset) - this.height) < 0);
 
       // only check items that aren't filtered
@@ -305,6 +305,7 @@
         return !item.filtered;
       });
 
+      var activeItem;
       items.forEach(function(item) {
 
         // item has to have crossed the trigger offset
@@ -322,36 +323,47 @@
       });
 
       // double check conditions around an active item
-      if (activeItem) {
-
-        // make sure we haven't scrolled beyond last item, or that 
-        // scrolling beyond is allowed
-        if (containerInActiveArea || !containerInActiveArea && !this.options.disablePastLastItem) {
-          this.focus(activeItem);
-          blurAll = false;
-        }
+      if (activeItem && !containerInActiveArea && this.options.disablePastLastItem) {
+        activeItem = false;
 
       // not yet scrolled in, but auto-activate is set to true
       } else if (this.options.autoActivateFirstItem && items.length > 0) {
-        this.focus(items[0]);
-        blurAll = false;
+        activeItem = items[0];
       }
 
-      if (blurAll) {
-        this.blurAll();
+
+      if (activeItem) {
+
+        // item
+        this._focusItem(activeItem);
+
+        // container
+        if (!this._isActive) {
+          this._isActive = true;
+          this._trigger('active');
+        }
+
+      } else {
+        this._blurAllItems();
+        
+        // container
+        if (this._isActive) {
+          this._isActive = false;
+          this._trigger('inactive');
+        }
       }
     },
 
 
     /**
      * Excecute a callback function that expects an
-     * item id as its paramamter for each items.
+     * item as its paramamter for each items.
      *
-     * Optionally, a id or array of ids of exceptions
+     * Optionally, a item or array of items of exceptions
      * can be passed in. They'll not call the callback.
      *
      * @param  {Function} cb         Method to call, and pass in exepctions
-     * @param  {String/Array}   exceptions
+     * @param  {Object/Array}   exceptions
      */
     applyToAllItems: function(cb, exceptions) {
       exceptions = ($.isArray(exceptions)) ? exceptions : [exceptions];
@@ -363,10 +375,9 @@
 
       for (i = 0; i < length; i++) {
         item = items[i];
-        // console.log(item);
-        // if (!_.contains(exceptions, item.id)) {
-        cb(item);
-        // }
+        if (exceptions.indexOf(item) === -1) {
+          cb(item);
+        }
       }
     },
 
@@ -374,21 +385,25 @@
     /**
      * Unfocus all items.
      *
-     * @param  {String/Array} exceptions id or array of ids to not blur
+     * @param  {Object/Array} exceptions item or array of items to not blur
      */
-    blurAll: function(exceptions) {
-      this.applyToAllItems(this.blur.bind(this), exceptions);
+    _blurAllItems: function(exceptions) {
+      this.applyToAllItems(this._blurItem.bind(this), exceptions);
+
+      if (!exceptions) {
+        this._activeItem = undefined;
+      }
+
     },
 
     /**
      * Unfocus an item
-     * @param  {Object/String} item object or item id
+     * @param  {Object}
      */
-    blur: function(item) {
-      console.log('blur', item.id);
-      // item = (typeof item === 'string') ? this.getItemById(item) : item;
+    _blurItem: function(item) {
 
       if (item.active) {
+        console.log('blur', item.id);
         item.el.removeClass('active');
         item.active = false;
         this._trigger('itemblur', null, {
@@ -402,54 +417,39 @@
      * Given an item, give it focus. Focus is exclusive
      * so we unfocus any other item.
      *
-     * @param  {Object/String} item object or item id
+     * @param  {Object} item object
      */
-    focus: function(item) {
-      // item = (typeof item === 'string') ? this.getItemById(item) : item;
-      console.log('focus started');
+    _focusItem: function(item) {
+
       if (!item.active && !item.filtered) {
-        console.log('focus done', item.id, item.active);
-        var $item = item.el,
-          previousActiveIndex = this._activeIndex;
+        console.log('focus', item.id);
+        this._previousItem = this._activeItem;
 
         // blur all the other items
-        this.blurAll();
+        this._blurAllItems(item);
 
         // make active
-        this._activeIndex = item.index;
+        this._activeItem = item;
         item.active = true;
-        $item.addClass('active');
+        item.el.addClass('active');
 
         // notify clients of changes
-        var previousItem = this.getItemByIndex(previousActiveIndex);
-        this._trigger('indexchange', null, {
+        var previousItem = this._previousItem;
+        this._trigger('itemfocus', null, {
           item: item,
           index: item.index,
           id: item.id,
           previousItem: previousItem,
-          previousIndex: previousItem.index,
-          previousId: previousItem.id
         });
-
-
-        // update order classes if necessary
-        if (this.options.verboseItemClasses) {
-          // this._verboseItemClasses();
-        }
 
         // trigger catgory change if not previously active or
         // this item's category is different from the last
-        if (item.category !== previousItem.category || !this._isActive) {
-          this._trigger('categorychange', null, {
-            category: item.category,
-            previousCategory: previousItem.category
-          });
-        }
-
-        if (!this._isActive) {
-          this._isActive = true;
-          this._trigger('active');
-        }
+        // if (item.category !== previousItem.category || !this._isActive) {
+        //   this._trigger('categorychange', null, {
+        //     category: item.category,
+        //     previousCategory: previousItem.category
+        //   });
+        // }
       }
     },
 
@@ -494,7 +494,7 @@
     },
 
 
-    updateItemScrollPositions: function() {
+    _updateItemScrollPositions: function() {
       var bodyElem = document.body;
       var docElem = document.documentElement;
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
@@ -568,14 +568,14 @@
       }
 
       this.updateItemOffsets(); // must be called first
-      this.updateItemScrollPositions(); // must be called second
-      this.setActiveItem(); // must be called third
+      this._updateItemScrollPositions(); // must be called second
+      this._setActiveItem(); // must be called third
     },
 
 
     onScroll: function() {
-      this.updateItemScrollPositions();
-      this.setActiveItem();
+      this._updateItemScrollPositions();
+      this._setActiveItem();
     },
 
 
