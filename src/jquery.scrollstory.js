@@ -181,15 +181,10 @@
      * Given an item id, return it.
      *
      * @param  {string} id
-     * @return {Object/Boolean}
+     * @return {Object}
      */
     getItemById: function(id) {
-      var item = this._itemsById[id];
-      if (item) {
-        return this._items[item.index];
-      } else {
-        return false;
-      }
+      return this._itemsById[id];
     },
 
 
@@ -197,14 +192,10 @@
      * Given an item index, return it.
      *
      * @param  {Integer} index
-     * @return {Object/Boolean}
+     * @return {Object}
      */
     getItemByIndex: function(index) {
-      if (index >= 0 && index < this._items.length) {
-        return this._items[index];
-      } else {
-        return false;
-      }
+      return this._items[index];
     },
 
 
@@ -688,10 +679,7 @@
       this._items.push(item);
 
       // quick lookup
-      this._itemsById[item.id] = {
-        index: item.index,
-        id: item.id
-      };
+      this._itemsById[item.id] = item;
 
       this._trigger('itembuild', null, {
         item: item
