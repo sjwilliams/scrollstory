@@ -124,6 +124,8 @@
           top: this.options.triggerOffset + 'px',
           left: '0px',
           backgroundColor: '#ff0000',
+          '-webkit-transform': 'translateZ(0)',
+          '-webkit-backface-visibility': 'hidden',
           zIndex: 1000
         }).attr('id', pluginName + 'Trigger-' + this._instanceId).appendTo('body');
       }
@@ -319,9 +321,7 @@
      * @return {Array}
      */
     getItemsInViewport: function() {
-      return this.getItemsWhere({
-        inViewport: true
-      });
+      return this.getItemsWhere({inViewport: true});
     },
 
 
@@ -524,6 +524,8 @@
       var bodyElem = document.body;
       var docElem = document.documentElement;
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
+      var wHeight = window.innerHeight || docElem.clientHeight;
+      var wWidth = window.innerWidth || docElem.clientWidth;
       var triggerOffset = this.options.triggerOffset;
 
       // update item scroll positions
@@ -540,20 +542,10 @@
         item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
 
-        // TODO
-        // make this work for partially in viewport, not just fully in viewport
-
+        // track viewport status
         previouslyInViewport = item.inViewport;
-        item.inViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || docElem.clientHeight) && rect.right <= (window.innerWidth || docElem.clientWidth);
-        // item.inViewport = rect.height - rect.top >= 0 && rect.width - rect.left >= 0;
-        
-        if (i === 0) {
-          console.log('inviewport', item.id, item.inViewport, rect);
-        }
-
-
-
-        // console.log(rect, item.inViewport);
+        item.inViewport = rect.bottom > 0 && rect.right > 0 && rect.left < wWidth && rect.top < wHeight;
+        item.fullyInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= wHeight && rect.right <= wWidth;
 
         if (item.inViewport && !previouslyInViewport) {
           this._trigger('itementerviewport', null, {item: item});
