@@ -49,7 +49,10 @@
 
     debug: false,
 
-    itembuild: function() {}
+    itemfocus: $.noop,
+    itemblur: $.noop,
+    active: $.noop,
+    inactive: $.noop
   };
 
   // static across all plugin instances
@@ -77,10 +80,10 @@
        * List of all items, and a quick lockup hash
        * Data populated via _prepItems* methods
        */
-      this.items = [];
-      this.itemsById = {};
-      this.categories = [];
-      this.tags = [];
+      this._items = [];
+      this._itemsById = {};
+      this._categories = [];
+      this._tags = [];
 
       this._activeItem;
       this._previousItem;
@@ -109,6 +112,13 @@
           zIndex: 1000
         }).attr('id', 'scrollStoryTrigger-' + this._instanceId).appendTo('body');
       }
+
+
+      this.$el.on('active', this.onActive.bind(this));
+      this.$el.on('inactive', this.onInactive.bind(this));
+      this.$el.on('itemblur', this.onItemBlur.bind(this));
+      this.$el.on('itemfocus', this.onItemFocus.bind(this));
+
 
       /**
        * scroll is throttled and bound to plugin
@@ -163,7 +173,7 @@
      * @return {Array}
      */
     getItems: function() {
-      return this.items;
+      return this._items;
     },
 
 
@@ -174,9 +184,9 @@
      * @return {Object/Boolean}
      */
     getItemById: function(id) {
-      var item = this.itemsById[id];
+      var item = this._itemsById[id];
       if (item) {
-        return this.items[item.index];
+        return this._items[item.index];
       } else {
         return false;
       }
@@ -190,8 +200,8 @@
      * @return {Object/Boolean}
      */
     getItemByIndex: function(index) {
-      if (index >= 0 && index < this.items.length) {
-        return this.items[index];
+      if (index >= 0 && index < this._items.length) {
+        return this._items[index];
       } else {
         return false;
       }
@@ -404,7 +414,6 @@
 
       if (item.active) {
         console.log('blur', item.id);
-        item.el.removeClass('active');
         item.active = false;
         this._trigger('itemblur', null, {
           item: item
@@ -431,7 +440,6 @@
         // make active
         this._activeItem = item;
         item.active = true;
-        item.el.addClass('active');
 
         // notify clients of changes
         var previousItem = this._previousItem;
@@ -578,6 +586,21 @@
       this._setActiveItem();
     },
 
+    onActive: function() {
+      this.$el.addClass('scrollStoryActive');
+    },
+
+    onInactive: function() {
+      this.$el.removeClass('scrollStoryActive');
+    },
+
+    onItemFocus: function(ev, data) {
+      data.item.el.addClass('active');
+    },
+
+    onItemBlur: function(ev, data) {
+      data.item.el.removeClass('active');
+    },
 
     /**
      * Given a jQuery selection, add those elements
@@ -623,10 +646,10 @@
      */
     _addItem: function(data, $el) {
       var item = {
-        index: this.items.length,
+        index: this._items.length,
 
         // id is from markup id attribute, domData or dynamically generated
-        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story' + instanceCounter + '-' + this.items.length,
+        id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story' + instanceCounter + '-' + this._items.length,
 
         // item's domData is from client data or data-* attrs
         domData: $.extend({}, data, $el.data()),
@@ -662,10 +685,10 @@
       }
 
       // global record
-      this.items.push(item);
+      this._items.push(item);
 
       // quick lookup
-      this.itemsById[item.id] = {
+      this._itemsById[item.id] = {
         index: item.index,
         id: item.id
       };
