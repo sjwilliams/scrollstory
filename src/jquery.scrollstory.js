@@ -52,7 +52,9 @@
     itemfocus: $.noop,
     itemblur: $.noop,
     active: $.noop,
-    inactive: $.noop
+    inactive: $.noop,
+    itementerviewport: $.noop,
+    itemexitviewport: $.noop
   };
 
   // static across all plugin instances
@@ -118,6 +120,8 @@
       this.$el.on('inactive', this.onInactive.bind(this));
       this.$el.on('itemblur', this.onItemBlur.bind(this));
       this.$el.on('itemfocus', this.onItemFocus.bind(this));
+      this.$el.on('itementerviewport', this.onItemEnterViewport.bind(this));
+      this.$el.on('itemexitviewport', this.onItemExitViewport.bind(this));
 
 
       /**
@@ -497,6 +501,7 @@
       var length = items.length;
       var item;
       var rect;
+      var previouslyInViewport;
 
       for (i = 0; i < length; i++) {
         item = items[i];
@@ -506,8 +511,16 @@
 
         // TODO
         // make this work for partially in viewport, not just fully in viewport
+        
+        previouslyInViewport = item.inViewport;
         item.inViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || docElem.clientHeight) && rect.right <= (window.innerWidth || docElem.clientWidth);
         // console.log(rect, item.inViewport);
+      
+        if (item.inViewport && !previouslyInViewport) {
+          this._trigger('itementerviewport', null, {item:item});
+        } else if (!item.inViewport && previouslyInViewport) {
+          this._trigger('itemexitviewport', null, {item:item});
+        }
       }
 
       // update container scroll position
@@ -585,13 +598,19 @@
     },
 
     onItemFocus: function(ev, data) {
-      console.log('focus', data.item.id);
       data.item.el.addClass('active');
     },
 
     onItemBlur: function(ev, data) {
-      console.log('blur', data.item.id);
       data.item.el.removeClass('active');
+    },
+
+    onItemEnterViewport: function(ev, data) {
+      data.item.el.addClass('inviewport');
+    },
+
+    onItemExitViewport: function(ev, data) {
+      data.item.el.removeClass('inviewport');
     },
 
     /**
