@@ -139,13 +139,19 @@
       var boundResize = debounce(this.handleResize.bind(this));
       $(window).on('DOMContentLoaded load resize', boundResize);
 
-
-      // TODO 
-      // onResize, update offsets, etc
-
       // TODO
       // When refreshed in middle of page, make sure 
       // an item activates on first scoll
+
+      // TODO
+      // Simplify most _triggers to just pass .item?
+      // Maybe if all items have a reference to `this`,
+      // there's no need for other data?
+      
+      // TODO
+      // Keep a running list of the order of active items?
+      // Could help simplify the previousItem stuff in 
+      // certain _triggers
 
 
       instanceCounter = instanceCounter + 1;
@@ -419,9 +425,7 @@
     _blurItem: function(item) {
       if (item.active) {
         item.active = false;
-        this._trigger('itemblur', null, {
-          item: item
-        });
+        this._trigger('itemblur', null, {item: item});
       }
     },
 
@@ -534,13 +538,9 @@
         // console.log(rect, item.inViewport);
 
         if (item.inViewport && !previouslyInViewport) {
-          this._trigger('itementerviewport', null, {
-            item: item
-          });
+          this._trigger('itementerviewport', null, {item: item});
         } else if (!item.inViewport && previouslyInViewport) {
-          this._trigger('itemexitviewport', null, {
-            item: item
-          });
+          this._trigger('itemexitviewport', null, {item: item});
         }
       }
 
@@ -730,9 +730,7 @@
       // quick lookup
       this._itemsById[item.id] = item;
 
-      this._trigger('itembuild', null, {
-        item: item
-      });
+      this._trigger('itembuild', null, {item: item});
     },
 
 
