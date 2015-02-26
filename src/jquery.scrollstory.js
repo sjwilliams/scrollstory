@@ -97,12 +97,6 @@
 
 
       /**
-       * Various viewport properties cached to this_.viewport
-       */
-      this.setViewport();
-
-
-      /**
        * Attach handlers before any events are dispatched
        */
       this.$el.on('containeractive', this._onContainerActive.bind(this));
@@ -169,43 +163,6 @@
       instanceCounter = instanceCounter + 1;
 
       this._trigger('complete', null, this);
-    },
-
-
-    /**
-     * Update viewport rectangle coordinates cache
-     * TODO: remove this?
-     */
-    setViewport: function() {
-      var width = this.$win.width();
-      var height = this.$win.height();
-      var top = this.$win.scrollTop();
-      var left = this.$win.scrollLeft();
-      var bottom = height + top;
-      var right = left + width;
-
-      this._viewport = {
-        width: width,
-        height: height,
-        top: top,
-        left: left,
-        bottom: bottom,
-        right: right
-      };
-    },
-
-
-    /**
-     * Return viewport coordinates
-     *
-     * @return {Object}
-     */
-    getViewport: function() {
-      if (typeof this._viewport === 'undefined') {
-        this.setViewport();
-      }
-
-      return this._viewport();
     },
 
 
