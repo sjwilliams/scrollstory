@@ -49,12 +49,17 @@
 
     debug: false,
 
+    itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
     active: $.noop,
     inactive: $.noop,
     itementerviewport: $.noop,
-    itemexitviewport: $.noop
+    itemexitviewport: $.noop,
+    updateoffsets: $.noop,
+    complete: $.noop,
+    resize: $.noop,
+    scroll: $.noop
   };
 
   // static across all plugin instances
@@ -125,11 +130,16 @@
 
 
       /**
-       * scroll is throttled and bound to plugin
+       * scroll is throttled and bound to `this`
        */
       var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
-      var boundScroll = scrollThrottle(this.onScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+      var boundScroll = scrollThrottle(this.handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+      // var boundScroll = this.handleScroll.bind(this);
       $(window, 'body').scroll(boundScroll);
+
+
+      var boundResize = debounce(this.handleResize.bind(this));
+      $(window).resize(boundResize);
 
 
       // TODO 
@@ -139,7 +149,10 @@
       // When refreshed in middle of page, make sure 
       // an item activates on first scoll
 
+
       instanceCounter = instanceCounter + 1;
+
+      this._trigger('complete', null, this);
     },
 
 
@@ -486,6 +499,8 @@
       this._height = box.height;
       this._width = box.width;
       this.topOffset = box.top + scrollTop - clientTop;
+
+      this._trigger('updateoffsets', null, {});
     },
 
 
@@ -584,9 +599,16 @@
     },
 
 
-    onScroll: function() {
+    handleScroll: function() {
+      console.log('scroll');
       this._updateScrollPositions();
       this._setActiveItem();
+      this._trigger('scroll');
+    },
+
+    handleResize: function() {
+      console.log('resize', this);
+      this._trigger('resize');
     },
 
     onActive: function() {
