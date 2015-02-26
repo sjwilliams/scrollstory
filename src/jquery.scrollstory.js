@@ -16,7 +16,7 @@
     contentSelector: '.story',
 
     // Enables keys to navigate menu
-    keyboard: true,
+    // keyboard: true,
 
     // Offset from top used in the programatic scrolling of an
     // item to the focus position. Useful in the case of thinks like
@@ -95,19 +95,27 @@
       this._activeItem;
       this._previousItem;
 
+
       /**
        * Various viewport properties cached to this_.viewport
        */
       this.setViewport();
 
-      /**
-       * Convert data from outside of widget into
-       * items and, if needed, categories of items.
-       *
-       * It also updates offsets and sets the active item.
-       */
-      this.addItems(this.options.content);
 
+      /**
+       * Attach handlers before any events are dispatched
+       */
+      this.$el.on('containeractive', this._onContainerActive.bind(this));
+      this.$el.on('containerinactive', this._onContainerInactive.bind(this));
+      this.$el.on('itemblur', this._onItemBlur.bind(this));
+      this.$el.on('itemfocus', this._onItemFocus.bind(this));
+      this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
+      this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
+
+
+      /**
+       * Debug UI
+       */
       if (this.options.debug) {
         $('<div class="' + pluginName + 'Trigger"></div>').css({
           position: 'fixed',
@@ -121,12 +129,13 @@
       }
 
 
-      this.$el.on('containeractive', this._onContainerActive.bind(this));
-      this.$el.on('containerinactive', this._onContainerInactive.bind(this));
-      this.$el.on('itemblur', this._onItemBlur.bind(this));
-      this.$el.on('itemfocus', this._onItemFocus.bind(this));
-      this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
-      this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
+      /**
+       * Convert data from outside of widget into
+       * items and, if needed, categories of items.
+       *
+       * It also updates offsets and sets the active item.
+       */
+      this.addItems(this.options.content);
 
 
       /**
@@ -136,8 +145,9 @@
       var boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
       $(window, 'body').on('scroll', boundScroll);
 
-      var boundResize = debounce(this._handleResize.bind(this));
-      $(window).on('DOMContentLoaded load resize', boundResize);
+      // anything that might cause a repaint      
+      var resizeThrottle = debounce(this._handleResize, 100);
+      $(window).on('DOMContentLoaded load resize', resizeThrottle.bind(this));
 
       // TODO
       // When refreshed in middle of page, make sure 
@@ -535,6 +545,14 @@
 
         previouslyInViewport = item.inViewport;
         item.inViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || docElem.clientHeight) && rect.right <= (window.innerWidth || docElem.clientWidth);
+        // item.inViewport = rect.height - rect.top >= 0 && rect.width - rect.left >= 0;
+        
+        if (i === 0) {
+          console.log('inviewport', item.id, item.inViewport, rect);
+        }
+
+
+
         // console.log(rect, item.inViewport);
 
         if (item.inViewport && !previouslyInViewport) {
