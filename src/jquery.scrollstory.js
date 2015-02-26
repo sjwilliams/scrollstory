@@ -121,22 +121,22 @@
       }
 
 
-      this.$el.on('containeractive', this.onContainerActive.bind(this));
-      this.$el.on('containerinactive', this.onContainerInactive.bind(this));
-      this.$el.on('itemblur', this.onItemBlur.bind(this));
-      this.$el.on('itemfocus', this.onItemFocus.bind(this));
-      this.$el.on('itementerviewport', this.onItemEnterViewport.bind(this));
-      this.$el.on('itemexitviewport', this.onItemExitViewport.bind(this));
+      this.$el.on('containeractive', this._onContainerActive.bind(this));
+      this.$el.on('containerinactive', this._onContainerInactive.bind(this));
+      this.$el.on('itemblur', this._onItemBlur.bind(this));
+      this.$el.on('itemfocus', this._onItemFocus.bind(this));
+      this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
+      this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
 
 
       /**
        * bind and throttle page events
        */
       var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
-      var boundScroll = scrollThrottle(this.handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+      var boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
       $(window, 'body').on('scroll', boundScroll);
 
-      var boundResize = debounce(this.handleResize.bind(this));
+      var boundResize = debounce(this._handleResize.bind(this));
       $(window).on('DOMContentLoaded load resize', boundResize);
 
       // TODO
@@ -504,7 +504,7 @@
       box = this.el.getBoundingClientRect();
       this._height = box.height;
       this._width = box.width;
-      this.topOffset = box.top + scrollTop - clientTop;
+      this._topOffset = box.top + scrollTop - clientTop;
 
       this._trigger('updateoffsets', null, {});
     },
@@ -549,7 +549,7 @@
 
       // takes into account other elements that might make the top of the 
       // container different than the topoffset of the first item.
-      this._distanceToOffset = this.topOffset - scrollTop - triggerOffset;
+      this._distanceToOffset = this._topOffset - scrollTop - triggerOffset;
     },
 
 
@@ -605,40 +605,40 @@
     },
 
 
-    handleScroll: function() {
+    _handleScroll: function() {
       this._updateScrollPositions();
       this._setActiveItem();
       this._trigger('containerscroll');
     },
 
-    handleResize: function() {
+    _handleResize: function() {
       console.log('resize', this);
       this._updateScrollPositions();
       this._setActiveItem();
       this._trigger('containerresize');
     },
 
-    onContainerActive: function() {
+    _onContainerActive: function() {
       this.$el.addClass(pluginName + 'Active');
     },
 
-    onContainerInactive: function() {
+    _onContainerInactive: function() {
       this.$el.removeClass(pluginName + 'Active');
     },
 
-    onItemFocus: function(ev, data) {
+    _onItemFocus: function(ev, data) {
       data.item.el.addClass('active');
     },
 
-    onItemBlur: function(ev, data) {
+    _onItemBlur: function(ev, data) {
       data.item.el.removeClass('active');
     },
 
-    onItemEnterViewport: function(ev, data) {
+    _onItemEnterViewport: function(ev, data) {
       data.item.el.addClass('inviewport');
     },
 
-    onItemExitViewport: function(ev, data) {
+    _onItemExitViewport: function(ev, data) {
       data.item.el.removeClass('inviewport');
     },
 
