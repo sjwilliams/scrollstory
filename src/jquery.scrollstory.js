@@ -303,9 +303,7 @@
       var containerInActiveArea = (this._distanceToFirstItemTopOffset <= 0 && (Math.abs(this._distanceToOffset) - this._height) < 0);
 
       // only check items that aren't filtered
-      var items = this.getItemsBy(function(item) {
-        return !item.filtered;
-      });
+      var items = this.getItemsWhere({filtered:false});
 
       var activeItem;
       items.forEach(function(item) {
@@ -335,8 +333,6 @@
 
 
       if (activeItem) {
-
-        // item
         this._focusItem(activeItem);
 
         // container
@@ -395,7 +391,6 @@
       if (!exceptions) {
         this._activeItem = undefined;
       }
-
     },
 
     /**
@@ -403,7 +398,6 @@
      * @param  {Object}
      */
     _blurItem: function(item) {
-
       if (item.active) {
         item.active = false;
         this._trigger('itemblur', null, {
@@ -420,7 +414,6 @@
      * @param  {Object} item object
      */
     _focusItem: function(item) {
-
       if (!item.active && !item.filtered) {
         this._previousItem = this._activeItem;
 
