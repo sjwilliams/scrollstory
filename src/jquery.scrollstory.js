@@ -52,14 +52,14 @@
     itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
-    active: $.noop,
-    inactive: $.noop,
     itementerviewport: $.noop,
     itemexitviewport: $.noop,
+    containeractive: $.noop,
+    containerinactive: $.noop,
+    containerresize: $.noop,
+    containerscroll: $.noop,
     updateoffsets: $.noop,
-    complete: $.noop,
-    resize: $.noop,
-    scroll: $.noop
+    complete: $.noop
   };
 
   // static across all plugin instances
@@ -74,7 +74,7 @@
     this._defaults = defaults;
     this._name = pluginName;
     this._instanceId = (function() {
-      return pluginName+'_' + instanceCounter;
+      return pluginName + '_' + instanceCounter;
     })();
     this.init();
   }
@@ -109,7 +109,7 @@
       this.addItems(this.options.content);
 
       if (this.options.debug) {
-        $('<div class="'+pluginName+'Trigger"></div>').css({
+        $('<div class="' + pluginName + 'Trigger"></div>').css({
           position: 'fixed',
           width: '100%',
           height: '1px',
@@ -117,12 +117,12 @@
           left: '0px',
           backgroundColor: '#ff0000',
           zIndex: 1000
-        }).attr('id', pluginName+'Trigger-' + this._instanceId).appendTo('body');
+        }).attr('id', pluginName + 'Trigger-' + this._instanceId).appendTo('body');
       }
 
 
-      this.$el.on('active', this.onActive.bind(this));
-      this.$el.on('inactive', this.onInactive.bind(this));
+      this.$el.on('containeractive', this.onContainerActive.bind(this));
+      this.$el.on('containerinactive', this.onContainerInactive.bind(this));
       this.$el.on('itemblur', this.onItemBlur.bind(this));
       this.$el.on('itemfocus', this.onItemFocus.bind(this));
       this.$el.on('itementerviewport', this.onItemEnterViewport.bind(this));
@@ -130,16 +130,14 @@
 
 
       /**
-       * scroll is throttled and bound to `this`
+       * bind and throttle page events
        */
       var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
       var boundScroll = scrollThrottle(this.handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
-      // var boundScroll = this.handleScroll.bind(this);
-      $(window, 'body').scroll(boundScroll);
-
+      $(window, 'body').on('scroll', boundScroll);
 
       var boundResize = debounce(this.handleResize.bind(this));
-      $(window).resize(boundResize);
+      $(window).on('DOMContentLoaded load resize', boundResize);
 
 
       // TODO 
@@ -300,12 +298,14 @@
     },
 
     /**
-     * Get items that are atleast partially visible 
-     * 
+     * Get items that are atleast partially visible
+     *
      * @return {Array}
      */
     getItemsInViewport: function() {
-      return this.getItemsWhere({inViewport: true});
+      return this.getItemsWhere({
+        inViewport: true
+      });
     },
 
 
@@ -315,12 +315,14 @@
 
 
     _setActiveItem: function() {
-      
+
       // top of the container is above the trigger point and the bottom is still below trigger point. 
       var containerInActiveArea = (this._distanceToFirstItemTopOffset <= 0 && (Math.abs(this._distanceToOffset) - this._height) < 0);
 
       // only check items that aren't filtered
-      var items = this.getItemsWhere({filtered:false});
+      var items = this.getItemsWhere({
+        filtered: false
+      });
 
       var activeItem;
       items.forEach(function(item) {
@@ -343,7 +345,7 @@
       if (activeItem && !containerInActiveArea && this.options.disablePastLastItem) {
         activeItem = false;
 
-      // not yet scrolled in, but auto-activate is set to true
+        // not yet scrolled in, but auto-activate is set to true
       } else if (this.options.autoActivateFirstItem && items.length > 0) {
         activeItem = items[0];
       }
@@ -355,16 +357,16 @@
         // container
         if (!this._isActive) {
           this._isActive = true;
-          this._trigger('active');
+          this._trigger('containeractive');
         }
 
       } else {
         this._blurAllItems();
-        
+
         // container
         if (this._isActive) {
           this._isActive = false;
-          this._trigger('inactive');
+          this._trigger('containerinactive');
         }
       }
     },
@@ -526,15 +528,19 @@
 
         // TODO
         // make this work for partially in viewport, not just fully in viewport
-        
+
         previouslyInViewport = item.inViewport;
         item.inViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= (window.innerHeight || docElem.clientHeight) && rect.right <= (window.innerWidth || docElem.clientWidth);
         // console.log(rect, item.inViewport);
-      
+
         if (item.inViewport && !previouslyInViewport) {
-          this._trigger('itementerviewport', null, {item:item});
+          this._trigger('itementerviewport', null, {
+            item: item
+          });
         } else if (!item.inViewport && previouslyInViewport) {
-          this._trigger('itemexitviewport', null, {item:item});
+          this._trigger('itemexitviewport', null, {
+            item: item
+          });
         }
       }
 
@@ -600,23 +606,24 @@
 
 
     handleScroll: function() {
-      console.log('scroll');
       this._updateScrollPositions();
       this._setActiveItem();
-      this._trigger('scroll');
+      this._trigger('containerscroll');
     },
 
     handleResize: function() {
       console.log('resize', this);
-      this._trigger('resize');
+      this._updateScrollPositions();
+      this._setActiveItem();
+      this._trigger('containerresize');
     },
 
-    onActive: function() {
-      this.$el.addClass(pluginName+'Active');
+    onContainerActive: function() {
+      this.$el.addClass(pluginName + 'Active');
     },
 
-    onInactive: function() {
-      this.$el.removeClass(pluginName+'Active');
+    onContainerInactive: function() {
+      this.$el.removeClass(pluginName + 'Active');
     },
 
     onItemFocus: function(ev, data) {
@@ -773,55 +780,32 @@
   /**
    * Utility methods
    *
-   * now(), debounce() and throttle() are from on Underscore.js:
+   * debounce() and throttle() are from on Underscore.js:
    * https://github.com/jashkenas/underscore
    */
-
-  /**
-   * Underscore's now():
-   * http://underscorejs.org/#now
-   * @return {Function}
-   */
-  var now = Date.now || function() {
-    return new Date().getTime();
-  };
 
   /**
    * Underscore's debounce:
    * http://underscorejs.org/#debounce
    */
   var debounce = function(func, wait, immediate) {
-    var timeout, args, context, timestamp, result;
-
-    var later = function() {
-      var last = now() - timestamp;
-
-      if (last < wait && last >= 0) {
-        timeout = setTimeout(later, wait - last);
-      } else {
+    var result;
+    var timeout = null;
+    return function() {
+      var context = this,
+        args = arguments;
+      var later = function() {
         timeout = null;
         if (!immediate) {
           result = func.apply(context, args);
-          if (!timeout) {
-            context = args = null;
-          }
         }
-      }
-    };
-
-    return function() {
-      context = this;
-      args = arguments;
-      timestamp = now();
+      };
       var callNow = immediate && !timeout;
-      if (!timeout) {
-        timeout = setTimeout(later, wait);
-      }
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
       if (callNow) {
         result = func.apply(context, args);
-        context = args = null;
       }
-
       return result;
     };
   };
@@ -834,35 +818,25 @@
     var context, args, result;
     var timeout = null;
     var previous = 0;
-    if (!options) {
-      options = {};
-    }
+    options || (options = {});
     var later = function() {
-      previous = options.leading === false ? 0 : now();
+      previous = options.leading === false ? 0 : new Date;
       timeout = null;
       result = func.apply(context, args);
-      if (!timeout) {
-        context = args = null;
-      }
     };
     return function() {
-      var timestamp = now();
+      var now = new Date;
       if (!previous && options.leading === false) {
-        previous = timestamp;
+        previous = now;
       }
-      var remaining = wait - (timestamp - previous);
+      var remaining = wait - (now - previous);
       context = this;
       args = arguments;
-      if (remaining <= 0 || remaining > wait) {
-        if (timeout) {
-          clearTimeout(timeout);
-          timeout = null;
-        }
-        previous = timestamp;
+      if (remaining <= 0) {
+        clearTimeout(timeout);
+        timeout = null;
+        previous = now;
         result = func.apply(context, args);
-        if (!timeout) {
-          context = args = null;
-        }
       } else if (!timeout && options.trailing !== false) {
         timeout = setTimeout(later, remaining);
       }
