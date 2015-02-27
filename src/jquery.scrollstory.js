@@ -150,11 +150,6 @@
       // an item activates on first scoll
 
       // TODO
-      // Simplify most _triggers to just pass .item?
-      // Maybe if all items have a reference to `this`,
-      // there's no need for other data?
-      
-      // TODO
       // Keep a running list of the order of active items?
       // Could help simplify the previousItem stuff in 
       // certain _triggers
@@ -200,7 +195,7 @@
     /**
      * Return an array of items that pass an abritrary truth test.
      *
-     * Example: this.getItemsBy(function(item){return item.domData.slug=='josh_williams'})
+     * Example: this.getItemsBy(function(item){return item.data.slug=='josh_williams'})
      *
      * @param {Function} truthTest The function to check all items against
      * @return {Array} Array of item objects
@@ -392,7 +387,7 @@
     _blurItem: function(item) {
       if (item.active) {
         item.active = false;
-        this._trigger('itemblur', null, {item: item});
+        this._trigger('itemblur', null, item);
       }
     },
 
@@ -416,12 +411,7 @@
 
         // notify clients of changes
         var previousItem = this._previousItem;
-        this._trigger('itemfocus', null, {
-          item: item,
-          index: item.index,
-          id: item.id,
-          previousItem: previousItem,
-        });
+        this._trigger('itemfocus', null, item);
 
         // trigger catgory change if not previously active or
         // this item's category is different from the last
@@ -473,7 +463,7 @@
       this._width = box.width;
       this._topOffset = box.top + scrollTop - clientTop;
 
-      this._trigger('updateoffsets', null, {});
+      this._trigger('updateoffsets');
     },
 
 
@@ -505,9 +495,9 @@
         item.fullyInViewport = rect.top >= 0 && rect.left >= 0 && rect.bottom <= wHeight && rect.right <= wWidth;
 
         if (item.inViewport && !previouslyInViewport) {
-          this._trigger('itementerviewport', null, {item: item});
+          this._trigger('itementerviewport', null, item);
         } else if (!item.inViewport && previouslyInViewport) {
-          this._trigger('itemexitviewport', null, {item: item});
+          this._trigger('itemexitviewport', null, item);
         }
       }
 
@@ -526,16 +516,16 @@
      *
      * 1. jQuery selection. Items will be generated
      * from the selection, and any data-* attributes
-     * will be added to the item's domData object.
+     * will be added to the item's data object.
      *
      * 2. A string selector to search for elements
      * within our container. Items will be generated
      * from that selection, and any data-* attributes
-     * will be added to the item's domData object.
+     * will be added to the item's data object.
      *
      * 3. Array of objects. All needed markup will
      * be generated, and the data in each object will
-     * be added to the item's domData object.
+     * be added to the item's data object.
      *
      * 4. If no 'items' param, we search for items
      * using the options.contentSelector string.
@@ -655,16 +645,16 @@
       var item = {
         index: this._items.length,
 
-        // id is from markup id attribute, domData or dynamically generated
+        // id is from markup id attribute, data or dynamically generated
         id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story' + instanceCounter + '-' + this._items.length,
 
-        // item's domData is from client data or data-* attrs
-        domData: $.extend({}, data, $el.data()),
+        // item's data is from client data or data-* attrs
+        data: $.extend({}, data, $el.data()),
 
         category: data.category, // optional category this item belongs to
         tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
         el: $el,
-
+        scrollStory: this,
         // previousItem: previousItem,
         nextItem: false,
 
@@ -697,7 +687,7 @@
       // quick lookup
       this._itemsById[item.id] = item;
 
-      this._trigger('itembuild', null, {item: item});
+      this._trigger('itembuild', null, item);
     },
 
 
