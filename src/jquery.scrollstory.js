@@ -93,7 +93,7 @@
       this._tags = [];
 
       this._activeItem;
-      this._previousItem;
+      this._previousItems = [];
 
 
       /**
@@ -148,12 +148,6 @@
       // TODO
       // When refreshed in middle of page, make sure 
       // an item activates on first scoll
-
-      // TODO
-      // Keep a running list of the order of active items?
-      // Could help simplify the previousItem stuff in 
-      // certain _triggers
-
 
       instanceCounter = instanceCounter + 1;
 
@@ -276,6 +270,13 @@
       return this.getItemsWhere({inViewport: true});
     },
 
+    getPreviousItem: function() {
+      return this._previousItems[0];
+    },
+
+    getPreviousItems: function() {
+      return this._previousItems;
+    },
 
     getActiveItem: function() {
       return this._activeItem;
@@ -400,8 +401,6 @@
      */
     _focusItem: function(item) {
       if (!item.active && !item.filtered) {
-        this._previousItem = this._activeItem;
-
         // blur all the other items
         this._blurAllItems(item);
 
@@ -410,7 +409,6 @@
         item.active = true;
 
         // notify clients of changes
-        var previousItem = this._previousItem;
         this._trigger('itemfocus', null, item);
 
         // trigger catgory change if not previously active or
@@ -586,6 +584,7 @@
     },
 
     _onItemBlur: function(ev, item) {
+      this._previousItems.unshift(item);
       item.el.removeClass('active');
     },
 
@@ -653,7 +652,6 @@
         tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
         el: $el,
         scrollStory: this,
-        // previousItem: previousItem,
         nextItem: false,
 
         // in-focus item
