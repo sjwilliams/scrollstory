@@ -434,7 +434,6 @@
      * http://stackoverflow.com/questions/123999/how-to-tell-if-a-dom-element-is-visible-in-the-current-viewport/7557433#7557433
      */
     updateOffsets: function() {
-      console.log('update offsets');
       var bodyElem = document.body;
       var docElem = document.documentElement;
 
@@ -569,7 +568,6 @@
     },
 
     _handleResize: function() {
-      console.log('resize', this);
       this._updateScrollPositions();
       this._setActiveItem();
       this._trigger('containerresize');
@@ -583,20 +581,20 @@
       this.$el.removeClass(pluginName + 'Active');
     },
 
-    _onItemFocus: function(ev, data) {
-      data.item.el.addClass('active');
+    _onItemFocus: function(ev, item) {
+      item.el.addClass('active');
     },
 
-    _onItemBlur: function(ev, data) {
-      data.item.el.removeClass('active');
+    _onItemBlur: function(ev, item) {
+      item.el.removeClass('active');
     },
 
-    _onItemEnterViewport: function(ev, data) {
-      data.item.el.addClass('inviewport');
+    _onItemEnterViewport: function(ev, item) {
+      item.el.addClass('inviewport');
     },
 
-    _onItemExitViewport: function(ev, data) {
-      data.item.el.removeClass('inviewport');
+    _onItemExitViewport: function(ev, item) {
+      item.el.removeClass('inviewport');
     },
 
     /**
