@@ -537,7 +537,7 @@
     addItems: function(items) {
 
       // use an existing jQuery selection
-      if (items instanceof jQuery) {
+      if (items instanceof $) {
         this._prepItemsFromSelection(items);
 
         // a custom selector to use within our container
