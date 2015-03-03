@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: External data</title>
+    <link rel="stylesheet" href="base.css">
+</head>
+
+<body>
+    <div id="container">
+        <p class="about">Generate elements from data.</p>
+        <code>
+            Our code here
+        </code>
+        <div class="stories">
+
+        </div>
+    </div>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="../src/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        var storyItems = [{name: 'Josh', location: 'San Francisco'}, {name: 'Shan', location: 'Berkeley'}, {name: 'Mike', location: 'San Francisco'}, {name:'Jennifer', location: 'Oakland'}];
+
+        $('.stories').scrollStory({
+            debug: true,
+            triggerOffset: 30,
+            content: storyItems,
+            itembuild: function(ev, item) {
+                item.el
+                    .css({'height': $(window).height() * 0.6})
+                    .html('<span>' + item.index + ' ' + item.data.name + ', '+item.data.location + '</span>');
+            }
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>
