@@ -1,14 +1,32 @@
 {
 	"name": "scrollstory",
+  "description": "A jQuery plugin for building simple, scroll-based pages and interactions.",
   "version": "0.3.0",
-	"devDependencies": {
-		"grunt": "~0.4.1",
-		"grunt-cli": "~0.1.7",
-		"grunt-contrib-jshint": "~0.4.3",
-		"grunt-contrib-concat": "~0.3.0",
-		"grunt-contrib-uglify": "~0.2.0"
-	},
-	"scripts": {
-		"test": "grunt travis --verbose"
-	}
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sjwilliams/scrollstory.git"
+  },
+  "keywords": [
+    "jquery-plugin",
+    "ecosystem:jquery",
+    "scroll",
+    "scrolling"
+  ],
+  "license": "MIT",
+  "author": [
+    {
+      "name": "Josh Williams",
+      "email": "contact@joshwilliams.com"
+    }
+  ],
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-cli": "~0.1.7",
+    "grunt-contrib-jshint": "~0.4.3",
+    "grunt-contrib-concat": "~0.3.0",
+    "grunt-contrib-uglify": "~0.2.0"
+  },
+  "scripts": {
+    "test": "grunt travis --verbose"
+  },
 }
