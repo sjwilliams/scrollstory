@@ -1,10 +1,10 @@
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['jquery', window, document, undefined], factory);
+    define(['jquery', undefined], factory);
   } else {
-    factory(jQuery, window, document, undefined);
+    factory(jQuery, undefined);
   }
-}(function($, window, document, undefined) {
+}(function($, undefined) {
 
   var pluginName = 'scrollStory';
   var defaults = {
