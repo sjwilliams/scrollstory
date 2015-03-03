@@ -9,10 +9,10 @@
   var pluginName = 'scrollStory';
   var defaults = {
 
-    // jquery object, dom element, or array of values, or null (to use existing DOM)
+    // jquery object, class selector string, or array of values, or null (to use existing DOM)
     content: null,
 
-    // Only used if content is a dom element or null. Should be a class selector
+    // Only used if content null. Should be a class selector
     contentSelector: '.story',
 
     // Enables keys to navigate menu
@@ -551,6 +551,12 @@
         // search for elements with the default selector
       } else {
         this._prepItemsFromSelection(this.$el.find(this.options.contentSelector));
+      }
+
+      // after instantiation and any addItems, we must have 
+      // atleast one valid item. If not, plugin is misconfigured.
+      if (this.getItems().length < 1) {
+        throw new Error('addItems found no valid items.');
       }
 
       this.updateOffsets(); // must be called first
