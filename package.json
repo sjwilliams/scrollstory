@@ -1,5 +1,5 @@
 {
-	"name": "scrollstory",
+  "name": "scrollstory",
   "description": "A jQuery plugin for building simple, scroll-based pages and interactions.",
   "version": "0.3.0",
   "repository": {
@@ -28,5 +28,5 @@
   },
   "scripts": {
     "test": "grunt travis --verbose"
-  },
+  }
 }
