@@ -728,7 +728,8 @@
         this.$el.trigger(event, data);
 
         // call the callback
-        this.options[eventType](event, data);
+        var boundCb = this.options[eventType].bind(this);
+        boundCb(event, data);
       }
     }
   }; // end plugin.prototype
