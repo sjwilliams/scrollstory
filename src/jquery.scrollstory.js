@@ -34,7 +34,11 @@
     disablePastLastItem: true,
 
     // Automated scroll speed in ms. Set to 0 to remove animation.
-    // speed: 800,
+    speed: 800,
+
+    // Scroll easing. 'swing' or 'linear', unless an external plugin provides others
+    // http://api.jquery.com/animate/
+    easing: 'swing',
 
     // // scroll-based events are either 'debounce' or 'throttle'
     throttleType: 'throttle',
@@ -154,6 +158,60 @@
       this._trigger('complete', null, this);
     },
 
+    /**
+     * Get current item's index, 
+     * or set the current item width an index.
+     * @param  {Number} index
+     * @return {Number} index of active item
+     */
+    index: function(index) {
+      if (typeof index === 'number' && this.getItemByIndex(index)) {
+       this.setActiveItem(this.getItemByIndex(index));
+      } else {
+        return this.getActiveItem().index;
+      }
+    },
+
+    /**
+     * Convenience method to navigate to next item
+     */
+    next: function() {
+      this.index(this.index() + 1);
+    },
+
+
+    /**
+     * Convenience method to navigate to previous item
+     */
+    previous: function() {
+      console.log(this.index());
+      this.index(this.index() - 1);
+    },
+
+    /**
+     * The active item object.
+     * 
+     * @return {Object}
+     */
+    getActiveItem: function() {
+      return this._activeItem;
+    },
+
+    /**
+     * Given an item object, make it active,
+     * including updating its scroll position. 
+     * 
+     * @param {Object} item
+     */
+    setActiveItem: function(item) {
+
+      // verify item
+      if (item.id && this.getItemById(item.id)) {
+        this._scrollToItem(item);
+      }
+
+    },
+
 
     /**
      * Return array of all items
@@ -262,27 +320,40 @@
     },
 
     /**
-     * Get items that are atleast partially visible
+     * Array of items that are atleast partially visible
      *
      * @return {Array}
      */
     getItemsInViewport: function() {
-      return this.getItemsWhere({inViewport: true});
+      return this.getItemsWhere({
+        inViewport: true
+      });
     },
 
+    /**
+     * Most recently active item.  
+     * 
+     * @return {Object}
+     */
     getPreviousItem: function() {
       return this._previousItems[0];
     },
 
+    /**
+     * Array of items that were previously
+     * active, with most recently active
+     * at the front of the array. 
+     * 
+     * @return {Array}
+     */
     getPreviousItems: function() {
       return this._previousItems;
     },
 
-    getActiveItem: function() {
-      return this._activeItem;
-    },
-
-
+    /**
+     * Determine which item should be active,
+     * and then make it so.
+     */
     _setActiveItem: function() {
 
       // top of the container is above the trigger point and the bottom is still below trigger point. 
@@ -338,6 +409,36 @@
           this._trigger('containerinactive');
         }
       }
+    },
+
+    /**
+     * Scroll to an item, making it active
+     * @param  {Object}   item
+     * @param  {Object}   opts
+     * @param  {Function} callback  
+     */
+    _scrollToItem: function(item, opts, callback) {
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
+
+      /**
+       * Allows global scroll options to be overridden
+       * in one of two ways:
+       *
+       * 1. Higher priority: Passed in to scrollToItem directly via opts obj.
+       * 2. Lower priority: options set as an item.* property
+       */
+      opts = $.extend(true, {
+        // prefer item.scrollOffset over this.options.scrollOffset
+        scrollOffset: (typeof item.scrollOffset === 'number') ? item.scrollOffset : this.options.scrollOffset,
+        speed: this.options.speed,
+        easing: this.options.easing
+      }, opts);
+
+      // position to travel to
+      var scrolllTop = item.el.offset().top - opts.scrollOffset;
+      $('html, body').stop(true).animate({
+          scrollTop: scrolllTop
+      }, opts.speed, opts.easing, callback);
     },
 
 
