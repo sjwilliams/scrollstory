@@ -1,3 +1,12 @@
+// TODO
+// * When refreshed in middle of page, make sure 
+// an item activates on first scoll
+//
+// * Categories
+// * tags
+
+
+
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery', undefined], factory);
@@ -16,7 +25,7 @@
     contentSelector: '.story',
 
     // Enables keys to navigate menu
-    // keyboard: true,
+    keyboard: true,
 
     // Offset from top used in the programatic scrolling of an
     // item to the focus position. Useful in the case of thinks like
@@ -113,24 +122,6 @@
 
 
       /**
-       * Debug UI
-       */
-      if (this.options.debug) {
-        $('<div class="' + pluginName + 'Trigger"></div>').css({
-          position: 'fixed',
-          width: '100%',
-          height: '1px',
-          top: this.options.triggerOffset + 'px',
-          left: '0px',
-          backgroundColor: '#ff0000',
-          '-webkit-transform': 'translateZ(0)',
-          '-webkit-backface-visibility': 'hidden',
-          zIndex: 1000
-        }).attr('id', pluginName + 'Trigger-' + this._instanceId).appendTo('body');
-      }
-
-
-      /**
        * Convert data from outside of widget into
        * items and, if needed, categories of items.
        *
@@ -150,12 +141,47 @@
       var resizeThrottle = debounce(this._handleResize, 100);
       $(window).on('DOMContentLoaded load resize', resizeThrottle.bind(this));
 
-      // TODO
-      // When refreshed in middle of page, make sure 
-      // an item activates on first scoll
+
+      /**
+       * Bind keyboard events
+       */
+      if (this.options.keyboard) {
+        $(document).keydown(function(e){
+          var captured = true;
+          switch (e.keyCode) {
+            case 37:
+              if (e.metaKey) {return;} // ignore ctrl/cmd left, as browsers use that to go back in history
+              this.previous();
+              break; // left arrow
+            case 39:
+              this.next();
+              break; // right arrow
+            default:
+              captured = false;
+          }
+          return !captured;
+        }.bind(this));
+      }
+
+
+      /**
+       * Debug UI
+       */
+      if (this.options.debug) {
+        $('<div class="' + pluginName + 'Trigger"></div>').css({
+          position: 'fixed',
+          width: '100%',
+          height: '1px',
+          top: this.options.triggerOffset + 'px',
+          left: '0px',
+          backgroundColor: '#ff0000',
+          '-webkit-transform': 'translateZ(0)',
+          '-webkit-backface-visibility': 'hidden',
+          zIndex: 1000
+        }).attr('id', pluginName + 'Trigger-' + this._instanceId).appendTo('body');
+      }
 
       instanceCounter = instanceCounter + 1;
-
       this._trigger('complete', null, this);
     },
 
