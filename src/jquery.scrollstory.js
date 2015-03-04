@@ -96,6 +96,7 @@
       this._categories = [];
       this._tags = [];
 
+      this._isActive = false;
       this._activeItem;
       this._previousItems = [];
 
@@ -349,6 +350,16 @@
     getPreviousItems: function() {
       return this._previousItems;
     },
+
+    /**
+     * Whether or not any of the items are active.
+     *
+     * @return {Boolean}
+     */
+    isContainerActive: function() {
+      return this._isActive;
+    },
+
 
     /**
      * Determine which item should be active,
