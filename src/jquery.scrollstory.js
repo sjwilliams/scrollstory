@@ -2,7 +2,7 @@
 // * When refreshed in middle of page, make sure 
 // an item activates on first scoll
 //
-// * Categories
+// * categories
 // * tags
 
 
@@ -211,7 +211,6 @@
      * Convenience method to navigate to previous item
      */
     previous: function() {
-      console.log(this.index());
       this.index(this.index() - 1);
     },
 
@@ -239,6 +238,10 @@
 
     },
 
+
+    each: function(callback) {
+      this.applyToAllItems(callback);
+    },
 
     /**
      * Return array of all items
@@ -486,11 +489,12 @@
      * Optionally, a item or array of items of exceptions
      * can be passed in. They'll not call the callback.
      *
-     * @param  {Function} cb         Method to call, and pass in exepctions
+     * @param  {Function} callback         Method to call, and pass in exepctions
      * @param  {Object/Array}   exceptions
      */
-    applyToAllItems: function(cb, exceptions) {
+    applyToAllItems: function(callback, exceptions) {
       exceptions = ($.isArray(exceptions)) ? exceptions : [exceptions];
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
 
       var items = this.getItems();
       var i = 0;
@@ -500,7 +504,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         if (exceptions.indexOf(item) === -1) {
-          cb(item);
+          callback(item);
         }
       }
     },
