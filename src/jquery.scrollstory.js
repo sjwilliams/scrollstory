@@ -238,9 +238,23 @@
 
     },
 
-
+    /**
+     * Iterate over each item, passing the item to a callback.
+     *
+     * this.each(function(item){ console.log(item.id) });
+     *
+     * @param {Function}
+     */
     each: function(callback) {
       this.applyToAllItems(callback);
+    },
+
+    /**
+     * Number of items
+     * @return {Number}
+     */
+    getLength: function() {
+      return this.getItems().length;
     },
 
     /**
@@ -378,6 +392,20 @@
      */
     getPreviousItems: function() {
       return this._previousItems;
+    },
+
+    /**
+     * Progress of the scroll needed to activate the 
+     * last item on a 0.0 - 1.0 scale.
+     *
+     * 0 means the first item isn't yet active,
+     * and 1 means the last item is active, or 
+     * has already be scrolled beyond.
+     * 
+     * @return {[type]} [description]
+     */
+    getPercentScrollToLastItem: function() {
+      return this._percentScrollToLastItem || 0;
     },
 
     /**
@@ -616,8 +644,9 @@
 
       // update item scroll positions
       var items = this.getItems();
-      var i = 0;
       var length = items.length;
+      var lastItem = items[length -1];
+      var i = 0;
       var item;
       var rect;
       var previouslyInViewport;
@@ -646,6 +675,16 @@
       // takes into account other elements that might make the top of the 
       // container different than the topoffset of the first item.
       this._distanceToOffset = this._topOffset - scrollTop - triggerOffset;
+
+
+      // percent of the total scroll needed to activate the last item
+      var percentScrollToLastItem = 0;
+      if (this._distanceToOffset < 0) {
+        percentScrollToLastItem = 1 - (lastItem.distanceToOffset / (this._height - lastItem.height));
+        percentScrollToLastItem = (percentScrollToLastItem < 1) ? percentScrollToLastItem : 1; // restrict range
+      }
+
+      this._percentScrollToLastItem = percentScrollToLastItem;
     },
 
 
