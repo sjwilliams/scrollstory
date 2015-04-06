@@ -502,11 +502,17 @@
         easing: this.options.easing
       }, opts);
 
+
+      // because we animate to body and html for maximum compatiblity, 
+      // we only want the callback to fire once. jQuery will call it 
+      // once for each element otherwise
+      var debouncedCallback = debounce(callback, 100);
+
       // position to travel to
       var scrolllTop = item.el.offset().top - opts.scrollOffset;
       $('html, body').stop(true).animate({
           scrollTop: scrolllTop
-      }, opts.speed, opts.easing, callback);
+      }, opts.speed, opts.easing, debouncedCallback);
     },
 
 
