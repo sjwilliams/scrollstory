@@ -189,11 +189,12 @@
      * Get current item's index, 
      * or set the current item width an index.
      * @param  {Number} index
+     * @param  {Function} callback
      * @return {Number} index of active item
      */
-    index: function(index) {
+    index: function(index, callback) {
       if (typeof index === 'number' && this.getItemByIndex(index)) {
-       this.setActiveItem(this.getItemByIndex(index));
+        this.setActiveItem(this.getItemByIndex(index), callback);
       } else {
         return this.getActiveItem().index;
       }
@@ -229,11 +230,10 @@
      * 
      * @param {Object} item
      */
-    setActiveItem: function(item) {
-
+    setActiveItem: function(item, callback) {
       // verify item
       if (item.id && this.getItemById(item.id)) {
-        this._scrollToItem(item);
+        this._scrollToItem(item, {}, callback);
       }
 
     },
