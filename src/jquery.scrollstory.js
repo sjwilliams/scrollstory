@@ -39,7 +39,7 @@
     // regardless of its position relative to the offset
     autoActivateFirstItem: false,
 
-    // Disable last item once it's scroll beyond the trigger point
+    // Disable last item -- and the entire widget -- once it's scroll beyond the trigger point
     disablePastLastItem: true,
 
     // Automated scroll speed in ms. Set to 0 to remove animation.
@@ -61,6 +61,10 @@
     throttleTypeOptions: null,
 
     debug: false,
+
+    // whether or not the scroll checkings
+    // is enabled.
+    enabled: true,
 
     itembuild: $.noop,
     itemfocus: $.noop,
@@ -417,6 +421,19 @@
       return this._isActive;
     },
 
+    /**
+     * Disable scroll updates
+     */
+    disable: function() {
+      this.options.enabled = false;
+    },
+    
+    /**
+     * Enable scroll updates
+     */
+    enable: function() {
+      this.options.enabled = true;
+    },
 
     /**
      * Determine which item should be active,
@@ -753,9 +770,11 @@
 
 
     _handleScroll: function() {
-      this._updateScrollPositions();
-      this._setActiveItem();
-      this._trigger('containerscroll');
+      if (this.options.enabled) {
+        this._updateScrollPositions();
+        this._setActiveItem();
+        this._trigger('containerscroll');
+      }
     },
 
     _handleResize: function() {
