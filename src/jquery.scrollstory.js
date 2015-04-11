@@ -198,7 +198,7 @@
      */
     index: function(index, callback) {
       if (typeof index === 'number' && this.getItemByIndex(index)) {
-        this.setActiveItem(this.getItemByIndex(index), callback);
+        this.setActiveItem(this.getItemByIndex(index), {}, callback);
       } else {
         return this.getActiveItem().index;
       }
@@ -234,12 +234,13 @@
      * 
      * @param {Object} item
      */
-    setActiveItem: function(item, callback) {
+    setActiveItem: function(item, options, callback) {
+      options = options || {};
+
       // verify item
       if (item.id && this.getItemById(item.id)) {
-        this._scrollToItem(item, {}, callback);
+        this._scrollToItem(item, options, callback);
       }
-
     },
 
     /**
