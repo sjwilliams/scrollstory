@@ -174,18 +174,20 @@
       /**
        * Debug UI
        */
+      this.$trigger = $('<div class="' + pluginName + 'Trigger"></div>').css({
+        position: 'fixed',
+        width: '100%',
+        height: '1px',
+        top: this.options.triggerOffset + 'px',
+        left: '0px',
+        backgroundColor: '#ff0000',
+        '-webkit-transform': 'translateZ(0)',
+        '-webkit-backface-visibility': 'hidden',
+        zIndex: 1000
+      }).attr('id', pluginName + 'Trigger-' + this._instanceId);
+      
       if (this.options.debug) {
-        this.$trigger = $('<div class="' + pluginName + 'Trigger"></div>').css({
-          position: 'fixed',
-          width: '100%',
-          height: '1px',
-          top: this.options.triggerOffset + 'px',
-          left: '0px',
-          backgroundColor: '#ff0000',
-          '-webkit-transform': 'translateZ(0)',
-          '-webkit-backface-visibility': 'hidden',
-          zIndex: 1000
-        }).attr('id', pluginName + 'Trigger-' + this._instanceId).appendTo('body');
+        this.$trigger.appendTo('body');
       }
 
       instanceCounter = instanceCounter + 1;
