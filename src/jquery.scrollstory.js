@@ -76,6 +76,8 @@
     containerresize: $.noop,
     containerscroll: $.noop,
     updateoffsets: $.noop,
+    triggeroffsetupdate: $.noop,
+    scrolloffsetupdate: $.noop,
     complete: $.noop
   };
 
@@ -123,6 +125,7 @@
       this.$el.on('itemfocus', this._onItemFocus.bind(this));
       this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
       this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
+      this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
 
 
       /**
@@ -172,7 +175,7 @@
        * Debug UI
        */
       if (this.options.debug) {
-        $('<div class="' + pluginName + 'Trigger"></div>').css({
+        this.$trigger = $('<div class="' + pluginName + 'Trigger"></div>').css({
           position: 'fixed',
           width: '100%',
           height: '1px',
@@ -434,6 +437,26 @@
      */
     enable: function() {
       this.options.enabled = true;
+    },
+
+    /**
+     * Update trigger offset
+     * @param  {Number} offset
+     */
+    updateTriggerOffset: function(offset) {
+      this.options.triggerOffset = offset;
+      this.updateOffsets();
+      this._trigger('triggeroffsetupdate', null, offset);
+    },
+
+    /**
+     * Update scroll offset
+     * @param  {Number} offset
+     */
+    updateScrollOffset: function(offset) {
+      this.options.scrollOffset = offset;
+      this.updateOffsets();
+      this._trigger('scrolloffsetupdate', null, offset);
     },
 
     /**
@@ -807,6 +830,12 @@
 
     _onItemExitViewport: function(ev, item) {
       item.el.removeClass('inviewport');
+    },
+
+    _onTriggerOffsetUpdate: function(ev, offset) {
+      this.$trigger.css({
+        top: offset + 'px'
+      });
     },
 
     /**
