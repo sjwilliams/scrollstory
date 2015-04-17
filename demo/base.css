@@ -8,20 +8,35 @@ body {
   margin: 30px auto;
 }
 
+
+
+.button,
 #status {
-  position: fixed;
-  right: 5%;
-  top: 10px;
+  display: inline;
   min-width: 60px;
   border-radius: 5px;
+  padding: 5px;
   background-color: #000;
   color: #fff;
-  padding: 5px;
+
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
   -o-user-select: none;
   user-select: none;
+}
+
+.button{
+  background-color: #EC6A0C;
+  text-align: center;
+
+  cursor: pointer;
+}
+
+#status{
+  position: fixed;
+  right: 5%;
+  top: 10px;
   z-index: 11;
   -webkit-transform: translateZ(0);
 }

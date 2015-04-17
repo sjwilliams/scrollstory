@@ -60,6 +60,9 @@
     // see: http://underscorejs.org/#throttle && http://underscorejs.org/#debounce
     throttleTypeOptions: null,
 
+    // Update offsets after likely repaints, like window resizes and filters
+    autoUpdateOffsets: true, 
+
     debug: false,
 
     // whether or not the scroll checkings
@@ -69,6 +72,8 @@
     itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
+    itemfilter: $.noop,
+    itemunfilter: $.noop,
     itementerviewport: $.noop,
     itemexitviewport: $.noop,
     containeractive: $.noop,
@@ -84,6 +89,76 @@
   // static across all plugin instances
   // so we can uniquely ID elements
   var instanceCounter = 0;
+
+
+
+  /**
+   * Utility methods
+   *
+   * debounce() and throttle() are from on Underscore.js:
+   * https://github.com/jashkenas/underscore
+   */
+
+  /**
+   * Underscore's debounce:
+   * http://underscorejs.org/#debounce
+   */
+  var debounce = function(func, wait, immediate) {
+    var result;
+    var timeout = null;
+    return function() {
+      var context = this,
+        args = arguments;
+      var later = function() {
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+        }
+      };
+      var callNow = immediate && !timeout;
+      clearTimeout(timeout);
+      timeout = setTimeout(later, wait);
+      if (callNow) {
+        result = func.apply(context, args);
+      }
+      return result;
+    };
+  };
+
+  /**
+   * Underscore's throttle:
+   * http://underscorejs.org/#throttle
+   */
+  var throttle = function(func, wait, options) {
+    var context, args, result;
+    var timeout = null;
+    var previous = 0;
+    options || (options = {});
+    var later = function() {
+      previous = options.leading === false ? 0 : new Date;
+      timeout = null;
+      result = func.apply(context, args);
+    };
+    return function() {
+      var now = new Date;
+      if (!previous && options.leading === false) {
+        previous = now;
+      }
+      var remaining = wait - (now - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0) {
+        clearTimeout(timeout);
+        timeout = null;
+        previous = now;
+        result = func.apply(context, args);
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining);
+      }
+      return result;
+    };
+  };
+
 
   function ScrollStory(element, options) {
     this.el = element;
@@ -125,6 +200,8 @@
       this.$el.on('itemfocus', this._onItemFocus.bind(this));
       this.$el.on('itementerviewport', this._onItemEnterViewport.bind(this));
       this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
+      this.$el.on('itemfilter', this._onItemFilter.bind(this));
+      this.$el.on('itemunfilter', this._onItemUnfilter.bind(this));
       this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
 
 
@@ -358,6 +435,7 @@
               }
 
             } else {
+              
               // type 1, value
               match = item[key] === properties[key];
             }
@@ -416,6 +494,47 @@
      */
     getPercentScrollToLastItem: function() {
       return this._percentScrollToLastItem || 0;
+    },
+
+
+    filter: function(item) {
+      if (!item.filtered) {
+        item.filtered = true;
+        this._trigger('itemfilter', null, item);
+      }
+    },
+
+    unfilter: function(item) {
+      if (item.filtered) {
+        item.filtered = false;
+        this._trigger('itemunfilter', null, item);
+      }
+    },
+
+    filterAll: function(callback) {
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
+      var filterFnc = this.filter.bind(this);
+      this.getItems().forEach(filterFnc);
+    },
+
+    unfilterAll: function(callback) {
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
+      var unfilterFnc = this.unfilter.bind(this);
+      this.getItems().forEach(unfilterFnc);
+    },
+
+    filterBy: function(truthTest, callback) {
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
+      var filterFnc = this.filter.bind(this);
+      this.getItemsBy(truthTest).forEach(filterFnc);
+      callback();
+    },
+
+    filterWhere: function(properties, callback) {
+      callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
+      var filterFnc = this.filter.bind(this);
+      this.getItemsWhere(truthTest).forEach(filterFnc);
+      callback();
     },
 
     /**
@@ -682,7 +801,6 @@
       this._trigger('updateoffsets');
     },
 
-
     _updateScrollPositions: function() {
       var bodyElem = document.body;
       var docElem = document.documentElement;
@@ -789,24 +907,48 @@
         throw new Error('addItems found no valid items.');
       }
 
-      this.updateOffsets(); // must be called first
+      this._handleRepaint();
+    },
+
+
+    /**
+     * Update items' scroll positions and 
+     * determine which one is active based 
+     * on those positions. Useful during
+     * scrolls, resizes and other events
+     * that repaint the page. 
+     *
+     * updateOffsets should be used 
+     * with caution, as it's CPU intensive,
+     * and only useful it item sizes or
+     * scrollOffsets have changed.
+     * 
+     * @param  {Boolean} updateOffsets 
+     * @return {[type]} [description]
+     */
+    _handleRepaint: function(updateOffsets) {
+      updateOffsets = (updateOffsets === false) ? false : true;
+      
+      if (updateOffsets) {
+        this.updateOffsets();
+      }
+
       this._updateScrollPositions(); // must be called second
       this._setActiveItem(); // must be called third
     },
 
-
     _handleScroll: function() {
       if (this.options.enabled) {
-        this._updateScrollPositions();
-        this._setActiveItem();
+        this._handleRepaint(false);
         this._trigger('containerscroll');
       }
     },
 
     _handleResize: function() {
-      this._updateScrollPositions();
-      this._setActiveItem();
-      this._trigger('containerresize');
+      if (this.options.enabled && this.options.autoUpdateOffsets) {
+        this._debouncedHandleRepaint();
+        this._trigger('containerresize');
+      }
     },
 
     _onContainerActive: function() {
@@ -832,6 +974,20 @@
 
     _onItemExitViewport: function(ev, item) {
       item.el.removeClass('inviewport');
+    },
+
+    _onItemFilter: function(ev, item) {
+      item.el.addClass('filtered');
+      if (this.options.autoUpdateOffsets) {
+        this._debouncedHandleRepaint();
+      }
+    },
+
+    _onItemUnfilter: function(ev, item) {
+      item.el.removeClass('filtered');
+      if (this.options.autoUpdateOffsets) {
+        this._debouncedHandleRepaint();
+      }
     },
 
     _onTriggerOffsetUpdate: function(ev, offset) {
@@ -974,71 +1130,12 @@
 
 
   /**
-   * Utility methods
-   *
-   * debounce() and throttle() are from on Underscore.js:
-   * https://github.com/jashkenas/underscore
+   * Debounced version of prototype methods
    */
+  ScrollStory.prototype.debouncedUpdateOffsets = debounce(ScrollStory.prototype.updateOffsets, 100);
+  ScrollStory.prototype._debouncedHandleRepaint = debounce(ScrollStory.prototype._handleRepaint, 100);
 
-  /**
-   * Underscore's debounce:
-   * http://underscorejs.org/#debounce
-   */
-  var debounce = function(func, wait, immediate) {
-    var result;
-    var timeout = null;
-    return function() {
-      var context = this,
-        args = arguments;
-      var later = function() {
-        timeout = null;
-        if (!immediate) {
-          result = func.apply(context, args);
-        }
-      };
-      var callNow = immediate && !timeout;
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-      if (callNow) {
-        result = func.apply(context, args);
-      }
-      return result;
-    };
-  };
 
-  /**
-   * Underscore's throttle:
-   * http://underscorejs.org/#throttle
-   */
-  var throttle = function(func, wait, options) {
-    var context, args, result;
-    var timeout = null;
-    var previous = 0;
-    options || (options = {});
-    var later = function() {
-      previous = options.leading === false ? 0 : new Date;
-      timeout = null;
-      result = func.apply(context, args);
-    };
-    return function() {
-      var now = new Date;
-      if (!previous && options.leading === false) {
-        previous = now;
-      }
-      var remaining = wait - (now - previous);
-      context = this;
-      args = arguments;
-      if (remaining <= 0) {
-        clearTimeout(timeout);
-        timeout = null;
-        previous = now;
-        result = func.apply(context, args);
-      } else if (!timeout && options.trailing !== false) {
-        timeout = setTimeout(later, remaining);
-      }
-      return result;
-    };
-  };
 
   // A really lightweight plugin wrapper around the constructor,
   // preventing multiple instantiations
