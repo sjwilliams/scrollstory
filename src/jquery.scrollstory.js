@@ -611,8 +611,6 @@
         }
       });
 
-      console.log('scroll1', activeItem);
-
       // double check conditions around an active item
       if (activeItem && !containerInActiveArea && this.options.disablePastLastItem) {
         activeItem = false;
@@ -621,8 +619,6 @@
       } else if (!activeItem && this.options.autoActivateFirstItem && items.length > 0) {
         activeItem = items[0];
       }
-
-      console.log('scroll2', activeItem);
 
       if (activeItem) {
         this._focusItem(activeItem);
