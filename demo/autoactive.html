@@ -3,36 +3,14 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ScrollStory: Item Filter Event</title>
+    <title>ScrollStory: Auto Activate First</title>
     <link rel="stylesheet" href="base.css">
-
-    <style>
-        .button{
-            position: fixed;
-            right: 10px;
-        }
-
-        #unfilter,
-        .itemsfiltered #filter{
-            display: none;
-        }
-
-        .itemsfiltered #unfilter{
-            display: block;
-        }
-
-        .story.filtered{
-            display: none;
-        }
-
-    </style>
 </head>
 
 <body>
-    <div id="filter" class="button">Filter Odd Numbers</div>
-    <div id="unfilter" class="button">Unfilter All</div>
+    <div id="status"></div>
     <div id="container">
-        <p class="about">You can 'filter' items, which takes them out of the active list.</p>
+        <p class="about">You can set the first item active, even if it's below the trigger point.</p>
         <div class="stories">
             <div class="story"><span>1</span></div>
             <div class="story"><span>2</span></div>
@@ -56,31 +34,17 @@
         $('#status').hide();
         $('.story').css({'height': $(window).height() * 0.6 });
 
-
-        var scrollStory = $('.stories').scrollStory({
+        $('.stories').scrollStory({
+            autoActivateFirstItem: true,
             debug: true,
             triggerOffset: 30,
-            itemfilter: function(ev, item){
-                console.log('Filtered', item.id);
+            itemfocus: function(ev, item){
+                $('#status').show().html('Active item index: ' + item.index);
             },
-            updateoffsets: function(ev, item){
-                console.log('Offsets Updated');
+            containerinactive: function(){
+                $('#status').hide();
             }
-        }).data('plugin_scrollStory');
-
-        $('#filter').on('click', function(){
-            $('body').addClass('itemsfiltered');
-            scrollStory.filterBy(function(item){
-                return item.index % 2 != 0;
-            });
         });
-
-        $('#unfilter').on('click', function(){
-            $('body').removeClass('itemsfiltered');
-            scrollStory.unfilterAll();
-        });
-
-
     })(jQuery);
     </script>
 </body>
