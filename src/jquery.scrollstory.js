@@ -533,7 +533,7 @@
     filterWhere: function(properties, callback) {
       callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
       var filterFnc = this.filter.bind(this);
-      this.getItemsWhere(truthTest).forEach(filterFnc);
+      this.getItemsWhere(properties).forEach(filterFnc);
       callback();
     },
 
