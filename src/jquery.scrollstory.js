@@ -1,9 +1,6 @@
 // TODO
-// * When refreshed in middle of page, make sure 
-// an item activates on first scoll
-//
-// * categories
 // * tags
+// * percentage trigger/scroll ofsets
 
 
 
