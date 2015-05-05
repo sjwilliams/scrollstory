@@ -158,6 +158,7 @@
   };
 
   var $win = $(window);
+  var winHeight = $win.height(); // cached. updated via _handleResize()
 
   /**
    * Given a scroll/trigger offset, determine
@@ -177,7 +178,7 @@
 
     if (offsetIsAPercentage(offset)) {
       pxOffset = offset.slice(0, -1);
-      pxOffset = Math.round($win.height() * (parseInt(pxOffset, 10)/100) );
+      pxOffset = Math.round(winHeight * (parseInt(pxOffset, 10)/100) );
     } else {
       pxOffset = parseInt(offset, 10);
     }
@@ -1091,6 +1092,8 @@
      * Keep state correct while resizing
      */
     _handleResize: function() {
+      winHeight = $win.height();
+      
       if (this.options.enabled && this.options.autoUpdateOffsets) {
 
         if (offsetIsAPercentage(this.options.triggerOffset)) {
