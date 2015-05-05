@@ -24,7 +24,7 @@
     // Only used if content null. Should be a class selector
     contentSelector: '.story',
 
-    // Enables keys to navigate menu
+    // Left/right keys to navigate
     keyboard: true,
 
     // Offset from top used in the programatic scrolling of an
@@ -65,8 +65,7 @@
 
     debug: false,
 
-    // whether or not the scroll checkings
-    // is enabled.
+    // whether or not the scroll checking is enabled.
     enabled: true,
 
     itembuild: $.noop,
