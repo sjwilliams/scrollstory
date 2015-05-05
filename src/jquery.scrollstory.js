@@ -204,6 +204,7 @@
       this.$el.on('itemexitviewport', this._onItemExitViewport.bind(this));
       this.$el.on('itemfilter', this._onItemFilter.bind(this));
       this.$el.on('itemunfilter', this._onItemUnfilter.bind(this));
+      this.$el.on('categoryfocus', this._onCategoryFocus.bind(this));
       this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
 
 
@@ -967,6 +968,7 @@
 
     _onItemFocus: function(ev, item) {
       item.el.addClass('active');
+      this._manageContainerClasses('scrollStoryActiveItem-',item.id);
 
       // trigger catgory change if not previously active or
       // this item's category is different from the last
@@ -1008,11 +1010,35 @@
       }
     },
 
+    _onCategoryFocus: function(ev, category) {
+      this._manageContainerClasses('scrollStoryActiveCategory-',category);
+    },
+
     _onTriggerOffsetUpdate: function(ev, offset) {
       this.$trigger.css({
         top: offset + 'px'
       });
     },
+
+
+    /**
+     * Given a prefix string like 'scrollStoryActiveCategory-',
+     * and a value like 'fruit', add 'scrollStoryActiveCategory-fruit'
+     * class to the containing element after removing any other 
+     * 'scrollStoryActiveCategory-*' classes
+     * @param  {[type]} prefix [description]
+     * @param  {[type]} value  [description]
+     * @return {[type]}        [description]
+     */
+    _manageContainerClasses: function(prefix, value) {
+      this.$el.removeClass(function(index, classes){
+        return classes.split(' ').filter(function(c) {
+            return c.lastIndexOf(prefix, 0) === 0;
+        }).join(' ');
+      });
+      this.$el.addClass(prefix+value);
+    },
+
 
     /**
      * Given a jQuery selection, add those elements
