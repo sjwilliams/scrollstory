@@ -61,7 +61,7 @@
     throttleTypeOptions: null,
 
     // Update offsets after likely repaints, like window resizes and filters
-    autoUpdateOffsets: true, 
+    autoUpdateOffsets: true,
 
     debug: false,
 
@@ -76,6 +76,8 @@
     itemunfilter: $.noop,
     itementerviewport: $.noop,
     itemexitviewport: $.noop,
+    categoryfocus: $.noop,
+    categeryblur: $.noop,
     containeractive: $.noop,
     containerinactive: $.noop,
     containerresize: $.noop,
@@ -496,6 +498,21 @@
       return this._percentScrollToLastItem || 0;
     },
 
+    getFilteredItems: function() {
+      return this.getItemsWhere({
+        filtered: true
+      });
+    },
+
+    getUnFilteredItems: function() {
+      return this.getItemsWhere({
+        filtered: false
+      });
+    },
+
+    getCategorySlugs: function() {
+      return this._categories;
+    },
 
     filter: function(item) {
       if (!item.filtered) {
@@ -738,7 +755,6 @@
      */
     _focusItem: function(item) {
       if (!item.active && !item.filtered) {
-        // blur all the other items
         this._blurAllItems(item);
 
         // make active
@@ -747,15 +763,6 @@
 
         // notify clients of changes
         this._trigger('itemfocus', null, item);
-
-        // trigger catgory change if not previously active or
-        // this item's category is different from the last
-        // if (item.category !== previousItem.category || !this._isActive) {
-        //   this._trigger('categorychange', null, {
-        //     category: item.category,
-        //     previousCategory: previousItem.category
-        //   });
-        // }
       }
     },
 
@@ -960,6 +967,12 @@
 
     _onItemFocus: function(ev, item) {
       item.el.addClass('active');
+
+      // trigger catgory change if not previously active or
+      // this item's category is different from the last
+      if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
+        this._trigger('categoryfocus', null, item.category);
+      }
     },
 
     _onItemBlur: function(ev, item) {
@@ -1038,19 +1051,20 @@
      * @param {jQuery Object} $el
      */
     _addItem: function(data, $el) {
+      var domData = $el.data();
+
       var item = {
         index: this._items.length,
-
+        el: $el,
         // id is from markup id attribute, data or dynamically generated
         id: $el.attr('id') ? $el.attr('id') : (data.id) ? data.id : 'story' + instanceCounter + '-' + this._items.length,
 
-        // item's data is from client data or data-* attrs
-        data: $.extend({}, data, $el.data()),
+        // item's data is from client data or data-* attrs. prefer data-* attrs over client data.
+        data: $.extend({}, data, domData),
 
-        category: data.category, // optional category this item belongs to
+        category: domData.category || data.category, // string. optional category slug this item belongs to. prefer data-category attribute
         tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
-        el: $el,
-        scrollStory: this,
+        scrollStory: this, // reference to this instance of scrollstory
         nextItem: false,
 
         // in-focus item
@@ -1083,6 +1097,15 @@
       this._itemsById[item.id] = item;
 
       this._trigger('itembuild', null, item);
+
+      // An item's category is saved after the the itembuild event
+      // to allow for user code to specify a category client-side in 
+      // that event callback or handler.
+      if (item.category && this._categories.indexOf(item.category) === -1) {
+        this._categories.push(item.category);
+      }
+
+      // this._tags.push(item.tags);
     },
 
 
