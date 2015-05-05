@@ -1,8 +1,5 @@
 // TODO
 // * tags
-// * percentage trigger/scroll ofsets
-
-
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
