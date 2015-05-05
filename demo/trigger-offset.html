@@ -38,10 +38,11 @@
             debug: true,
             itembuild: function(ev, item) {
                 if (item.index == 4) {
-                    item.scrollOffset = '30%';
+                    // item.scrollOffset = '30%';
                 }
             },
-            triggerOffset: '30%'
+            triggerOffset: '30.0001%',
+            scrollOffset: '30.0001%'
         }).data('plugin_scrollStory');
 
     })(jQuery);

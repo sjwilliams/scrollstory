@@ -179,7 +179,7 @@
       pxOffset = offset.slice(0, -1);
       pxOffset = Math.round($win.height() * (parseInt(pxOffset, 10)/100) );
     } else {
-      pxOffset = parseInt(offset, 10)
+      pxOffset = parseInt(offset, 10);
     }
 
     return pxOffset;
@@ -746,7 +746,7 @@
             activeItem = item;
           } else {
 
-            // closer to trigger point that previously found item?
+            // closer to trigger point than previously found item?
             if (activeItem.adjustedDistanceToOffset < item.adjustedDistanceToOffset) {
               activeItem = item;
             }
@@ -946,6 +946,7 @@
       var wWidth = window.innerWidth || docElem.clientWidth;
       var triggerOffset = offsetToPx(this.options.triggerOffset);
 
+
       // update item scroll positions
       var items = this.getItems();
       var length = items.length;
@@ -958,7 +959,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         rect = item.el[0].getBoundingClientRect();
-        item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
+        item.distanceToOffset = Math.floor(item.topOffset - scrollTop - triggerOffset); // floor to prevent some off-by-fractional px in determining active item
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
 
         // track viewport status
