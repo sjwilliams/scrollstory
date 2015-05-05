@@ -157,11 +157,43 @@
     };
   };
 
+  var $win = $(window);
+  var winHeight = $win.height(); // cached. updated via _handleResize()
+
+  /**
+   * Given a scroll/trigger offset, determine
+   * its pixel value from the top of the viewport. 
+   * 
+   * If number or number-like string (30 or '30'), return that 
+   * number. (30)
+   *
+   * If it's a percentage string ('30%'), convert to pixels
+   * based on the height of the viewport. (eg: 395) 
+   * 
+   * @param  {String/Number} offset
+   * @return {Number}
+   */
+  var offsetToPx = function(offset){
+    var pxOffset;
+
+    if (offsetIsAPercentage(offset)) {
+      pxOffset = offset.slice(0, -1);
+      pxOffset = Math.round(winHeight * (parseInt(pxOffset, 10)/100) );
+    } else {
+      pxOffset = parseInt(offset, 10);
+    }
+
+    return pxOffset;
+  };
+
+  var offsetIsAPercentage = function(offset){
+    return typeof offset === 'string' && offset.slice(-1) === '%';
+  };
+
 
   function ScrollStory(element, options) {
     this.el = element;
     this.$el = $(element);
-    this.$win = $(window);
     this.options = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
@@ -254,7 +286,7 @@
         position: 'fixed',
         width: '100%',
         height: '1px',
-        top: this.options.triggerOffset + 'px',
+        top: offsetToPx(this.options.triggerOffset) + 'px',
         left: '0px',
         backgroundColor: '#ff0000',
         '-webkit-transform': 'translateZ(0)',
@@ -675,7 +707,7 @@
     updateTriggerOffset: function(offset) {
       this.options.triggerOffset = offset;
       this.updateOffsets();
-      this._trigger('triggeroffsetupdate', null, offset);
+      this._trigger('triggeroffsetupdate', null, offsetToPx(offset));
     },
 
 
@@ -688,7 +720,7 @@
     updateScrollOffset: function(offset) {
       this.options.scrollOffset = offset;
       this.updateOffsets();
-      this._trigger('scrolloffsetupdate', null, offset);
+      this._trigger('scrolloffsetupdate', null, offsetToPx(offset));
     },
 
 
@@ -715,7 +747,7 @@
             activeItem = item;
           } else {
 
-            // closer to trigger point that previously found item?
+            // closer to trigger point than previously found item?
             if (activeItem.adjustedDistanceToOffset < item.adjustedDistanceToOffset) {
               activeItem = item;
             }
@@ -772,7 +804,7 @@
        */
       opts = $.extend(true, {
         // prefer item.scrollOffset over this.options.scrollOffset
-        scrollOffset: (typeof item.scrollOffset === 'number') ? item.scrollOffset : this.options.scrollOffset,
+        scrollOffset: (item.scrollOffset !== false) ? offsetToPx(item.scrollOffset) : offsetToPx(this.options.scrollOffset),
         speed: this.options.speed,
         easing: this.options.easing
       }, opts);
@@ -784,7 +816,7 @@
       var debouncedCallback = debounce(callback, 100);
 
       // position to travel to
-      var scrolllTop = item.el.offset().top - opts.scrollOffset;
+      var scrolllTop = item.el.offset().top - offsetToPx(opts.scrollOffset);
       $('html, body').stop(true).animate({
           scrollTop: scrolllTop
       }, opts.speed, opts.easing, debouncedCallback);
@@ -885,6 +917,8 @@
       var item;
       var box;
 
+      console.log('update offsets');
+
       // individual items
       for (i = 0; i < length; i++) {
         item = items[i];
@@ -911,7 +945,8 @@
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
       var wHeight = window.innerHeight || docElem.clientHeight;
       var wWidth = window.innerWidth || docElem.clientWidth;
-      var triggerOffset = this.options.triggerOffset;
+      var triggerOffset = offsetToPx(this.options.triggerOffset);
+
 
       // update item scroll positions
       var items = this.getItems();
@@ -925,7 +960,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         rect = item.el[0].getBoundingClientRect();
-        item.distanceToOffset = item.topOffset - scrollTop - triggerOffset;
+        item.distanceToOffset = Math.floor(item.topOffset - scrollTop - triggerOffset); // floor to prevent some off-by-fractional px in determining active item
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
 
         // track viewport status
@@ -1057,7 +1092,18 @@
      * Keep state correct while resizing
      */
     _handleResize: function() {
+      winHeight = $win.height();
+      
       if (this.options.enabled && this.options.autoUpdateOffsets) {
+
+        if (offsetIsAPercentage(this.options.triggerOffset)) {
+          this.updateTriggerOffset(this.options.triggerOffset);
+        }
+
+        if (offsetIsAPercentage(this.options.scrollOffset)) {
+          this.updateScrollOffset(this.options.scrollOffset);
+        }
+
         this._debouncedHandleRepaint();
         this._trigger('containerresize');
       }
