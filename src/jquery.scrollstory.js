@@ -973,6 +973,10 @@
       if (item.category) {
         if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
           this._trigger('categoryfocus', null, item.category);
+
+          if (this.getPreviousItem()) {
+            this._trigger('categoryblur', null, this.getPreviousItem().category);
+          }
         }
       }
     },
