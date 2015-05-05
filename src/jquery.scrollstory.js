@@ -511,6 +511,12 @@
       });
     },
 
+    getItemsByCategory: function(categorySlug) {
+      return this.getItemsWhere({
+        category: categorySlug
+      });
+    },
+
     getCategorySlugs: function() {
       return this._categories;
     },
