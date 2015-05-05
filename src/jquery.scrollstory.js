@@ -157,11 +157,40 @@
     };
   };
 
+  var $win = $(window);
+
+  /**
+   * Given a scroll/trigger offset, determine
+   * its pixel value from the top of the viewport. 
+   * 
+   * If number or number-like string (30 or '30'), return that 
+   * number. (30)
+   *
+   * If it's a percentage string ('30%'), convert to pixels
+   * based on the height of the viewport. (eg: 395) 
+   * 
+   * @param  {String/Number} offset
+   * @return {Number}
+   */
+  var offsetToPx = function(offset){
+    var pxOffset;
+    if (typeof offset === 'number') {
+      pxOffset = offset;
+    } else {
+      if (offset.slice(-1) === '%') {
+        pxOffset = offset.slice(0, -1);
+        pxOffset = Math.round($win.height() * (parseInt(pxOffset, 10)/100) );
+      } else {
+        pxOffset = offset;
+      }
+    }
+    return pxOffset;
+  };
+
 
   function ScrollStory(element, options) {
     this.el = element;
     this.$el = $(element);
-    this.$win = $(window);
     this.options = $.extend({}, defaults, options);
     this._defaults = defaults;
     this._name = pluginName;
@@ -254,7 +283,7 @@
         position: 'fixed',
         width: '100%',
         height: '1px',
-        top: this.options.triggerOffset + 'px',
+        top: offsetToPx(this.options.triggerOffset) + 'px',
         left: '0px',
         backgroundColor: '#ff0000',
         '-webkit-transform': 'translateZ(0)',
@@ -675,7 +704,7 @@
     updateTriggerOffset: function(offset) {
       this.options.triggerOffset = offset;
       this.updateOffsets();
-      this._trigger('triggeroffsetupdate', null, offset);
+      this._trigger('triggeroffsetupdate', null, offsetToPx(offset));
     },
 
 
@@ -688,7 +717,7 @@
     updateScrollOffset: function(offset) {
       this.options.scrollOffset = offset;
       this.updateOffsets();
-      this._trigger('scrolloffsetupdate', null, offset);
+      this._trigger('scrolloffsetupdate', null, offsetToPx(offset));
     },
 
 
@@ -772,7 +801,7 @@
        */
       opts = $.extend(true, {
         // prefer item.scrollOffset over this.options.scrollOffset
-        scrollOffset: (typeof item.scrollOffset === 'number') ? item.scrollOffset : this.options.scrollOffset,
+        scrollOffset: (item.scrollOffset !== false) ? offsetToPx(item.scrollOffset) : offsetToPx(this.options.scrollOffset),
         speed: this.options.speed,
         easing: this.options.easing
       }, opts);
@@ -784,7 +813,7 @@
       var debouncedCallback = debounce(callback, 100);
 
       // position to travel to
-      var scrolllTop = item.el.offset().top - opts.scrollOffset;
+      var scrolllTop = item.el.offset().top - offsetToPx(opts.scrollOffset);
       $('html, body').stop(true).animate({
           scrollTop: scrolllTop
       }, opts.speed, opts.easing, debouncedCallback);
@@ -911,7 +940,7 @@
       var scrollTop = window.pageYOffset || docElem.scrollTop || bodyElem.scrollTop;
       var wHeight = window.innerHeight || docElem.clientHeight;
       var wWidth = window.innerWidth || docElem.clientWidth;
-      var triggerOffset = this.options.triggerOffset;
+      var triggerOffset = offsetToPx(this.options.triggerOffset);
 
       // update item scroll positions
       var items = this.getItems();
