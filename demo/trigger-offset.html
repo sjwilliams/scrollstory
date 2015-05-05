@@ -36,13 +36,12 @@
 
         var scrollStory = window.SS = $('.stories').scrollStory({
             debug: true,
-            triggerOffset: '30%',
             itembuild: function(ev, item) {
                 if (item.index == 4) {
                     item.scrollOffset = '30%';
                 }
             },
-            // triggerOffset: 30
+            triggerOffset: '30%'
         }).data('plugin_scrollStory');
 
     })(jQuery);

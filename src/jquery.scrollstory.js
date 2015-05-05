@@ -174,17 +174,19 @@
    */
   var offsetToPx = function(offset){
     var pxOffset;
-    if (typeof offset === 'number') {
-      pxOffset = offset;
+
+    if (offsetIsAPercentage(offset)) {
+      pxOffset = offset.slice(0, -1);
+      pxOffset = Math.round($win.height() * (parseInt(pxOffset, 10)/100) );
     } else {
-      if (offset.slice(-1) === '%') {
-        pxOffset = offset.slice(0, -1);
-        pxOffset = Math.round($win.height() * (parseInt(pxOffset, 10)/100) );
-      } else {
-        pxOffset = offset;
-      }
+      pxOffset = parseInt(offset, 10)
     }
+
     return pxOffset;
+  };
+
+  var offsetIsAPercentage = function(offset){
+    return typeof offset === 'string' && offset.slice(-1) === '%';
   };
 
 
@@ -914,6 +916,8 @@
       var item;
       var box;
 
+      console.log('update offsets');
+
       // individual items
       for (i = 0; i < length; i++) {
         item = items[i];
@@ -1087,6 +1091,15 @@
      */
     _handleResize: function() {
       if (this.options.enabled && this.options.autoUpdateOffsets) {
+
+        if (offsetIsAPercentage(this.options.triggerOffset)) {
+          this.updateTriggerOffset(this.options.triggerOffset);
+        }
+
+        if (offsetIsAPercentage(this.options.scrollOffset)) {
+          this.updateScrollOffset(this.options.scrollOffset);
+        }
+
         this._debouncedHandleRepaint();
         this._trigger('containerresize');
       }
