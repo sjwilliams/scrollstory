@@ -274,9 +274,10 @@
       this._trigger('complete', null, this);
     },
 
+
     /**
      * Get current item's index, 
-     * or set the current item width an index.
+     * or set the current item with an index.
      * @param  {Number} index
      * @param  {Function} callback
      * @return {Number} index of active item
@@ -288,6 +289,7 @@
         return this.getActiveItem().index;
       }
     },
+
 
     /**
      * Convenience method to navigate to next item
@@ -304,6 +306,7 @@
       this.index(this.index() - 1);
     },
 
+
     /**
      * The active item object.
      * 
@@ -312,6 +315,7 @@
     getActiveItem: function() {
       return this._activeItem;
     },
+
 
     /**
      * Given an item object, make it active,
@@ -328,6 +332,7 @@
       }
     },
 
+
     /**
      * Iterate over each item, passing the item to a callback.
      *
@@ -339,8 +344,9 @@
       this.applyToAllItems(callback);
     },
 
+
     /**
-     * Number of items
+     * Return number of items
      * @return {Number}
      */
     getLength: function() {
@@ -357,7 +363,7 @@
 
 
     /**
-     * Given an item id, return it.
+     * Given an item id, return item object with that id.
      *
      * @param  {string} id
      * @return {Object}
@@ -368,7 +374,7 @@
 
 
     /**
-     * Given an item index, return it.
+     * Given an item index, return item object with that index.
      *
      * @param  {Integer} index
      * @return {Object}
@@ -395,6 +401,7 @@
         return truthTest(item);
       });
     },
+
 
     /**
      * Returns an array of items where all the properties
@@ -454,6 +461,7 @@
       return items;
     },
 
+
     /**
      * Array of items that are atleast partially visible
      *
@@ -465,6 +473,7 @@
       });
     },
 
+
     /**
      * Most recently active item.  
      * 
@@ -473,6 +482,7 @@
     getPreviousItem: function() {
       return this._previousItems[0];
     },
+
 
     /**
      * Array of items that were previously
@@ -484,6 +494,7 @@
     getPreviousItems: function() {
       return this._previousItems;
     },
+
 
     /**
      * Progress of the scroll needed to activate the 
@@ -499,28 +510,57 @@
       return this._percentScrollToLastItem || 0;
     },
 
+
+    /**
+     * Return an array of all filtered items.
+     * @return {Array}
+     */
     getFilteredItems: function() {
       return this.getItemsWhere({
         filtered: true
       });
     },
 
+
+    /**
+     * Return an array of all unfiltered items.
+     * @return {Array}
+     */
     getUnFilteredItems: function() {
       return this.getItemsWhere({
         filtered: false
       });
     },
 
+
+    /**
+     * Return an array of all items belonging to a category.
+     * 
+     * @param  {String} categorySlug
+     * @return {Array}
+     */
     getItemsByCategory: function(categorySlug) {
       return this.getItemsWhere({
         category: categorySlug
       });
     },
 
+
+    /**
+     * Return an array of all category slugs
+     * 
+     * @return {Array}
+     */
     getCategorySlugs: function() {
       return this._categories;
     },
 
+
+    /**
+     * Change an item's status to filtered.
+     * 
+     * @param  {Object} item
+     */
     filter: function(item) {
       if (!item.filtered) {
         item.filtered = true;
@@ -528,6 +568,12 @@
       }
     },
 
+
+    /**
+     * Change an item's status to unfiltered.
+     * 
+     * @param  {Object} item
+     */
     unfilter: function(item) {
       if (item.filtered) {
         item.filtered = false;
@@ -535,18 +581,38 @@
       }
     },
 
+    /**
+     * Change all items' status to filtered.
+     * 
+     * @param  {Function} callback
+     */
     filterAll: function(callback) {
       callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
       var filterFnc = this.filter.bind(this);
       this.getItems().forEach(filterFnc);
     },
 
+    /**
+     * Change all items' status to unfiltered.
+     * 
+     * @param  {Function} callback
+     */
     unfilterAll: function(callback) {
       callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
       var unfilterFnc = this.unfilter.bind(this);
       this.getItems().forEach(unfilterFnc);
     },
 
+
+    /**
+     * Filter items that pass an abritrary truth test. This is a light 
+     * wrapper around `getItemsBy()` and `filter()`.
+     *
+     * Example: this.filterBy(function(item){return item.data.last_name === 'williams'})
+     *
+     * @param {Function} truthTest The function to check all items against
+     * @param  {Function} callback
+     */
     filterBy: function(truthTest, callback) {
       callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
       var filterFnc = this.filter.bind(this);
@@ -554,6 +620,17 @@
       callback();
     },
 
+
+    /**
+     * Filter items where all the properties match an item's properties. This 
+     * is a light wrapper around `getItemsWhere()` and `filter()`. See `getItemsWhere()`
+     * for more options and examples.
+     * 
+     * Example: this.filterWhere({index:2})
+     *
+     * @param {Function} truthTest The function to check all items against
+     * @param  {Function} callback
+     */
     filterWhere: function(properties, callback) {
       callback = ($.isFunction(callback)) ? callback.bind(this) : $.noop;
       var filterFnc = this.filter.bind(this);
@@ -561,8 +638,9 @@
       callback();
     },
 
+
     /**
-     * Whether or not any of the items are active.
+     * Whether or not any of the item objects are active.
      *
      * @return {Boolean}
      */
@@ -570,12 +648,18 @@
       return this._isActive;
     },
 
+
     /**
-     * Disable scroll updates
+     * Disable scroll updates. This is useful in the
+     * rare case when you want to manipulate the page
+     * but not have ScrollStory continue to check
+     * positions, fire events, etc. Usually a `disable`
+     * is temporary and followed by an `enable`.
      */
     disable: function() {
       this.options.enabled = false;
     },
+
     
     /**
      * Enable scroll updates
@@ -584,8 +668,12 @@
       this.options.enabled = true;
     },
 
+
     /**
-     * Update trigger offset
+     * Update trigger offset. This is useful if a client
+     * app needs to, post-instantiation, change the trigger
+     * point, like after a window resize. 
+     * 
      * @param  {Number} offset
      */
     updateTriggerOffset: function(offset) {
@@ -594,8 +682,11 @@
       this._trigger('triggeroffsetupdate', null, offset);
     },
 
+
     /**
-     * Update scroll offset
+     * Update scroll offset. This is useful if a client
+     * app needs to, post-instantiation, change the scroll
+     * offset, like after a window resize. 
      * @param  {Number} offset
      */
     updateScrollOffset: function(offset) {
@@ -603,6 +694,7 @@
       this.updateOffsets();
       this._trigger('scrolloffsetupdate', null, offset);
     },
+
 
     /**
      * Determine which item should be active,
@@ -664,8 +756,10 @@
       }
     },
 
+
     /**
-     * Scroll to an item, making it active
+     * Scroll to an item, making it active.
+     * 
      * @param  {Object}   item
      * @param  {Object}   opts
      * @param  {Function} callback  
@@ -772,6 +866,7 @@
         this._trigger('itemfocus', null, item);
       }
     },
+
 
     /**
      * Iterate through items and update their top offset.
@@ -891,7 +986,8 @@
      *
      * TODO: ensure existing items aren't re-added.
      * This is expecially important for the empty items
-     * option
+     * option, and will give us the ability to do
+     * infinite scrolls, etc.
      *
      * @param {jQuery Object/String/Array} items
      */
@@ -943,13 +1039,17 @@
       updateOffsets = (updateOffsets === false) ? false : true;
       
       if (updateOffsets) {
-        this.updateOffsets();
+        this.updateOffsets(); // must be called first
       }
 
       this._updateScrollPositions(); // must be called second
       this._setActiveItem(); // must be called third
     },
 
+
+    /**
+     * Keep state correct while scrolling
+     */
     _handleScroll: function() {
       if (this.options.enabled) {
         this._handleRepaint(false);
@@ -957,12 +1057,18 @@
       }
     },
 
+    /**
+     * Keep state correct while resizing
+     */
     _handleResize: function() {
       if (this.options.enabled && this.options.autoUpdateOffsets) {
         this._debouncedHandleRepaint();
         this._trigger('containerresize');
       }
     },
+
+    // Handlers for public events that maintain state
+    // of the ScrollStory instance.
 
     _onContainerActive: function() {
       this.$el.addClass(pluginName + 'Active');
@@ -1059,6 +1165,7 @@
       });
     },
 
+
     /**
      * Given array of data, append markup and add
      * data to internal items array.
@@ -1080,6 +1187,7 @@
 
       this.$el.append($items);
     },
+
 
     /**
      * Given item user data, and an aleady appended
