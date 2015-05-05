@@ -970,8 +970,10 @@
 
       // trigger catgory change if not previously active or
       // this item's category is different from the last
-      if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
-        this._trigger('categoryfocus', null, item.category);
+      if (item.category) {
+        if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
+          this._trigger('categoryfocus', null, item.category);
+        }
       }
     },
 
