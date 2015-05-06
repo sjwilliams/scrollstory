@@ -26,6 +26,15 @@
     <script src="../src/jquery.scrollstory.js"></script>
     <script>
     (function($) {
+        $.getJSON('https://cdn.rawgit.com/sjwilliams/city-websites/master/city-websites.json')
+        .error(function(s, error){
+            console.log('error', error);
+        })
+        .done(function( data ) {
+            console.log('data');
+            console.log(data);
+        });
+
         console.time('createArray');
         var length = 10000;
         var storyItems = Array(length);
