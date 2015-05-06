@@ -1,8 +1,5 @@
 // TODO
 // * tags
-// * percentage trigger/scroll ofsets
-
-
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -917,8 +914,6 @@
       var item;
       var box;
 
-      console.log('update offsets');
-
       // individual items
       for (i = 0; i < length; i++) {
         item = items[i];
@@ -1023,7 +1018,6 @@
      * @param {jQuery Object/String/Array} items
      */
     addItems: function(items) {
-
       // use an existing jQuery selection
       if (items instanceof $) {
         this._prepItemsFromSelection(items);
@@ -1220,14 +1214,14 @@
       // add it to the class attr in markup
       var selector = this.options.contentSelector.replace(/\./g, '');
 
-      var $items = $();
+      var frag = document.createDocumentFragment();
       items.forEach(function(data) {
         var $item = $('<div class="' + selector + '"></div>');
         that._addItem(data, $item);
-        $items = $items.add($item);
+        frag.appendChild($item.get(0));
       });
 
-      this.$el.append($items);
+      this.$el.append(frag);
     },
 
 

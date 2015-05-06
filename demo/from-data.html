@@ -21,17 +21,23 @@
     <script src="../src/jquery.scrollstory.js"></script>
     <script>
     (function($) {
-        var storyItems = [{name: 'Josh', location: 'San Francisco'}, {name: 'Shan', location: 'Berkeley'}, {name: 'Mike', location: 'San Francisco'}, {name:'Jennifer', location: 'Oakland'}];
-
-        $('.stories').scrollStory({
-            debug: true,
-            triggerOffset: 30,
-            content: storyItems,
-            itembuild: function(ev, item) {
-                item.el
-                    .css({'height': $(window).height() * 0.6})
-                    .html('<span>' + item.index + ' ' + item.data.name + ', '+item.data.location + '</span>');
-            }
+        $.getJSON('http://www.filltext.com/?callback=?', {
+            'rows': 36,
+            'fname': '{firstName}',
+            'lname': '{lastName}',
+            'zip': '{zip}'
+        })
+        .done(function( data ) {
+            $('.stories').scrollStory({
+                debug: true,
+                triggerOffset: '35%',
+                content: data,
+                itembuild: function(ev, item) {
+                    item.el
+                        .css({'height': $(window).height() * 0.6})
+                        .html('<span>' + item.index + ' ' + item.data.fname + ' ' +item.data.lname +', '+item.data.zip + '</span>');
+                }
+            });
         });
     })(jQuery);
     </script>
