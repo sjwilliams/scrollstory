@@ -1,0 +1,289 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>ScrollStory, A jQuery plugin for building scroll-based stories and interactions</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="lib/tomorrow.css">
+    <style>
+      /* http://meyerweb.com/eric/tools/css/reset/
+         v2.0 | 20110126
+         License: none (public domain)
+      */
+      html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {margin: 0; padding: 0; border: 0; font-size: 100%; font: inherit; vertical-align: baseline; } /* HTML5 display-role reset for older browsers */ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block; } body {line-height: 1; } ol, ul {list-style: none; } blockquote, q {quotes: none; } blockquote:before, blockquote:after, q:before, q:after {content: ''; content: none; } table {border-collapse: collapse; border-spacing: 0; }
+
+      html {
+        box-sizing: border-box;
+      }
+      *, *:before, *:after {
+        box-sizing: inherit;
+      }
+
+      body{
+        font-size: 16px;
+        line-height: 1;
+        font-family: Georgia, Times, serif;
+        color: #000;
+        background-color: #FFFDEE;
+        transition: color 0.3s ease, background-color 0.3s ease;
+      }
+
+      .page-active body{
+        background-color: #fff;
+        color: #1a1a1a;
+      }
+
+      /* typography */
+      h1{
+        font-size: 1.9em;
+      }
+
+      @media (min-width: 768px) {
+        h1{
+          font-size: 3.1em;
+        }
+      }
+
+      h2{
+        font-family: "helvetica neue", helvetica, sans-serif;
+        font-size: 1.5em;
+        font-weight: 500;
+      }
+
+      p{
+        font-size: 1.2em;
+        line-height: 1.55em;
+      }
+
+      .highlighter{
+        background-color: #7B0303;
+        border-radius: 3px;
+        padding: 1px 3px;
+        color: #fff;
+      }
+
+      .page-active .highlighter{
+        background-color: rgb(255, 244, 202);
+        color: inherit;
+      }
+
+      a{
+        color: #000;
+      }
+
+      em{
+        font-style: italic;
+      }
+
+      /* boxes */
+      header{
+        position: fixed;
+        top: 0;
+        z-index: 1;
+        width: 100%;
+        padding: 15px 0;
+        background-color: #000000;
+        color: #ffffff;
+        font-family: "helvetica neue", helvetica, sans-serif;
+        font-weight: 300;
+        text-align: center;
+
+        opacity: 0;
+        transition: 0.3s opacity ease;
+        transform: translate3d(0,0,0);
+      }
+
+      .page-active header{
+        opacity: 1;
+      }
+
+      header li{
+        display: inline-block;
+        margin-left: 9px;
+        padding: 5px 9px;
+        border-radius: 3px;
+        background-color: #353535;
+        cursor: pointer;
+        transition: 0.3s background-color ease;
+
+        font-size: 12px;
+        text-transform: uppercase;
+      }
+
+      header li:first-child{
+        margin-left: 0;
+      }
+
+      header li.active,
+      header li:hover{
+        background-color: #7B0303;
+      }
+
+      header li:active{
+        background-color: #000;
+      }
+
+      .content{
+        width: 100%;
+        padding: 0 30px;
+        margin: 80px auto 0 auto;
+      }
+
+      @media (min-width: 768px) {
+        .content{
+          margin-top: 130px;
+        }
+      }
+
+      .content img{
+        width: 100%;
+      }
+
+      section{
+        margin-bottom: 90px;
+      }
+
+      /* text width */
+      .content > section > pre,
+      .content > section > p,
+      .content > section > ul,
+      .content > section > h1,
+      .content > section > h2,
+      .content > section > h3,
+      .content > section > h4{
+        max-width: 690px;
+        margin: 0 auto 20px auto;
+      }
+
+
+      /* section overrides */
+      .introduction{
+
+      }
+
+      .introduction p {
+
+
+      }
+
+      .examples li{
+        margin-top: 30px;
+      }
+
+      .examples li p {
+        font-family: "helvetica neue", helvetica, sans-serif;
+        font-size: 0.9em;
+        color: #8B8B8B;
+      }
+
+    </style>
+  </head>
+  <body>
+    <header>
+      <ul></ul>
+    </header>
+
+    <div class="content">
+      <section data-navtext="Home" class="introduction">
+        <h1>ScrollStory</h1>
+        <p>ScrollStory is a jQuery plugin for building scroll-based stories. Rather than doing a specific task, it aims to be a tool to help solve general problems. </p>
+        <p>For example, it can help you <span class="highlighter">update your nav</span> as you scroll down the page. It can <span class="highlighter">auto-scroll</span> to sections of your story on a mouse click or custom event. It can trigger <span class="highlighter">custom callbacks</span> that manipulate the page as you scroll, like <span class="highlighter">lazy loading</span> media. It can dynamically insert items into the page, or use pre-existing markup. Additionally, it <span class="highlighter">maintains data</span> associated with all these custom interactions.</p>
+      </section>
+      <section data-navtext="Examples" class="examples">
+        <h2>Real-world Examples</h2>
+        <ul>
+          <li>
+            <img src="http://placekitten.com/900/500">
+            <p>Loading panoramas in <a href="http://www.nytimes.com/interactive/2015/04/22/magazine/new-york-city-walks.html">Walking New York</a>, nytimes.com</p>
+          </li>
+          <li>
+            <img src="http://placekitten.com/900/500">
+            <p>Triggering info panes in <a href="http://www.nytimes.com/interactive/2015/02/06/arts/a-walk-through-the-gallery-henri-matisse-the-cut-outs-at-the-museum-of-modern-art-in-new-york.html">A Walk Through the Gallery</a></p>
+          </li>
+        </ul>
+
+        <h2>Simplifed Example Exercises</h2>
+
+      </section>
+      <section data-navtext="Overview">
+        <h2>Overview</h2>
+
+        <p>ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader's focus. These elements &mdash; or <em>items</em> in ScrollStory speak &mdash; can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.</p>
+
+        <p>ScrollStory follows these <em>items</em>, internally tracking the scroll distance until an item requires the reader's focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any <em>item</em> enters the viewport; any <em>item</em> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is 'filtered,' a ScrollStory construct meaning it is no longer an active part of a collection; or any of <span class="highlighter">17 custom events</span>.</p>
+
+        <p>ScrollStory <em>items</em> aren't just DOM nodes. Rather, they're data objects that have a corresponding representation in the markup. ScrollStory instances maintain data about each <em>item</em> object in a collection and provides numerous methods of accessing, querying and modifying that data.</p>
+      </section>
+
+      <section>
+        <h2>Download</h2>
+        <p>Download the <a href="https://raw.github.com/sjwilliams/scrollstory/master/dist/scrollstory.min.js">production version</a> or the <a href="https://raw.github.com/sjwilliams/scrollstory/master/dist/scrollstory.js">development version</a>.</p>
+
+        <p>Or via NPM</p>
+
+<pre><code class="bash">
+npm install scrollstory
+</code></pre>
+
+      </section>
+
+      <section data-navtext="Documentation">
+        <h2>Documentation</h2>
+
+        <p>In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into <a href="#item">'item' objects</a> and assigns them several default properties, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.</p>
+
+        <p>In addition to object properties, ScrollStory modifies the DOM in a few ways:</p>
+* A class of 'storyScroll_story' is added to every item
+* A class of 'active' is added to the currently active item
+* A class of 'scrollStory_active' is added to the container if any item is active.
+</p>
+
+<pre><code>
+$('#container').scrollStory();
+</code></pre>
+
+      </section>
+    </div>
+
+    <script src="lib/jquery.min.js"></script>
+    <script src="lib/highlight.pack.js"></script>
+    <!-- <script src="dist/jquery.scrollstory.js"></script> -->
+    <script src="src/jquery.scrollstory.js"></script>
+    <script>
+      var $html = $('html');
+      var $nav = $('header ul');
+      var scrollStory = $('.content').scrollStory({
+        content: 'section',
+        triggerOffset: 60,
+        scrollOffset: 60,
+        debug: true,
+        itembuild: function(ev, item){
+          item.data.navtext = item.data.navtext || item.el.find('h2').first().text();
+          $nav.append('<li>'+item.data.navtext+'</li>');
+        },
+        itemfocus: function(ev, item){
+          $('li', $nav).removeClass('active');
+          $('li', $nav).eq(item.index).addClass('active');
+        },
+        containeractive: function(){
+          $html.addClass('page-active');
+        },
+        containerinactive: function(){
+          $html.removeClass('page-active');
+        },
+        complete: function(){
+          var that = this;
+          $nav.on('click', 'li', function(){
+            that.index($('li', $nav).index($(this)));
+          })
+
+          $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block);
+          });
+        }
+      }).data('plugin_scrollStory');
+
+      window.SS = scrollStory;
+    </script>
+  </body>
+</html>

@@ -2,24 +2,22 @@
 
 A jQuery plugin for building scroll-based stories and interactions. Rather doing a specific task, it aims to be a tool to help solve general problems. 
 
-For example, it can help you update your nav as you scroll done the page. It can auto-scroll to sections of your story on a mouse click. It can trigger custom callbacks that manipulate the page as you scroll. It can dynamically insert items into the page, or use pre-existing markup. Additionally, it maintains the data associated with all these custom interactions.
-
+For example, it can help you update your nav as you scroll done the page. It can auto-scroll to sections of your story on a mouse click. It can trigger custom callbacks that manipulate the page as you scroll, like lazy loading media. It can dynamically insert items into the page, or use pre-existing markup. Additionally, it maintains the data associated with all these custom interactions.
 
 
 ## Real-world Examples
-### 0.3+ 
+### 0.3.0+ 
 * Loading panoramas in [Walking New York](http://www.nytimes.com/interactive/2015/04/22/magazine/new-york-city-walks.html), nytimes.com
 * Triggering info panes in [A Walk Through the Gallery](http://www.nytimes.com/interactive/2015/02/06/arts/a-walk-through-the-gallery-henri-matisse-the-cut-outs-at-the-museum-of-modern-art-in-new-york.html), nytimes.com
 
-### Pre 0.3 (required jQueryUI and Underscore)
+### Pre 0.3.0 (required jQueryUI and Underscore)
 * Triggering Charts in [Fewer Helmets, More Deaths](http://www.nytimes.com/interactive/2014/03/31/science/motorcycle-helmet-laws.html), nytimes.com
 * Lazy image loading and video playing in [Still Life in Motion From a Road Trip Across South America](http://www.nytimes.com/interactive/2014/02/18/magazine/guttenfelder-south-america-road-trip.html), nytimes.com
 * Filtering, tagging, lazy loading and video playing in [52 Places to Go in 2013](http://www.nytimes.com/interactive/2014/01/10/travel/2014-places-to-go.html), nytimes.com
 * Lazy loading, transition triggers and navigation dots in [Gun Country](http://www.nytimes.com/projects/2013/gun-country/), nytimes.com
 
 ## Dependencies
-Any recent version of:
-- jQuery
+Any recent version of jQuery.
 
 ## Getting Started
 Download the [production version][min] or the [development version][max].
