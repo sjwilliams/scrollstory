@@ -914,8 +914,6 @@
       var item;
       var box;
 
-      console.log('update offsets');
-
       // individual items
       for (i = 0; i < length; i++) {
         item = items[i];
@@ -1020,8 +1018,6 @@
      * @param {jQuery Object/String/Array} items
      */
     addItems: function(items) {
-      console.log('add items start');
-      console.time('addItems');
       // use an existing jQuery selection
       if (items instanceof $) {
         this._prepItemsFromSelection(items);
@@ -1045,7 +1041,6 @@
         throw new Error('addItems found no valid items.');
       }
 
-      console.timeEnd('addItems');
       this._handleRepaint();
     },
 
@@ -1225,7 +1220,7 @@
         that._addItem(data, $item);
         frag.appendChild($item.get(0));
       });
-      
+
       this.$el.append(frag);
     },
 
