@@ -1020,7 +1020,8 @@
      * @param {jQuery Object/String/Array} items
      */
     addItems: function(items) {
-
+      console.log('add items start');
+      console.time('addItems');
       // use an existing jQuery selection
       if (items instanceof $) {
         this._prepItemsFromSelection(items);
@@ -1044,6 +1045,7 @@
         throw new Error('addItems found no valid items.');
       }
 
+      console.timeEnd('addItems');
       this._handleRepaint();
     },
 
@@ -1217,14 +1219,14 @@
       // add it to the class attr in markup
       var selector = this.options.contentSelector.replace(/\./g, '');
 
-      var $items = $();
+      var frag = document.createDocumentFragment();
       items.forEach(function(data) {
         var $item = $('<div class="' + selector + '"></div>');
         that._addItem(data, $item);
-        $items = $items.add($item);
+        frag.appendChild($item.get(0));
       });
-
-      this.$el.append($items);
+      
+      this.$el.append(frag);
     },
 
 

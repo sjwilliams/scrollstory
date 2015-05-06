@@ -4,7 +4,12 @@
 <head>
     <meta charset="utf-8">
     <title>ScrollStory: One thousand items</title>
-
+    <style>
+        .story{
+            height: 10%;
+            padding: 40px;
+        }
+    </style>
 </head>
 
 <body>
@@ -21,7 +26,8 @@
     <script src="../src/jquery.scrollstory.js"></script>
     <script>
     (function($) {
-        var length = 500;
+        console.time('createArray');
+        var length = 10000;
         var storyItems = Array(length);
         for (var idx = 0; idx < length; idx++) {
             storyItems[idx] = {
@@ -30,17 +36,19 @@
             }
         }
 
-        console.log(storyItems);
+        console.timeEnd('createArray');
 
 
-        $('.stories').scrollStory({
+        console.time('ssStart');
+        var scrollStory = window.SS = $('.stories').scrollStory({
             debug: true,
             triggerOffset: 30,
             content: storyItems,
             itembuild: function(ev, item) {
                 item.el.html('<span>' + item.index + ' ' + item.data.name + ', '+item.data.location + '</span>');
             }
-        });
+        }).data('plugin_scrollStory');
+        console.timeEnd('ssStart');
     })(jQuery);
     </script>
 </body>
