@@ -4,7 +4,7 @@
     <title>ScrollStory, A jQuery plugin for building scroll-based stories and interactions</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="lib/tomorrow.css">
+    <link rel="stylesheet" href="lib/railscasts.css">
     <style>
       /* http://meyerweb.com/eric/tools/css/reset/
          v2.0 | 20110126
@@ -50,7 +50,7 @@
         font-weight: 500;
       }
 
-      p{
+      p, section li{
         font-size: 1.2em;
         line-height: 1.55em;
       }
@@ -73,6 +73,12 @@
 
       em{
         font-style: italic;
+      }
+
+      span.code{
+        padding: 0.2em;
+        font-style: italic;
+        font-size: 0.92em;
       }
 
       /* boxes */
@@ -157,15 +163,6 @@
 
 
       /* section overrides */
-      .introduction{
-
-      }
-
-      .introduction p {
-
-
-      }
-
       .examples li{
         margin-top: 30px;
       }
@@ -208,11 +205,11 @@
       <section data-navtext="Overview">
         <h2>Overview</h2>
 
-        <p>ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader's focus. These elements &mdash; or <em>items</em> in ScrollStory speak &mdash; can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.</p>
+        <p>ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader’s focus. These elements &mdash; or <span class="code">items</span> in ScrollStory speak &mdash; can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.</p>
 
-        <p>ScrollStory follows these <em>items</em>, internally tracking the scroll distance until an item requires the reader's focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any <em>item</em> enters the viewport; any <em>item</em> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is 'filtered,' a ScrollStory construct meaning it is no longer an active part of a collection; or any of <span class="highlighter">17 custom events</span>.</p>
+        <p>ScrollStory follows these items, internally tracking the scroll distance until an item requires the reader’s focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any <span class="code">item</span> enters the viewport; any <span class="code">item</span> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is <span class="code">filtered</span>, a ScrollStory construct meaning it is no longer an active part of a collection; or any of <span class="highlighter">17 custom events</span>.</p>
 
-        <p>ScrollStory <em>items</em> aren't just DOM nodes. Rather, they're data objects that have a corresponding representation in the markup. ScrollStory instances maintain data about each <em>item</em> object in a collection and provides numerous methods of accessing, querying and modifying that data.</p>
+        <p>ScrollStory <span class="code">items</span> aren't just DOM nodes. Rather, they’re data objects that have a corresponding representation in the markup. ScrollStory instances maintain data about each <span class="code">item</span> object in a collection and provides numerous methods of accessing, querying and modifying that data.</p>
       </section>
 
       <section>
@@ -230,12 +227,41 @@ npm install scrollstory
       <section data-navtext="Documentation">
         <h2>Documentation</h2>
 
-        <p>In its most basic form, ScrollStory takes a container element and searches for '.story' child elements. Internally, ScrollStory turns those elements into <a href="#item">'item' objects</a> and assigns them several default properties, like its 'index' position in the list, 'topOffset' (point from the top at which is becomes active), it's 'inViewport' status (true or false), and whether it has a custom 'scrollOffet' (or point on page it triggers active, different from the other items). These are covered in detail below.</p>
+        <p>In its most basic form, ScrollStory takes a container element and searches for <span class="code">.story</span> child elements. Internally, ScrollStory turns those elements into <span class="code">item</span> objects and assigns them several default properties, like its <span class="code">index</span> position in the list, it’s <span class="code">inViewport</span> status and a <span class="code">data</span> object for user data.</p>
+
+        <p>The <span class="code">item</span> object:</p>
+<pre><code>
+{
+  id: 'story0-2', // globally unique across every instance of ScrollStory. User-assigned or auto generated.
+  index: 0, // zero-based index for this item within this instance of ScrollStory
+  el: $(), // jQuery object containing the item node
+  data: {}, // user data for this item
+  inViewport: true,
+  fullyInViewport: false,
+  active: false, // is this the exclusively active item
+  filtered: false, // has this item been removed from the collection
+  category: 'people', // optional. single, top-level association.
+  tags: ['friend', 'relative'], optional. array of strings defining
+  distanceToOffset: -589, // px distance to global trigger,
+  adjustedDistanceToOffet: -589, //px distance to trigger taking into account any local adjustments for this item
+  scrollStory: {}, // reference to the scrollstory instance this item belongs to
+  height: 582, // item element height
+  width: 1341, // item element width
+  scrollOffset: false, // a number if the scrollOffset for this item is different from the global one
+  triggerOffset: false // a number if the triggerOffset for this item is different from the global one
+}
+</code></pre>
+
 
         <p>In addition to object properties, ScrollStory modifies the DOM in a few ways:</p>
-* A class of 'storyScroll_story' is added to every item
-* A class of 'active' is added to the currently active item
-* A class of 'scrollStory_active' is added to the container if any item is active.
+        <ul>
+          <li>A class of <span class="code">scrollStory</span> is added is added to the container element.</li>
+          <li>A class of <span class="code">scrollStoryActive</span> is added to the container element if any item is active.</li>
+          <li>A class of <span class="code">scrollStoryActiveItem-{itemId}</span> is added to the container element to reflect currently active item.</li>
+          <li>A class of <span class="code">scrollStoryItem</span> is added to every item elemnt.</li>
+          <li>A class of <span class="code">active</span> is added to the currently active item element.</li>
+          <li>A class of <span class="code">inviewport</span> is added to item elements partially or fully in the viewport.</li>
+        </ul>
 </p>
 
 <pre><code>
@@ -277,9 +303,15 @@ $('#container').scrollStory();
             that.index($('li', $nav).index($(this)));
           })
 
+          // code blocks
           $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
           });
+
+          //inline
+          // $('span.code').each(function(i, block) {
+          //   hljs.highlightBlock(block);
+          // });
         }
       }).data('plugin_scrollStory');
 

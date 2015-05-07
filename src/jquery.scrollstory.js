@@ -1247,7 +1247,6 @@
         category: domData.category || data.category, // string. optional category slug this item belongs to. prefer data-category attribute
         tags: data.tags || [], // optional tag or tags for this item. Can take an array of string, or a cvs string that'll be converted into array of strings.
         scrollStory: this, // reference to this instance of scrollstory
-        nextItem: false,
 
         // in-focus item
         active: false,
@@ -1271,6 +1270,8 @@
       if (!$el.attr('id')) {
         $el.attr('id', item.id);
       }
+
+      $el.addClass('scrollStoryItem');
 
       // global record
       this._items.push(item);
