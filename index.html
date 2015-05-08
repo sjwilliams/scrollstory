@@ -33,53 +33,9 @@
         color: #1a1a1a;
       }
 
-      /* typography */
-      h1{
-        font-size: 1.9em;
-      }
 
-      @media (min-width: 768px) {
-        h1{
-          font-size: 3.1em;
-        }
-      }
 
-      h2{
-        font-family: "helvetica neue", helvetica, sans-serif;
-        font-size: 1.5em;
-        font-weight: 500;
-      }
 
-      p, section li{
-        font-size: 1.2em;
-        line-height: 1.55em;
-      }
-
-      .highlighter{
-        background-color: #7B0303;
-        border-radius: 3px;
-        padding: 1px 3px;
-        color: #fff;
-      }
-
-      .page-active .highlighter{
-        background-color: rgb(255, 244, 202);
-        color: inherit;
-      }
-
-      a{
-        color: #000;
-      }
-
-      em{
-        font-style: italic;
-      }
-
-      span.code{
-        padding: 0.2em;
-        font-style: italic;
-        font-size: 0.92em;
-      }
 
       /* boxes */
       header{
@@ -149,7 +105,12 @@
         margin-bottom: 90px;
       }
 
+
+
+
+
       /* text width */
+      .content > section > .example,
       .content > section > pre,
       .content > section > p,
       .content > section > ul,
@@ -160,6 +121,84 @@
         max-width: 690px;
         margin: 0 auto 20px auto;
       }
+
+      .content > section > h3,
+      .content > section > h4{
+        margin-bottom: 7px;
+      }
+
+
+
+      /* typography */
+      h1{
+        font-size: 1.9em;
+      }
+
+      @media (min-width: 768px) {
+        h1{
+          font-size: 3.1em;
+        }
+      }
+
+      h2,
+      h3{
+        font-family: "helvetica neue", helvetica, sans-serif;
+        font-size: 1.6em;
+        font-weight: 500;
+      }
+
+      h3{
+        font-size: 1.1em;
+        text-transform: uppercase;
+        color: #7b7b7b;
+      }
+
+      h3:before{
+        display: block;
+        content: ' ';
+        border-top: 1px solid #ccc;
+        padding-bottom: 15px;
+      }
+
+      p, section li{
+        font-size: 1.2em;
+        line-height: 1.55em;
+      }
+
+      .highlighter{
+        background-color: #7B0303;
+        border-radius: 3px;
+        padding: 1px 3px;
+        color: #fff;
+      }
+
+      .page-active .highlighter{
+        background-color: rgb(255, 244, 202);
+        color: inherit;
+      }
+
+      a{
+        color: #000;
+      }
+
+      em{
+        font-style: italic;
+      }
+
+      .content .code-kicker{
+        font-family: "helvetica neue", helvetica, sans-serif;
+        font-size: 1.1em;
+        font-weight: 700;
+        margin-bottom: 4px;
+      }
+
+      span.code{
+        padding: 0.2em;
+        font-style: italic;
+        font-size: 0.92em;
+      }
+
+
 
 
       /* section overrides */
@@ -173,7 +212,32 @@
         color: #8B8B8B;
       }
 
+
+      .content .documentation h2 + h3{
+        margin-top: inherit;
+      }
+
+      .content .documentation h3{
+        margin-top: 70px;
+      }
+
     </style>
+    <script>
+      var entityMap = {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': '&quot;',
+          "'": '&#39;',
+          "/": '&#x2F;'
+        };
+
+        function escapeHtml(string) {
+          return String(string).replace(/[&<>"'\/]/g, function (s) {
+            return entityMap[s];
+          });
+        }
+    </script>
   </head>
   <body>
     <header>
@@ -216,57 +280,164 @@
         <h2>Download</h2>
         <p>Download the <a href="https://raw.github.com/sjwilliams/scrollstory/master/dist/scrollstory.min.js">production version</a> or the <a href="https://raw.github.com/sjwilliams/scrollstory/master/dist/scrollstory.js">development version</a>.</p>
 
-        <p>Or via NPM</p>
-
-<pre><code class="bash">
+        <p class="code-kicker">Or via NPM</p>
+        <pre><code class="bash">
 npm install scrollstory
-</code></pre>
+        </code></pre>
 
       </section>
 
-      <section data-navtext="Documentation">
+      <section class="documentation" data-navtext="Documentation">
         <h2>Documentation</h2>
 
-        <p>In its most basic form, ScrollStory takes a container element and searches for <span class="code">.story</span> child elements. Internally, ScrollStory turns those elements into <span class="code">item</span> objects and assigns them several default properties, like its <span class="code">index</span> position in the list, it’s <span class="code">inViewport</span> status and a <span class="code">data</span> object for user data.</p>
+        <h3>Instantiation</h3>
+        <p>In its most basic form, ScrollStory takes a container element and searches for <span class="code">.story</span> child elements.</p>
 
-        <p>The <span class="code">item</span> object:</p>
-<pre><code>
+        <p class="code-kicker">The markup:</p>
+        <pre><code id="doc-basic-html"></code></pre>
+        <p class="code-kicker">The JavaScript:</p>
+        <pre><code id="doc-basic-js"></code></pre>
+        <script>
+          (function(){
+            var html = [
+              '<div id="container">\n',
+              '\t<div class="story"><h2>Story 1</h2><p>...</p></div>\n',
+              '\t<div class="story"><h2>Story 2</h2><p>...</p></div>\n',
+              '\t...\n',
+              '</div>\n'
+            ].join('');
+
+            var js = [
+              '$(function(){\n',
+              '\t$("#container").scrollStory();\n',
+              '});\n',
+            ].join('');
+            document.getElementById('doc-basic-html').innerHTML = escapeHtml(html);
+            document.getElementById('doc-basic-js').innerHTML = escapeHtml(js);
+          })();
+        </script>
+
+        <p>Internally, ScrollStory turns those elements into <span class="code">item</span> objects and assigns them several default properties, like its <span class="code">index</span> position in the list, its <span class="code">inViewport</span> status and a <span class="code">data</span> object for user data.</p>
+
+        <p class="code-kicker">The <span class="code">item</span> object:</p>
+        <pre><code>
 {
-  id: 'story0-2', // globally unique across every instance of ScrollStory. User-assigned or auto generated.
-  index: 0, // zero-based index for this item within this instance of ScrollStory
-  el: $(), // jQuery object containing the item node
-  data: {}, // user data for this item
-  inViewport: true,
-  fullyInViewport: false,
-  active: false, // is this the exclusively active item
-  filtered: false, // has this item been removed from the collection
-  category: 'people', // optional. single, top-level association.
-  tags: ['friend', 'relative'], optional. array of strings defining
-  distanceToOffset: -589, // px distance to global trigger,
-  adjustedDistanceToOffet: -589, //px distance to trigger taking into account any local adjustments for this item
-  scrollStory: {}, // reference to the scrollstory instance this item belongs to
-  height: 582, // item element height
-  width: 1341, // item element width
-  scrollOffset: false, // a number if the scrollOffset for this item is different from the global one
-  triggerOffset: false // a number if the triggerOffset for this item is different from the global one
+id: 'story0-2', // globally unique across every instance of ScrollStory. User-assigned or auto generated.
+index: 0, // zero-based index for this item within this instance of ScrollStory
+el: $(), // jQuery object containing the item node
+data: {}, // user data for this item
+inViewport: true,
+fullyInViewport: false,
+active: false, // is this the exclusively active item
+filtered: false, // has this item been removed from the collection
+category: 'people', // optional. single, top-level association.
+tags: ['friend', 'relative'], optional. array of strings defining
+distanceToOffset: -589, // px distance to global trigger,
+adjustedDistanceToOffet: -589, //px distance to trigger taking into account any local adjustments for this item
+scrollStory: {}, // reference to the scrollstory instance this item belongs to
+height: 582, // item element height
+width: 1341, // item element width
+scrollOffset: false, // a number if the scrollOffset for this item is different from the global one
+triggerOffset: false // a number if the triggerOffset for this item is different from the global one
 }
-</code></pre>
+        </code></pre>
 
 
         <p>In addition to object properties, ScrollStory modifies the DOM in a few ways:</p>
         <ul>
-          <li>A class of <span class="code">scrollStory</span> is added is added to the container element.</li>
+          <li>A class of <span class="code">scrollStory</span> is added to the container element.</li>
           <li>A class of <span class="code">scrollStoryActive</span> is added to the container element if any item is active.</li>
           <li>A class of <span class="code">scrollStoryActiveItem-{itemId}</span> is added to the container element to reflect currently active item.</li>
-          <li>A class of <span class="code">scrollStoryItem</span> is added to every item elemnt.</li>
+          <li>A class of <span class="code">scrollStoryItem</span> is added to every item element.</li>
           <li>A class of <span class="code">active</span> is added to the currently active item element.</li>
           <li>A class of <span class="code">inviewport</span> is added to item elements partially or fully in the viewport.</li>
         </ul>
-</p>
 
-<pre><code>
-$('#container').scrollStory();
-</code></pre>
+        <p class="code-kicker">Post-instantiation</p>
+        <pre><code id="doc-basic-renderedhtml"></code></pre>
+        <script>
+          (function(){
+            var html = [
+              '<div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">\n',
+              '\t<div id="story0-0" class="story scrollStoryItem inviewport active ">...</div>\n',
+              '\t<div id="story0-1" class="story scrollStoryItem inviewport">...</div>\n',
+              '\t<div id="story0-2" class="story scrollStoryItem">...</div>\n',
+              '\t<div id="story0-3" class="story scrollStoryItem">...</div>\n',
+              '</div>\n'
+            ].join('');
+            document.getElementById('doc-basic-renderedhtml').innerHTML = escapeHtml(html);
+          })();
+        </script>
+
+
+        <h3>Pass In Data Via Attributes</h3>
+        <p>Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built.</p>
+
+        <pre><code id="doc-dataattrs-html"></code></pre>
+        <p class="code-kicker">The <span class="code">item</span> objects:</p>
+
+        <pre><code id="doc-dataattrs-js">
+[{
+  id: 'story0-0',
+  index: 0
+  inViewport: true,
+  active: true,
+  ...
+  data: {
+    organization: "The New York Times",
+    founded: "1851"
+  }
+},{
+  id: 'story0-1',
+  index: 1
+  inViewport: false,
+  active: false,
+  ...
+  data: {
+    organization: "The Washington Post",
+    founded: "1877"
+  }
+}]
+        </code></pre>
+        <script>
+          (function(){
+            var html = [
+              '<div id="container">\n',
+              '\t<div class="story" data-organization="The New York Times" data-founded="1851"></div>\n',
+              '\t<div class="story" data-organization="The Washington Post" data-founded="1877"></div>\n',
+              '\t...\n',
+              '</div>\n'
+            ].join('');
+            document.getElementById('doc-dataattrs-html').innerHTML = escapeHtml(html);
+          })();
+        </script>
+
+
+        <h3>Build From Data</h3>
+        <p>A ScrollStory instance can be built with an array of data objects instead of markup, which will be used to generate all the ScrollStory items and elements on the page. The <span class="code">items</span> array and rendered markup are idential to the example above.</p>
+
+        <p class="code-kicker">The markup:</p>
+        <pre><code id="doc-buildfromdata-html"></code></pre>
+        <p class="code-kicker">The JavaScript:</p>
+        <pre><code id="doc-buildfromdata-js"></code></pre>
+        <script>
+          (function(){
+            var js = [
+              '$(function(){\n',
+              '\t$("#container").scrollStory({\n',
+              '\t\tcontent: [{organization: "The New York Times", founded: "1851"}, {organization: "The Washington Post", founded: "1877"}]\n',
+              '\t});\n',
+              '});\n',
+            ].join('');
+
+            document.getElementById('doc-buildfromdata-html').innerHTML = escapeHtml('<div id="container"></div>');
+            document.getElementById('doc-buildfromdata-js').innerHTML = escapeHtml(js);
+          })();
+        </script>
+
+        <h3>Using Data</h3>
+        <p>Item data can be used in most ScrollStory events. For example, you can to use the data to dynamically generate markup during instantiation.</p>
+
 
       </section>
     </div>
@@ -307,11 +478,6 @@ $('#container').scrollStory();
           $('pre code').each(function(i, block) {
             hljs.highlightBlock(block);
           });
-
-          //inline
-          // $('span.code').each(function(i, block) {
-          //   hljs.highlightBlock(block);
-          // });
         }
       }).data('plugin_scrollStory');
 
