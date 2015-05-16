@@ -331,7 +331,7 @@ fullyInViewport: false,
 active: false, // is this the exclusively active item
 filtered: false, // has this item been removed from the collection
 category: 'people', // optional. single, top-level association.
-tags: ['friend', 'relative'], optional. array of strings defining
+tags: ['friend', 'relative'], // optional. array of strings defining lose relationships between items.
 distanceToOffset: -589, // px distance to global trigger,
 adjustedDistanceToOffet: -589, //px distance to trigger taking into account any local adjustments for this item
 scrollStory: {}, // reference to the scrollstory instance this item belongs to
@@ -373,7 +373,12 @@ triggerOffset: false // a number if the triggerOffset for this item is different
         <h3>Pass In Data Via Attributes</h3>
         <p>Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built.</p>
 
+        <p class="code-kicker">The markup:</p>
         <pre><code id="doc-dataattrs-html"></code></pre>
+
+        <p class="code-kicker">The JavaScript:</p>
+        <pre><code id="doc-dataattrs-js"></code></pre>
+
         <p class="code-kicker">The <span class="code">item</span> objects:</p>
 
         <pre><code id="doc-dataattrs-js">
@@ -399,8 +404,15 @@ triggerOffset: false // a number if the triggerOffset for this item is different
   }
 }]
         </code></pre>
+        <p class="code-kicker">Post-instantiation</p>
+        <pre><code id="doc-dataattrs-renderedhtml"></code></pre>
         <script>
           (function(){
+            var js = [
+              '$(function(){\n',
+              '\t$("#container").scrollStory();\n',
+              '});\n',
+            ].join('');
             var html = [
               '<div id="container">\n',
               '\t<div class="story" data-organization="The New York Times" data-founded="1851"></div>\n',
@@ -408,10 +420,17 @@ triggerOffset: false // a number if the triggerOffset for this item is different
               '\t...\n',
               '</div>\n'
             ].join('');
+            var post = [
+              '<div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">\n',
+              '\t<div id="story0-0" class="story scrollStoryItem inviewport active" data-organization="The New York Times" data-founded="1851">...</div>\n',
+              '\t<div id="story0-1" class="story scrollStoryItem" data-organization="The Washington Post" data-founded="1877">...</div>\n',
+              '</div>\n'
+            ].join('');
+            document.getElementById('doc-dataattrs-js').innerHTML = escapeHtml(js);
             document.getElementById('doc-dataattrs-html').innerHTML = escapeHtml(html);
+            document.getElementById('doc-dataattrs-renderedhtml').innerHTML = escapeHtml(post);
           })();
         </script>
-
 
         <h3>Build From Data</h3>
         <p>A ScrollStory instance can be built with an array of data objects instead of markup, which will be used to generate all the ScrollStory items and elements on the page. The <span class="code">items</span> array and rendered markup are idential to the example above.</p>
@@ -424,8 +443,15 @@ triggerOffset: false // a number if the triggerOffset for this item is different
           (function(){
             var js = [
               '$(function(){\n',
+              '\tvar newspapers=[{\n',
+              '\t\torganization: "The New York Times",\n',
+              '\t\tfounded: "1851"\n',
+              '\t},{\n',
+              '\t\torganization: "The Washington Post",\n',
+              '\t\tfounded: "1877"\n',
+              '\t}];\n\n',
               '\t$("#container").scrollStory({\n',
-              '\t\tcontent: [{organization: "The New York Times", founded: "1851"}, {organization: "The Washington Post", founded: "1877"}]\n',
+              '\t\tcontent: newspapers\n',
               '\t});\n',
               '});\n',
             ].join('');
@@ -436,8 +462,39 @@ triggerOffset: false // a number if the triggerOffset for this item is different
         </script>
 
         <h3>Using Data</h3>
-        <p>Item data can be used in most ScrollStory events. For example, you can to use the data to dynamically generate markup during instantiation.</p>
+        <p>Item data can be used in most ScrollStory events. For example, you can to use the data to dynamically generate markup during instantiation and when an item becomes active.</p>
 
+        <p class="code-kicker">The markup:</p>
+        <pre><code id="doc-usingdata-html"></code></pre>
+        <p class="code-kicker">The JavaScript:</p>
+        <pre><code id="doc-usingdata-js"></code></pre>
+        <script>
+          (function(){
+            var js = [
+              '$(function(){\n',
+              '\tvar newspapers=[{\n',
+              '\t\torganization: "The New York Times",\n',
+              '\t\tfounded: "1851"\n',
+              '\t},{\n',
+              '\t\torganization: "The Washington Post",\n',
+              '\t\tfounded: "1877"\n',
+              '\t}];\n\n',
+              '\t$("#container").scrollStory({\n',
+              '\t\tcontent: newspapers\n',
+              '\t\titembuild: function(ev, item){\n',
+              '\t\t\titem.el.append("<h2>"+item.data.organization+"</h2>");\n',
+              '\t\t},\n',
+              '\t\titemfocus: function(ev, item){\n',
+              '\t\t\tconsole.log(item.data.organization + ", founded in " + item.data.founded + ", is now active!");\n',
+              '\t\t}\n',
+              '\t});\n',
+              '});\n',
+            ].join('');
+
+            document.getElementById('doc-usingdata-html').innerHTML = escapeHtml('<div id="container"></div>');
+            document.getElementById('doc-usingdata-js').innerHTML = escapeHtml(js);
+          })();
+        </script>
 
       </section>
     </div>
