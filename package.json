@@ -20,13 +20,16 @@
     }
   ],
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-cli": "~0.1.7",
-    "grunt-contrib-jshint": "~0.4.3",
-    "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-uglify": "~0.2.0"
+    "autoprefixer": "^5.1.1",
+    "beautiful-docs": "^1.0.3",
+    "cssmin": "^0.4.3",
+    "jshint": "^2.7.0"
   },
   "scripts": {
-    "test": "grunt travis --verbose"
+    "lint": "jshint src/jquery.scrollstory.js",
+    "clean": "rm -rf build && mkdir build",
+    "docs:css": "autoprefixer -b 'last 2 versions' < documentation/base.css | cssmin > build/main.css",
+    "docs:examples": "bfdocs --theme='documentation/theme' --title='ScrollStory Examples' documentation build && rm build/index.html && rm build/all.html && mv build/overview.html build/index.html",
+    "docs": "npm run clean && npm run docs:css && npm run docs:examples"
   }
 }
