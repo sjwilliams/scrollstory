@@ -28,8 +28,8 @@
   "scripts": {
     "lint": "jshint src/jquery.scrollstory.js",
     "clean": "rm -rf build && mkdir build",
-    "docs:css": "autoprefixer -b 'last 2 versions' < documentation/base.css | cssmin > build/main.css",
-    "docs:examples": "bfdocs --theme='documentation/theme' --title='ScrollStory Examples' documentation build && rm build/index.html && rm build/all.html && mv build/overview.html build/index.html",
-    "docs": "npm run clean && npm run docs:css && npm run docs:examples"
+    "docs:css": "autoprefixer -b 'last 2 versions' < build/overview.css | cssmin > build/overview.css",
+    "docs:html": "bfdocs --theme='documentation/theme' ./ build && rm build/index.html && rm build/all.html && mv build/readme.html build/index.html",
+    "docs": "npm run clean && npm run docs:html && npm run docs:css"
   }
 }
