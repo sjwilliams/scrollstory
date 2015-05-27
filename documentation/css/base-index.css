@@ -88,7 +88,7 @@ header li:active{
 }
 
 section{
-  margin-bottom: 90px;
+  margin-bottom: 5.4em;
 }
 
 
@@ -143,12 +143,25 @@ h3:before{
   display: block;
   content: ' ';
   border-top: 1px solid #ccc;
-  padding-bottom: 15px;
+  padding-bottom: 25px;
+  margin-top: 50px;
 }
 
-p, section li{
+h2 + h3:before{
+  display: none;
+}
+
+p{
   font-size: 1.2em;
   line-height: 1.55em;
+}
+
+section li{
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 1.1em;
+  line-height: 1.3em;
+  list-style-type: disc;
+  margin-left: 1em;
 }
 
 .highlighter{
@@ -173,9 +186,10 @@ em{
 
 .content .code-kicker{
   font-family: "helvetica neue", helvetica, sans-serif;
-  font-size: 1.1em;
+  font-size: 0.9em;
   font-weight: 700;
   margin-bottom: 4px;
+  color: #808080;
 }
 
 span.code{
