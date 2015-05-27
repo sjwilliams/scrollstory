@@ -27,8 +27,6 @@
     "parallelshell": "^1.1.1"
   },
   "scripts": {
-    "lint": "jshint jquery.scrollstory.js",
-    
     "clean": "mkdir -p build && rm -rf build/* && mkdir -p build/js && mkdir -p build/css",
     "clean:docsjs": "mkdir -p build/js && rm -rf build/js/*",
     "clean:docscss": "mkdir -p build/css && rm -rf build/css/*",
@@ -38,16 +36,16 @@
     "docs:css": "npm run clean:docscss && cp -R documentation/css build && postcss --use autoprefixer --autoprefixer.browsers '> 5%' -d build/css/ build/css/base-*",
     "docs:js": "npm run clean:docsjs && cp -R documentation/js build && cp jquery.scrollstory.js build/js",
 
-    "docs:build": "npm run docs:html && npm run docs:css && npm run docs:js",
-    
     "watch:docscss": "nodemon -e css --ignore build/ --ignore node_modules -x 'npm run docs:css'",
     "watch:docsjs": "nodemon -e js --ignore build/ --ignore node_modules -x 'npm run docs:js'",
     "watch:docshtml": "nodemon -e html,json,md --ignore build/ --ignore node_modules -x 'npm run docs:html'",
     "watch": "parallelshell 'npm run watch:docsjs' 'npm run watch:docshtml' 'npm run watch:docscss'",
     
+    "lint": "jshint jquery.scrollstory.js",
     "server": "http-server build/",
     "start": "parallelshell 'npm run watch' 'npm run server'",
+    "build": "npm run docs:html && npm run docs:css && npm run docs:js",
     
-    "preserver": "npm run clean && npm run docs:build"
+    "preserver": "npm run clean && npm run build"
   }
 }
