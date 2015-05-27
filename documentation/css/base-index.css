@@ -164,14 +164,15 @@ section li{
   margin-left: 1em;
 }
 
-.highlighter{
+/* highlighter */
+strong{
   background-color: #7B0303;
   border-radius: 3px;
   padding: 1px 3px;
   color: #fff;
 }
 
-.page-active .highlighter{
+.page-active strong{
   background-color: rgb(255, 244, 202);
   color: inherit;
 }
@@ -184,7 +185,8 @@ em{
   font-style: italic;
 }
 
-.content .code-kicker{
+/* code kicker label */
+.content h4{
   font-family: "helvetica neue", helvetica, sans-serif;
   font-size: 0.9em;
   font-weight: 700;
@@ -192,13 +194,14 @@ em{
   color: #808080;
 }
 
-span.code{
+/* inline code */
+li code,
+h2 code,
+p code{
   padding: 0.2em;
   font-style: italic;
   font-size: 0.92em;
 }
-
-
 
 
 /* section overrides */

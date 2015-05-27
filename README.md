@@ -2,7 +2,7 @@
 
 ScrollStory is a jQuery plugin for building scroll-based stories. Rather than doing a specific task, it aims to be a tool to help solve general problems.
 
-For example, it can help you <span class="highlighter">update your nav</span> as you scroll down the page. It can <span class="highlighter">auto-scroll</span> to sections of your story on a mouse click or custom event. It can trigger <span class="highlighter">custom callbacks</span> that manipulate the page as you scroll, like <span class="highlighter">lazy loading</span> media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it <span class="highlighter">maintains data</span> associated with all these custom interactions.
+For example, it can help you **update your nav** as you scroll down the page. It can **auto-scroll** to sections of your story on a mouse click or custom event. It can trigger **custom callbacks** that manipulate the page as you scroll, like **lazy loading** media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it **maintains data** associated with all these custom interactions.
 
 ## Examples
 * Loading panoramas in [Walking New York](http://www.nytimes.com/interactive/2015/04/22/magazine/new-york-city-walks.html), nytimes.com
@@ -10,20 +10,19 @@ For example, it can help you <span class="highlighter">update your nav</span> as
 
 ## Overview
 
-ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader’s focus. These elements &mdash; or <span class="code">items</span> in ScrollStory speak &mdash; can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.
+ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader’s focus. These elements &mdash; or `items` in ScrollStory speak &mdash; can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.
 
-ScrollStory follows these items, internally tracking the scroll distance until an item requires the reader’s focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any <span class="code">item</span> enters the viewport; any <span class="code">item</span> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is <span class="code">filtered</span>, a ScrollStory construct meaning it is no longer an active part of a collection; or any of <span class="highlighter">17 custom events</span>.
+ScrollStory follows these items, internally tracking the scroll distance until an item requires the reader’s focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any `item` enters the viewport; any `item` within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is `filtered`, a ScrollStory construct meaning it is no longer an active part of a collection; or any of **17 custom events**.
 
-ScrollStory <span class="code">items</span> aren't just DOM nodes. Rather, they’re data objects that have a corresponding representation in the DOM. ScrollStory instances maintain data about each <span class="code">item</span> object in a collection and provides numerous methods of accessing, querying and modifying that data.
-
+ScrollStory `items` aren't just DOM nodes. Rather, they’re data objects that have a corresponding representation in the DOM. ScrollStory instances maintain data about each `item` object in a collection and provides numerous methods of accessing, querying and modifying that data.
 
 
 ## Documentation
 
 ### Instantiation
-In its most basic form, ScrollStory takes a container element and searches for <span class="code">.story</span> child elements.
+In its most basic form, ScrollStory takes a container element and searches for `.story` child elements.
 
-<p class="code-kicker">The markup:</p>
+#### The markup:
 
 ```html
 <div id="container">
@@ -32,7 +31,7 @@ In its most basic form, ScrollStory takes a container element and searches for <
   ...
 </div>
 ```
-<p class="code-kicker">The JavaScript:</p>
+#### The JavaScript:
 
 ```js
 $(function(){
@@ -40,11 +39,11 @@ $(function(){
 });
 ```
 
-Internally, ScrollStory turns those elements into <span class="code">item</span> objects and assigns them several default properties, like its index position in the list, its <span class="code">inViewport</span> status and a <span class="code">data</span> object for user data.
+Internally, ScrollStory turns those elements into `item` objects and assigns them several default properties, like its index position in the list, its `inViewport` status and a `data` object for user data.
 
-<p class="code-kicker">The item object:</p>
+#### The item object:
 
-```json
+```js
 {
   id: 'story0-2', // globally unique across every instance of ScrollStory. User-assigned or auto generated.
   index: 0, // zero-based index for this item within this instance of ScrollStory
@@ -66,16 +65,16 @@ Internally, ScrollStory turns those elements into <span class="code">item</span>
 }
 ```
 
-<p class="code-kicker">Post-instantiation DOM</p>
+#### Post-instantiation DOM
 
 In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
-* A class of <span class="code">scrollStory</span> is added to the container element.
-* A class of <span class="code">scrollStoryActive</span> is added to the container element if any item is active.
-* A class of <span class="code">scrollStoryActiveItem-{itemId}</span> is added to the container element to reflect currently * active item.
-* A class of <span class="code">scrollStoryItem</span> is added to every item element.
-* A class of <span class="code">active</span> is added to the currently active item element.
-* A class of <span class="code">inviewport</span> is added to item elements partially or fully in the viewport.
+* A class of `scrollStory` is added to the container element.
+* A class of `scrollStoryActive` is added to the container element if any item is active.
+* A class of `scrollStoryActiveItem-{itemId}` is added to the container element to reflect currently * active item.
+* A class of `scrollStoryItem` is added to every item element.
+* A class of `active` is added to the currently active item element.
+* A class of `inviewport` is added to item elements partially or fully in the viewport.
 
 ```html
 <div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">
@@ -90,7 +89,7 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
 Data can be dynamically added to individual story items by adding it as data attributes. Combined with ScrollStory's API methods, some very dynamic applications can be built.
 
-<p class="code-kicker">The markup:</p>
+#### The markup:
 
 ```html
 <div id="container">
@@ -99,7 +98,7 @@ Data can be dynamically added to individual story items by adding it as data att
   ...
 </div>
 ```
-<p class="code-kicker">The JavaScript:</p>
+#### The JavaScript:
 
 ```js
 $(function(){
@@ -109,7 +108,7 @@ $(function(){
 
 Internally, ScrollStory turns those elements into item objects and assigns them several default properties, like its index position in the list, its inViewport status and a data object for user data.
 
-<p class="code-kicker">The <span code>item</span> objects:</p>
+#### The <span code>item</span> objects:
 
 ```js
 [{
@@ -136,7 +135,7 @@ Internally, ScrollStory turns those elements into item objects and assigns them 
 ```
 
 
-<p class="code-kicker">Post-instantiation</p>
+#### Post-instantiation
 
 ```html
 <div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">
@@ -149,7 +148,7 @@ Internally, ScrollStory turns those elements into item objects and assigns them 
 
 A ScrollStory instance can be built with an array of data objects instead of markup, which will be used to generate all the ScrollStory items and elements on the page. The items array and rendered markup are idential to the example above.
 
-<p class="code-kicker">The Code</p>
+#### The Code
 
 ```html
 <div id="container"></div>
@@ -173,7 +172,7 @@ $(function(){
 
 
 
-<p class="code-kicker">Post-instantiation DOM</p>
+#### Post-instantiation DOM
 
 ```html
 <div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">
@@ -186,7 +185,7 @@ $(function(){
 
 Item data can be used in most ScrollStory events. For example, you can to use the data to dynamically generate markup during instantiation and when an item becomes active.
 
-<p class="code-kicker">The Code</p>
+#### The Code
 
 ```html
 <div id="container"></div>
@@ -214,7 +213,7 @@ $(function(){
 });
 ```
 
-<p class="code-kicker">Post-instantiation DOM</p>
+#### Post-instantiation DOM
 
 ```html
 <div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">
