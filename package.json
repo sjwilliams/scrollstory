@@ -23,25 +23,31 @@
     "http-server": "^0.8.0",
     "jshint": "^2.7.0",
     "markx": "^0.4.0",
-    "nodemon": "^1.3.7"
+    "nodemon": "^1.3.7",
+    "parallelshell": "^1.1.1"
   },
   "scripts": {
     "lint": "jshint jquery.scrollstory.js",
-    "clean": "mkdir -p build && rm -rf build/* && mkdir -p build/js && mkdir build/css",
+    
+    "clean": "mkdir -p build && rm -rf build/* && mkdir -p build/js && mkdir -p build/css",
     "clean:docsjs": "mkdir -p build/js && rm -rf build/js/*",
     "clean:docscss": "mkdir -p build/css && rm -rf build/css/*",
     "clean:docshtml": "mkdir -p build && rm -f build/index.html",
+    
     "docs:html": "npm run clean:docshtml && markx --highlight --template documentation/index-template.html README.md > build/index.html",
     "docs:css": "npm run clean:docscss && cp -R documentation/css build && postcss --use autoprefixer --autoprefixer.browsers '> 5%' -d build/css/ build/css/base-*",
     "docs:js": "npm run clean:docsjs && cp -R documentation/js build && cp jquery.scrollstory.js build/js",
-    "docs:build": "npm run clean && npm run docs:html && npm run docs:css && npm run docs:js",
+
+    "docs:build": "npm run docs:html && npm run docs:css && npm run docs:js",
+    
     "watch:docscss": "nodemon -e css --ignore build/ --ignore node_modules -x 'npm run docs:css'",
     "watch:docsjs": "nodemon -e js --ignore build/ --ignore node_modules -x 'npm run docs:js'",
-    "watch:docshtml": "nodemon -e html,css,json,md --ignore build/ --ignore node_modules -x 'npm run docs:html'",
-    "serve": "http-server build/",
-    "watch": "npm run watch:docsjs & npm run watch:docshtml & npm run watch:docscss",
-    "start": "npm run watch && npm serve",
-    "prestart": "npm run clean",
-    "prewatch": "npm run docs:build"
+    "watch:docshtml": "nodemon -e html,json,md --ignore build/ --ignore node_modules -x 'npm run docs:html'",
+    "watch": "parallelshell 'npm run watch:docsjs' 'npm run watch:docshtml' 'npm run watch:docscss'",
+    
+    "server": "http-server build/",
+    "start": "parallelshell 'npm run watch' 'npm run server'",
+    
+    "preserver": "npm run clean && npm run docs:build"
   }
 }
