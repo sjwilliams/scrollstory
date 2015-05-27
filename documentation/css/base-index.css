@@ -159,7 +159,6 @@ h4{
   font-size: 0.9em;
   font-weight: 700;
   margin-bottom: 4px;
-  color: #808080;
 }
 
 /* api reference labels */
@@ -170,6 +169,7 @@ section h5{
   font-weight: 700;
   margin-top: 30px;
   margin-bottom: 2px;
+  color: #808080;
 }
 
 h5 + p,

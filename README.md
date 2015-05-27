@@ -183,13 +183,8 @@ $(function(){
 
 ### Using Data
 
-Item data can be used in most ScrollStory events. For example, you can to use the data to dynamically generate markup during instantiation and when an item becomes active.
+Item data can be used in most ScrollStory events and callbacks. For example, you can to use the data to dynamically generate markup during instantiation and when an item becomes active.
 
-#### The Code
-
-```html
-<div id="container"></div>
-```
 
 ```js
 $(function(){
@@ -331,7 +326,7 @@ $('#container').ScrollStory({
     easing: 'swing'
 });
 ```
-The easing type for programatic scrolls. If jQuery effects core is included in your jQuery UI build, all jQuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
+The easing, 'swing' or 'linear', to use during programatic scrolls.  
 
  
 ##### scrollSensitivity
@@ -418,7 +413,7 @@ Fired when an item gains 'focus', which can happen from a scroll-based activatio
 
 ```js
 $('#container').ScrollStory({
-    indexchange: function(ev, item) {
+    itemfocus: function(ev, item) {
       // do something
     }
 })
@@ -566,6 +561,17 @@ $('#container').ScrollStory({
 })
 ```
 
+#### complete
+Fired when object's instantiation is complete.
+
+```js
+$('#container').ScrollStory({
+    complete: function() {
+      // do something
+    }
+})
+```
+
 
 ### API
 ScrollStory exposes many methods for interacting with the instance. 
@@ -575,51 +581,49 @@ ScrollStory exposes many methods for interacting with the instance.
 var scrollStory = $('#container').ScrollStory().data('plugin_scrollStory');
 
 // use a method
-scrollStory.index(3);
+scrollStory.index(3); // scroll to fourth item
+
+
+// or access the methods from within the object
+$('#container').ScrollStory({
+    complete: function() {
+      this.index(3); // scroll to fourth item
+    }
+})
 
 ```
 
 #### isActive()
-<code>scrollStory.isActive()</code>: Whether or not any of the items are active. If so, the entire widget is considered to be 'active.'
+
+Whether or not any of the items are active. If so, the entire widget is considered to be 'active.'
 
 #### updateOffsets()
-<code>scrollStory.updateOffsets()</code>: Update the widget's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position on the page, like when filtering changes the size of an element.
 
-#### index(index)
-<code>scrollStory.index()</code>: Get or set the current index of the active item. On set, also scroll to that item.
+Update the object's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position on the page, like when filtering changes the size of an element.
 
-**Arguments**
+#### index([index])
+Get or set the current index of the active item. On set, also scroll to that item.
 
-  * **index** (optional Number) - The zero-based index you want to activate.
+##### Arguments
 
+  * *index* (optional Number) - The zero-based index you want to activate.
 
 #### next()
-<code>scrollStory.next()</code>: Convenience method to navigate to the item after the active one.
+Convenience method to navigate to the item after the active one.
 
 
 #### previous()
-<code>scrollStory.previous()</code>: Convenience method to navigate to the item before the active one.
+Convenience method to navigate to the item before the active one.
 
+#### getActiveItem()
+The currently active item object.
 
+#### setActiveItem(item, [options, callback])
+Given an item object, make it active, including updating its scroll position. 
 
-#### scrollToItem(id, opts, cb)
-<code>scrollStory.scrollToItem()</code>: Given an <code>item.id</code>, scroll to it.
+##### Arguments
 
-**Arguments**
-
-  * **id** (String) - The item.id to scroll to
-  * **opts** (optional Object) - Allows you to pass in the <code>easing</code> type, <code>speed</code> and <code>scrollOffset</code> for the scroll, overriding the global and item-specific settings already established.
-  * **cb** (optional Function) - Callback to execute after scroll.
-
-#### scrollToIndex(index, opts, cb)
-<code>scrollStory.scrollToIndex()</code>: Given a zero-based index, scroll to it.
-
-**Arguments**
-
-* **index** (Number) - The index to scroll to
-* **opts** (optional Object) - Allows you to pass in the <code>easing</code> type, <code>speed</code> and <code>scrollOffset</code> for the scroll, overriding the global and item-specific settings already established.
-* **cb** (optional Function) - Callback to execute after scroll.
-
+  * *item* - The item object to activate
 
 #### getItems()
 <code>scrollStory.getItems()</code>: Return an array of all item objects.
