@@ -96,20 +96,22 @@ section{
 
 
 /* text width */
-.content > section > .example,
-.content > section > pre,
-.content > section > p,
-.content > section > ul,
-.content > section > h1,
-.content > section > h2,
-.content > section > h3,
-.content > section > h4{
+section > .example,
+section > pre,
+section > p,
+section > ul,
+section > h1,
+section > h2,
+section > h3,
+section > h4,
+section > h5{
   max-width: 690px;
   margin: 0 auto 20px auto;
 }
 
-.content > section > h3,
-.content > section > h4{
+section > h3,
+section > h4,
+section > h5{
   margin-bottom: 7px;
 }
 
@@ -151,6 +153,37 @@ h2 + h3:before{
   display: none;
 }
 
+/* code kicker label */
+h4{
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 0.9em;
+  font-weight: 700;
+  margin-bottom: 4px;
+  color: #808080;
+}
+
+/* api reference labels */
+section h5{
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 0.9em;
+  line-height: 1em;
+  font-weight: 700;
+  margin-top: 30px;
+  margin-bottom: 2px;
+}
+
+h5 + p,
+h5 + p + p {
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 0.9em;
+  line-height: 1.1em;
+  margin-bottom: 2px;
+}
+
+h5 + p + p {
+  margin-bottom: 7px;
+}
+
 p{
   font-size: 1.2em;
   line-height: 1.55em;
@@ -183,15 +216,6 @@ a{
 
 em{
   font-style: italic;
-}
-
-/* code kicker label */
-.content h4{
-  font-family: "helvetica neue", helvetica, sans-serif;
-  font-size: 0.9em;
-  font-weight: 700;
-  margin-bottom: 4px;
-  color: #808080;
 }
 
 /* inline code */

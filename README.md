@@ -228,28 +228,9 @@ $(function(){
 
 
 
-<a name="options"></a>
-### Options
+### Instantiation Options
 
-* <a href="#contentSelector"><code>contentSelector</code></a>
-* <a href="#throttleType"><code>throttleType</code></a>
-* <a href="#scrollSensitivity"><code>scrollSensitivity</code></a>
-* <a href="#triggerOffset"><code>triggerOffset</code></a>
-* <a href="#preOffetActivation"><code>preOffetActivation</code></a>
-* <a href="#keyboard"><code>keyboard</code></a>
-* <a href="#scrollOffset"><code>scrollOffset</code></a>
-* <a href="#autoActivateFirst"><code>autoActivateFirst</code></a>
-* <a href="# delayFirstActivationToOffset"><code> delayFirstActivationToOffset</code></a>
-* <a href="#speed"><code>speed</code></a>
-* <a href="#scrollRate"><code>scrollRate</code></a>
-* <a href="#easing"><code>easing</code></a>
-* <a href="#checkViewportVisibility"><code>checkViewportVisibility</code></a>
-* <a href="#verboseItemClasses"><code>verboseItemClasses</code></a>
-* <a href="#throttleTypeOptions"><code>throttleTypeOptions</code></a>
-
---------------------------------------------------------
-<a name="contentSelector"></a>
-#### contentSelector
+##### contentSelector
 Type: `String`
 
 Default value: '.story'
@@ -261,10 +242,7 @@ $('#container').ScrollStory({
 ```
 A jQuery selector to find story items within your widget.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/customselector.html)
-
-<a name="throttleType"></a>
-#### throttleType
+##### throttleType
 Type: `String`
 
 Default value: 'debounce'
@@ -276,10 +254,7 @@ $('#container').ScrollStory({
 ```
 Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's [throttle](http://underscorejs.org/#throttle) and [debounce](http://underscorejs.org/#debounce) functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' to trigger on the trailing edge. 
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/throttletype.html)
-
-<a name="scrollSensitivity"></a>
-#### scrollSensitivity
+##### scrollSensitivity
 Type: `Number`
 
 Default value: 100
@@ -291,10 +266,7 @@ $('#container').ScrollStory({
 ```
 How often in milliseconds to check for the active item during a scroll.
 
-[Example of a lower scroll sensitivity](http://sjwilliams.github.io/scrollstory/examples/scrollsensitivity.html)
-
-<a name="triggerOffset"></a>
-#### triggerOffset
+##### triggerOffset
 Type: `Number`
 
 Default value: 0
@@ -306,10 +278,7 @@ $('#container').ScrollStory({
 ```
 The trigger offset is the distance from the top of the page used to determine which item is active.
 
-[Example of trigger point farther down the page](http://sjwilliams.github.io/scrollstory/examples/triggeroffset.html)
-
-<a name="preOffetActivation"></a>
-#### preOffetActivation
+##### preOffetActivation
 Type: `Boolean`
 
 Default value: true
@@ -321,10 +290,7 @@ $('#container').ScrollStory({
 ```
 By default, ScrollStory activates the item closest to the trigger offset, indifferent to whether that item is above or below the line. If set to false, the widget will no longer allow items to be active 'pre' the triggerOffset point. Generally, a value of true gives a very natural feel.
 
-[Example set to false](http://sjwilliams.github.io/scrollstory/examples/preoffsetactivation.html)
-
-<a name="keyboard"></a>
-#### keyboard
+##### keyboard
 Type: `Boolean`
 
 Default value: true
@@ -336,10 +302,7 @@ $('#container').ScrollStory({
 ```
 Enable left and right arrow keys to move between story items.
 
-[Demo](http://sjwilliams.github.io/scrollstory/examples/basic.html)
-
-<a name="scrollOffset"></a>
-#### scrollOffset
+##### scrollOffset
 Type: `Number`
 
 Default value: 0
@@ -351,8 +314,7 @@ $('#container').ScrollStory({
 ```
 When programatically scrolled, this is the position in pixels from the top the item is scrolled to.
 
-<a name="autoActivateFirst"></a>
-#### autoActivateFirst
+##### autoActivateFirst
 Type: `Boolean`
 
 Default value: true
@@ -364,8 +326,7 @@ $('#container').ScrollStory({
 ```
 Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
 
-<a name="delayFirstActivationToOffset"></a>
-#### delayFirstActivationToOffset
+##### delayFirstActivationToOffset
 Type: `Boolean`
 
 Default value: true
@@ -377,8 +338,7 @@ $('#container').ScrollStory({
 ```
 If 'autoActivateFirst:false' and 'preOffsetActivation:true', app logic would dictate the first item would activate after a 1px scroll. Usually, we want to delay that first activation until the first item is to the offset, but maintain the activation behavior of other items. By default, we delay the activation on first item. Set to false otherwise. No effect if 'autoActivateFirst' is true or 'preOffsetActivation' is false.
 
-<a name="speed"></a>
-#### speed
+##### speed
 Type: `Number`
 
 Default value: 800
@@ -390,8 +350,7 @@ $('#container').ScrollStory({
 ```
 Automated scroll speed in ms. Set to 0 to remove animation.
 
-<a name="scrollRate"></a>
-#### scrollRate
+##### scrollRate
 Type: `String`
 
 Default value: 'dynamic'
@@ -403,8 +362,7 @@ $('#container').ScrollStory({
 ```
 The rate of scroll for programatic scrolls. 'fixed' means travel the full distance over 'speed' time, regardless of distance. 'dynamic' means the speed is a guide for the target travel time. Longer distances will take longer, and shorter distance will take less time. This is meant to have a more natural feel. Tip: you'll want a  higher speed if you use 'dynamic' than you would for 'fixed'.
 
-<a name="easing"></a>
-#### easing
+##### easing
 Type: `String`
 
 Default value: 'swing'
@@ -416,8 +374,7 @@ $('#container').ScrollStory({
 ```
 The easing type for programatic scrolls. If jQuery effects core is included in your jQuery UI build, all jQuery UI easings are available: http://api.jqueryui.com/easings/. Otherwise, you'll only have jQuery's built-in 'swing' and 'linear.' Tip: 'swing' and 'easeOutQuad' have a natural feel.
 
-<a name="checkViewportVisibility"></a>
-#### checkViewportVisibility
+##### checkViewportVisibility
 Type: `Boolean`
 
 Default value: false
@@ -433,10 +390,8 @@ When enabled, events are triggered for items entering and leaving the viewport, 
 
 Regardless of 'checkViewportVisibility' setting, the getItemsInViewport() method will alway return the items in the viewport.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/inviewport.html)
 
-<a name="verboseItemClasses"></a>
-#### verboseItemClasses
+##### verboseItemClasses
 Type: `Boolean`
 
 Default value: false
@@ -448,10 +403,8 @@ $('#container').ScrollStory({
 ```
 Add css classes to items to reflect their order from the active item. Class 'order0' for the active item. 'order-1', for the item above, continuing on through 'order-2' to 'order-N', and class 'order1' through 'orderN' for the items below.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/verboseitemclasses.html)
 
-<a name="throttleTypeOptions"></a>
-#### throttleTypeOptions
+##### throttleTypeOptions
 Type: `Boolean\Object`
 
 Default value: null
@@ -466,25 +419,10 @@ Options to pass to Underscore's throttle or debounce for scroll. Type/functional
 
 ### Events
 
-Most of ScrollStory's functionality can be used via the widget's callbacks and events. For details on how jQuery UI events work, see their [documentation](http://api.jqueryui.com/jquery.widget/).
+Most of ScrollStory's functionality is available via callbacks and events. 
 
-The events are:
+Tk - examples of both CB and events
 
-* <a href="#indexchange"><code>indexchange</code></a>
-* <a href="#itemblur"><code>itemblur</code></a>
-* <a href="#itemfilter"><code>itemfilter</code></a>
-* <a href="#enterviewport"><code>enterviewport</code></a>
-* <a href="#exitviewport"><code>exitviewport</code></a>
-* <a href="#itembuild"><code>itembuild</code></a>
-* <a href="#categorychange"><code>categorychange</code></a>
-* <a href="#active"><code>active</code></a>
-* <a href="#inactive"><code>inactive</code></a>
-* <a href="#aboveoffset"><code>aboveoffset</code></a>
-* <a href="#belowoffset"><code>belowoffset</code></a>
-* <a href="#scroll"><code>scroll</code></a>
-
---------------------------------------------------------
-<a name="indexchange"></a>
 #### indexchange
 Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index(), or this.scrollTo*().
 
@@ -496,7 +434,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="itemblur"></a>
 #### itemblur
 Fired when an item loses 'focus'.
 
@@ -508,7 +445,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="itemfilter"></a>
 #### itemfilter
 Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css rules.
 
@@ -519,7 +455,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="itemunfilter"></a>
 #### itemunfilter
 Fired when an item is unfiltered.
 
@@ -531,7 +466,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="enterviewport"></a>
 #### enterviewport
 Fired when an item enters the visible portion of the screen. This is useful for triggering things like lazy loads.
 
@@ -542,7 +476,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="exitviewport"></a>
 #### exitviewport
 Fired when an item leaves the visible portion of the screen.
 
@@ -554,7 +487,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="itembuild"></a>
 #### itembuild
 Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item here, as the item hasn't yet been added to the page and the render will be faster.
 
@@ -568,10 +500,8 @@ $('#container').ScrollStory({
 })
 ```
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/fromdata.html)
 
 
-<a name="categorychange"></a>
 #### categorychange
 Fired when new active item is in a different category than previously active item.
 
@@ -584,9 +514,7 @@ $('#container').ScrollStory({
 })
 ```
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/categories.html)
 
-<a name="active"></a>
 #### active
 Fired when the widget changes states from have no active item to an active item. Depending on instantiation options, this may or not be on instantiation. 'autoActivateFirst' and 'delayFirstActivationToOffset' may delay this event until a certain scroll position has been reached.
 
@@ -598,7 +526,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="inactive"></a>
 #### inactive
 Fired when the widget changes states from an active item to not having an active item.
 
@@ -610,7 +537,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="aboveoffset"></a>
 #### aboveoffset
 Fired when scrolling above global scroll offset
 
@@ -622,7 +548,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="belowoffset"></a>
 #### belowoffset
 Fired when scrolling below global scroll offset
 
@@ -634,7 +559,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="scroll"></a>
 #### scroll
 Throttled scroll event. The current active element is passed in.
 
@@ -646,7 +570,6 @@ $('#container').ScrollStory({
 })
 ```
 
-<a name="api"></a>
 ### API
 ScrollStory exposes many methods for interacting with the widget. The API is available, like other jQuery UI widgets, by accessing it via its namespace and name on the element you instantiate on. You should probably cache the object like so:
 
@@ -663,51 +586,12 @@ scrollStory.index(3);
 
 ```
 
-The primary methods include:
-
-* <a href="#isActive">scrollStory.<code>isActive()</code></a>
-* <a href="#updateOffsets">scrollStory.<code>updateOffsets()</code></a>
-* <a href="#index">scrollStory.<code>index()</code></a>
-* <a href="#next">scrollStory.<code>next()</code></a>
-* <a href="#previous">scrollStory.<code>previous()</code></a>
-* <a href="#scrollToItem">scrollStory.<code>scrollToItem()</code></a>
-* <a href="#scrollToIndex">scrollStory.<code>scrollToIndex()</code></a>
-* <a href="#getItems">scrollStory.<code>getItems()</code></a>
-* <a href="#getItemsInViewport">scrollStory.<code>getItemsInViewport()</code></a>
-* <a href="#getItemsByCategory">scrollStory.<code>getItemsByCategory()</code></a>
-* <a href="#getFilteredItems">scrollStory.<code>getFilteredItems()</code></a>
-* <a href="#getUnfilteredItems">scrollStory.<code>getUnfilteredItems()</code></a>
-* <a href="#getItemById">scrollStory.<code>getItemById()</code></a>
-* <a href="#getItemByIndex">scrollStory.<code>getItemByIndex()</code></a>
-* <a href="#getTopItem">scrollStory.<code>getTopItem()</code></a>
-* <a href="#getTopItemId">scrollStory.<code>getTopItemId()</code></a>
-* <a href="#getNextItem">scrollStory.<code>getNextItem()</code></a>
-* <a href="#getPreviousItem">scrollStory.<code>getPreviousItem()</code></a>
-* <a href="#getLength">scrollStory.<code>getLength()</code></a>
-* <a href="#getCategoryIds">scrollStory.<code>getCategoryIds()</code></a>
-* <a href="#getActiveCategory">scrollStory.<code>getActiveCategory()</code></a>
-* <a href="#scrollToCategory">scrollStory.<code>scrollToCategory()</code></a>
-* <a href="#scrollToCategoryIndex">scrollStory.<code>scrollToCategoryIndex()</code></a>
-* <a href="#getTags">scrollStory.<code>getTags()</code></a>
-* <a href="#getItemsByTag">scrollStory.<code>getItemsByTag()</code></a>
-* <a href="#getItemsBy">scrollStory.<code>getItemsBy()</code></a>
-* <a href="#filter">scrollStory.<code>filter()</code></a>
-* <a href="#unfilter">scrollStory.<code>unfilter()</code></a>
-* <a href="#filterByTag">scrollStory.<code>filterByTag()</code></a>
-* <a href="#unfilterByTag">scrollStory.<code>unfilterByTag()</code></a>
-* <a href="#filterBy">scrollStory.<code>filterBy()</code></a>
-* <a href="#unfilterAllItems">scrollStory.<code>unfilterAllItems()</code></a>
-
---------------------------------------------------------
-<a name="isActive"></a>
 ### isActive()
 <code>scrollStory.isActive()</code>: Whether or not any of the items are active. If so, the entire widget is considered to be 'active.'
 
-<a name="updateOffsets"></a>
 ### updateOffsets()
 <code>scrollStory.updateOffsets()</code>: Update the widget's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position on the page, like when filtering changes the size of an element.
 
-<a name="index"></a>
 ### index(index)
 <code>scrollStory.index()</code>: Get or set the current index of the active item. On set, also scroll to that item.
 
@@ -716,20 +600,15 @@ The primary methods include:
   * **index** (optional Number) - The zero-based index you want to activate.
 
 
-<a name="next"></a>
 ### next()
 <code>scrollStory.next()</code>: Convenience method to navigate to the item after the active one.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 
-<a name="previous"></a>
 ### previous()
 <code>scrollStory.previous()</code>: Convenience method to navigate to the item before the active one.
 
-[Example usage](http://sjwilliams.github.io/scrollstory/examples/scrolltoneighbors.html)
 
 
-<a name="scrollToItem"></a>
 ### scrollToItem(id, opts, cb)
 <code>scrollStory.scrollToItem()</code>: Given an <code>item.id</code>, scroll to it.
 
@@ -739,7 +618,6 @@ The primary methods include:
   * **opts** (optional Object) - Allows you to pass in the <code>easing</code> type, <code>speed</code> and <code>scrollOffset</code> for the scroll, overriding the global and item-specific settings already established.
   * **cb** (optional Function) - Callback to execute after scroll.
 
-<a name="scrollToIndex"></a>
 ### scrollToIndex(index, opts, cb)
 <code>scrollStory.scrollToIndex()</code>: Given a zero-based index, scroll to it.
 
@@ -750,15 +628,12 @@ The primary methods include:
 * **cb** (optional Function) - Callback to execute after scroll.
 
 
-<a name="getItems"></a>
 ### getItems()
 <code>scrollStory.getItems()</code>: Return an array of all item objects.
 
-<a name="getItemsInViewport"></a>
 ### getItemsInViewport()
 <code>scrollStory.getItemsInViewport()</code>: Return an array of all item objects currently visible on the screen.
 
-<a name="getItemsByCategory"></a>
 ### getItemsByCategory(slug)
 <code>scrollStory.getItemsByCategory()</code>: Return an array of all item objects in the given category.
 
@@ -766,16 +641,13 @@ The primary methods include:
 
 * **slug** (String) - The category slug
 
-<a name="getFilteredItems"></a>
 ### getFilteredItems()
 <code>scrollStory.getFilteredItems()</code>: Return an array of all item objects whose filtered state has been set to true.
 
-<a name="getUnfilteredItems"></a>
 ### getUnfilteredItems()
 <code>scrollStory.getUnfilteredItems()</code>: Return an array of all item objects whose filtered state has been not been set to true.
 
 
-<a name="getItemById"></a>
 ### getItemById(id)
 <code>scrollStory.getItemById()</code>: Given an <code>item.id</code>, return its data.
 
@@ -783,7 +655,6 @@ The primary methods include:
 
 * **id** (String) - The item.id
 
-<a name="getItemByIndex"></a>
 ### getItemByIndex(index)
 <code>scrollStory.getItemByIndex()</code>:  Given an item's zero-based index, return its data.
 
@@ -791,35 +662,27 @@ The primary methods include:
 
 * **index** (Number) - Zero-based index.
 
-<a name="getTopItem"></a>
 ### getTopItem()
 <code>scrollStory.getTopItem()</code>:  Return the active <code>item</code> object. False it there isn't one.
 
-<a name="getTopItemId"></a>
 ### getTopItemId()
 <code>scrollStory.getTopItemId()</code>:  Return the active <code>item.id</code>. False it there isn't one.
 
-<a name="getNextItem"></a>
 ### getNextItem()
 <code>scrollStory.getNextItem()</code>:  Return the <code>item</code> object for the item after the currently active one. False it there isn't one.
 
-<a name="getPreviousItem"></a>
 ### getPreviousItem()
 <code>scrollStory.getPreviousItem()</code>:  Return the <code>item</code> object for item before the currently active one. False it there isn't one.
 
-<a name="getLength"></a>
 ### getLength()
 <code>scrollStory.getLength()</code>:  Return the number of items.
 
-<a name="getCategoryIds"></a>
 ### getCategoryIds()
 <code>scrollStory.getCategoryIds()</code>:  Return an array of category slugs.
 
-<a name="getActiveCategory"></a>
 ### getActiveCategory()
 <code>scrollStory.getActiveCategory()</code>:  Return the slug of the active category.
 
-<a name="scrollToCategory"></a>
 ### scrollToCategory(id)
 <code>scrollStory.scrollToCategory()</code>: Scroll to the first item in a given category
 
@@ -827,7 +690,6 @@ The primary methods include:
 
   * **id** (String) - Category slug
 
-<a name="scrollToCategoryIndex"></a>
 ### scrollToCategoryIndex(index)
 <code>scrollStory.scrollToCategoryIndex()</code>: Scroll to the first item in the category, which are tracked by the order in which they appear in items, at the index specified. <code>getCategoryIds</code> lists the categories in order.
 
@@ -835,11 +697,9 @@ The primary methods include:
 
 * **index** (Number) - The index to scroll to
 
-<a name="getTags"></a>
 ### getTags()
 <code>scrollStory.getTags()</code>:  Return array of tag slugs.
 
-<a name="getItemsByTag"></a>
 ### getItemsByTag(tags, all)
 <code>scrollStory.getItemsByTag()</code>: Return an array of item objects that contain the given tag.
 
@@ -848,7 +708,6 @@ The primary methods include:
 * **tags** (String/Array) - The slug or array of slugs
 * **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
 
-<a name="getItemsBy"></a>
 ### getItemsBy(truthTest)
 <code>scrollStory.getItemsBy()</code>: Return an array of item objects that pass an aribitrary truth test.
 
@@ -863,7 +722,6 @@ scrollStory.getItemsBy(function(item){
 });
 ```
 
-<a name="filter"></a>
 ### filter(item)
 <code>scrollStory.filter()</code>:  Given an item or item id, change its state to filtered.
 
@@ -871,7 +729,6 @@ scrollStory.getItemsBy(function(item){
 
 * **item** (Object/String) - <code>item</code> or <code>item.id</code>
 
-<a name="unfilter"></a>
 ### unfilter(item)
 <code>scrollStory.unfilter()</code>:  Given an item or item id, change its state to unfiltered.
 
@@ -879,7 +736,6 @@ scrollStory.getItemsBy(function(item){
 
 * **item** (Object/String) - <code>item</code> or <code>item.id</code>
 
-<a name="filterByTag"></a>
 ### filterByTag(tag,all)
 <code>scrollStory.filterByTag()</code>:  Given a tag slug, change all matching items' state to filtered.
 
@@ -888,7 +744,6 @@ scrollStory.getItemsBy(function(item){
 * **tag** (String/Array) - The slug or array of slugs to filter
 * **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
 
-<a name="unfilterByTag"></a>
 ### unfilterByTag(tag,all)
 <code>scrollStory.unfilterByTag()</code>: Given a tag slug, change all matching items' state to unfiltered.
 
@@ -897,7 +752,6 @@ scrollStory.getItemsBy(function(item){
 * **tag** (String/Array) - The slug or array of slugs to filter
 * **all** (optional Boolean) - false (default) if item must can contain any given tag. true if item must contain all tags.
 
-<a name="filterItemsBy"></a>
 ### filterItemsBy(truthTest)
 <code>scrollStory.filterItemsBy()</code>: Filter items that pass an abritrary truth test.
 
@@ -912,7 +766,6 @@ scrollStory.filterItemsBy(function(item){
 });
 ```
 
-<a name="unfilterAllItems"></a>
 ### unfilterAllItems()
 <code>scrollStory.unfilterAllItems()</code>:  Change all items' state to unfiltered.
 

@@ -34,6 +34,10 @@
         itembuild: function(ev, item){
           item.data.navtext = item.data.navtext || item.el.find('h2').first().text() || 'Home';
           $nav.append('<li>'+item.data.navtext+'</li>');
+
+          // unique slug on each container for styling
+          item.data.slug = item.data.navtext.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+          item.el.addClass('item-' + item.data.slug);
         },
         itemfocus: function(ev, item){
           $('li', $nav).removeClass('active');
