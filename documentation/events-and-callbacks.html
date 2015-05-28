@@ -3,14 +3,17 @@
 
 <head>
     <meta charset="utf-8">
-    <title>ScrollStory: Categories</title>
+    <title>ScrollStory: Events and Callbacks</title>
     <link rel="stylesheet" href="css/base-examples.css">
 </head>
 
 <body>
-    <div id="status">Active item index: <span id="activeIndex"></span><br>Category: <span id="category"></span=></div>
+    <div id="status">
+      Item (callback): <span id="activeIndex"></span><br>
+      Category (event): <span id="category"></span=>
+    </div>
     <div id="container">
-        <p class="about">Each story item turns blue when it enters the viewport and green when it becomes "active" at the triggerpoint (red line), which by default is the top of the viewport. "Active" is exclusive, so only one item can be active at a time.</p>
+        <p class="about"></p>
         <code>
             Our code here
         </code>
@@ -40,18 +43,19 @@
         var $activeIndex = $('#activeIndex');
         var $category = $('#category');
 
-        var scrollStory = window.SS = $('.stories').scrollStory({
+        // callback
+        $('.stories').scrollStory({
             debug: true,
             triggerOffset: 30,
             itemfocus: function(ev, item){
-                $activeIndex.html(item.index);
-            },
-            categoryfocus: function(ev, category){
-                $category.html(category);
+              $activeIndex.html(item.index);
             }
-        }).data('plugin_scrollStory');
+        });
 
-
+        // event
+        $('.stories').on('categoryfocus', function(ev, category){
+          $category.html(category);
+        });
     })(jQuery);
     </script>
 </body>

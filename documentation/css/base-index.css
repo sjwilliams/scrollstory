@@ -100,11 +100,13 @@ section > .example,
 section > pre,
 section > p,
 section > ul,
+section > ol,
 section > h1,
 section > h2,
 section > h3,
 section > h4,
-section > h5{
+section > h5,
+section > h6{
   max-width: 690px;
   margin: 0 auto 20px auto;
 }
@@ -153,16 +155,8 @@ h2 + h3:before{
   display: none;
 }
 
-/* code kicker label */
-h4{
-  font-family: "helvetica neue", helvetica, sans-serif;
-  font-size: 0.9em;
-  font-weight: 700;
-  margin-bottom: 4px;
-}
-
 /* api reference labels */
-section h5{
+section h4{
   font-family: "helvetica neue", helvetica, sans-serif;
   font-size: 0.9em;
   line-height: 1em;
@@ -172,16 +166,43 @@ section h5{
   color: #808080;
 }
 
-h5 + p,
-h5 + p + p {
+h4 + p,
+h4 + p + p {
   font-family: "helvetica neue", helvetica, sans-serif;
   font-size: 0.9em;
   line-height: 1.1em;
   margin-bottom: 2px;
 }
 
-h5 + p + p {
+h4 + p + p {
   margin-bottom: 7px;
+}
+
+/* agruments label */
+section h6{
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 0.75em;
+  line-height: 1em;
+  font-weight: 700;
+  margin-top: 16px;
+  margin-bottom: 2px;
+  padding-left: 12px;
+  text-transform: uppercase;
+}
+
+/* arguments list */
+h6 + ul li {
+  margin-left: 28px;
+  font-size: 0.9em;
+  list-style-type: circle;
+}
+
+/* code kicker label */
+h5{
+  font-family: "helvetica neue", helvetica, sans-serif;
+  font-size: 0.9em;
+  font-weight: 700;
+  margin-bottom: 4px;
 }
 
 p{

@@ -32,7 +32,7 @@
     "clean:docscss": "mkdir -p build/css && rm -rf build/css/*",
     "clean:docshtml": "mkdir -p build && rm -f build/index.html",
     
-    "docs:html": "npm run clean:docshtml && markx --highlight --template documentation/index-template.html README.md > build/index.html",
+    "docs:html": "npm run clean:docshtml && markx --highlight --template documentation/index.tmpl README.md > build/index.html && cp documentation/*.html build/",
     "docs:css": "npm run clean:docscss && cp -R documentation/css build && postcss --use autoprefixer --autoprefixer.browsers '> 5%' -d build/css/ build/css/base-*",
     "docs:js": "npm run clean:docsjs && cp -R documentation/js build && cp jquery.scrollstory.js build/js",
 

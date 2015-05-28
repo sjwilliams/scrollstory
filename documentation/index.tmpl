@@ -27,7 +27,7 @@
         $(this).prependTo($(this).next('section'));
       });
 
-      var scrollStory = $('.content').scrollStory({
+      $('.content').scrollStory({
         content: 'section',
         triggerOffset: 60,
         scrollOffset: 60,
@@ -61,8 +61,6 @@
           });
         }
       }).data('plugin_scrollStory');
-
-      window.SS = scrollStory;
     </script>
   </body>
 </html>
