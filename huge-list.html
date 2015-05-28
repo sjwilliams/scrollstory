@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: One thousand items</title>
+    <style>
+        body{
+            font-size: 16px;
+            line-height: 1;
+        }
+
+        body.modalon{
+            overflow: hidden;
+        }
+
+        .modal{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
+            background-color: rgba(255,255,255,0.66);
+        }
+
+        .modalon .modal{
+            display: block;
+        }
+
+        .modal p{
+            font-family: arial, sans-serif;
+            font-size: 4em;
+            padding: 40px;
+        }
+
+        .story{
+            height: 10%;
+            padding: 40px;
+        }
+    </style>
+</head>
+
+<body class="modalon">
+    <div class="modal">
+        <p>Downloading Data</p>
+    </div>
+    <div id="container">
+        <p class="about">Generate elements from data.</p>
+        <div class="stories"></div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        console.time('startDownload');
+        $.getJSON('https://cdn.rawgit.com/sjwilliams/city-websites/master/city-websites.json')
+            .error(function(s, error){
+                console.log('error', error);
+            })
+            .done(function(data) {
+                console.timeEnd('startDownload');
+                $('.modal p').html('Rendering.');
+
+                setTimeout(function(){
+                    console.time('ssStart');
+                    var scrollStory = window.SS = $('.stories').scrollStory({
+                        debug: true,
+                        triggerOffset: 30,
+                        content: data,
+                        itembuild: function(ev, item) {
+                            item.el.html('<span><a href="'+item.data.url+'">' + item.data.name + '</a>, '+item.data.full_county_name + ', ' +  item.data.state_name+'</span>');
+                        },
+                        complete: function() {
+                            $('body').removeClass('modalon');
+                        }
+                    }).data('plugin_scrollStory');
+                    console.timeEnd('ssStart');
+
+                }, 0);
+            });
+    })(jQuery);
+    </script>
+</body>
+</html>

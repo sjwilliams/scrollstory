@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Passing data via attributes</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="container">
+        <p class="about">Pass data into ScrollStory via data attributes.</p>
+        <div class="stories">
+            <div class="story" data-color="#ffffff" data-bgcolor="#fee6ce"><span>1</span></div>
+            <div class="story" data-bgcolor="#fdae6b"><span>2</span></div>
+            <div class="story" data-bgcolor="#e6550d" data-fontsize="8"><span>3</span></div>
+            <div class="story" data-bgcolor="#e0f3db"><span>4</span></div>
+            <div class="story" data-bgcolor="#43a2ca"><span>5</span></div>
+            <div class="story" data-bgcolor="#43a2ca" data-color="#ffffff"><span>6</span></div>
+            <div class="story" data-color="#e0f3db"><span>7</span></div>
+            <div class="story"><span>8</span></div>
+            <div class="story" data-color="#31a354"><span>9</span></div>
+            <div class="story" data-bgcolor="#f7fcb9"><span>10</span></div>
+            <div class="story" data-bgcolor="#31a354"><span>11</span></div>
+            <div class="story" data-color="#ffffff"><span>12</span></div>
+            <div class="story" data-color="#ffffff"><span>13</span></div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        $('.story').css({'height': $(window).height() * 0.6 });
+
+        $('.stories').scrollStory({
+            debug: true,
+            triggerOffset: 30,
+            itembuild: function(ev, item) {
+                console.log(item);
+                var css = {};
+
+                if (item.data.bgcolor) {
+                    css.backgroundColor = item.data.bgcolor;
+                }
+
+                if (item.data.color) {
+                    css.color = item.data.color;
+                }
+
+                if (item.data.fontsize) {
+                    css.fontSize = item.data.fontsize + 'em';
+                }
+
+
+                item.el.css(css);
+            }
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Custom Selector</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="container">
+        <p class="about">You can trigger an action when new item becomes active.</p>
+        <div class="stories">
+            <div class="custom-selector"><span>1</span></div>
+            <div class="custom-selector"><span>2</span></div>
+            <div class="custom-selector"><span>3</span></div>
+            <div class="custom-selector"><span>4</span></div>
+            <div class="custom-selector"><span>5</span></div>
+            <div class="custom-selector"><span>6</span></div>
+            <div class="custom-selector"><span>7</span></div>
+            <div class="custom-selector"><span>8</span></div>
+            <div class="custom-selector"><span>9</span></div>
+            <div class="custom-selector"><span>10</span></div>
+            <div class="custom-selector"><span>11</span></div>
+            <div class="custom-selector"><span>12</span></div>
+            <div class="custom-selector"><span>13</span></div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        $('.custom-selector').css({'height': $(window).height() * 0.6 });
+
+        $('.stories').scrollStory({
+            debug: true,
+            triggerOffset: 30,
+            content: '.custom-selector'
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>

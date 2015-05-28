@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>jQuery Boilerplate</title>
+        <style>
+            #example{
+                width: 90%;
+                margin: 30px auto;
+            }
+            .example > div{
+                background-color: #ccc;
+                border-top:1px solid #000;
+                padding: 30px;
+                min-height: 800px;
+            }
+
+            body{
+                padding-bottom: 800px;
+            }
+        </style>
+	</head>
+	<body>
+
+<!-- 		<div id="example1" class="example markup-example">
+            <h2>First List</h2>
+            <div class="story">First</div>
+            <div class="story">Second</div>
+            <div class="story">Third</div>
+            <div class="story">Fourth</div>
+            <div class="story">Fith</div>
+            <div class="story">Sixth</div>
+            <div class="story">Seventh</div>
+            <div class="story">Eight</div>
+        </div>
+
+
+        <div id="example2" class="example markup-example">
+            <h2>Second List</h2>
+            <div class="story" data-age="11">Josh</div>
+            <div class="story" data-age="19">Bob</div>
+            <div class="story" data-age="30">Susan</div>
+            <div class="story" data-age="22">Jane</div>
+            <div class="story" data-age="54">Craig</div>
+        </div>
+
+        <div id="example3" class="example">
+            <h2>Third List</h2>
+        </div>
+
+        <div id="example4" class="example">
+            <h2>Fourth List</h2>
+            <div class="custom">Africa</div>
+            <div class="custom" id="europe">Europe</div>
+            <div class="custom">South America</div>
+        </div> -->
+
+        <div id="example5" class="example">
+            <h2>Fifth List</h2>
+            <div class="custom">North America</div>
+            <div class="custom">Asia</div>
+            <div class="custom">Antarctica</div>
+        </div>
+        <script src="js/jquery.min.js"></script>
+        <script src="js/jquery.scrollstory.js"></script>
+		<script>
+			$(function() {
+
+                // markup only
+				$(".markup-example").scrollStory({});
+
+                // data only
+                $("#example3").scrollStory({
+                    content: [{
+                        id:'josh',
+                        name:'josh'
+                    }, {
+                        name:'bob'
+                    }]
+                });
+
+                // jq object
+                $("#example4").scrollStory({
+                    content: $('#example4 .custom')
+                });
+
+                // custom selection
+                window.example5 = $("#example5").scrollStory({
+                    content: '.custom',
+                    debug: true,
+                    triggerOffset: 10,
+                    itembuild: function(ev, item){
+                        // console.log('item build', ev, item);
+                    }
+                }).data('plugin_scrollStory');
+
+                // console.log(example5);
+
+			});
+		</script>
+	</body>
+</html>
