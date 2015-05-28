@@ -87,12 +87,21 @@
 
 
 
+
   /**
    * Utility methods
    *
    * debounce() and throttle() are from on Underscore.js:
    * https://github.com/jashkenas/underscore
    */
+
+  /**
+   * Underscore's now:
+   * http://underscorejs.org/now
+   */
+  var dateNow = Date.now || function() {
+    return new Date().getTime();
+  };
 
   /**
    * Underscore's debounce:
@@ -130,12 +139,12 @@
     var previous = 0;
     options || (options = {});
     var later = function() {
-      previous = options.leading === false ? 0 : new Date;
+      previous = options.leading === false ? 0 : dateNow();
       timeout = null;
       result = func.apply(context, args);
     };
     return function() {
-      var now = new Date;
+      var now = dateNow();
       if (!previous && options.leading === false) {
         previous = now;
       }
