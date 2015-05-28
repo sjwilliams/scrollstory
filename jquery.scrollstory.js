@@ -1,5 +1,8 @@
-// TODO
-// * tags
+/**
+* @preserve ScrollStory - vVERSIONXXX - YYYY-MM-DDXXX
+* https://github.com/sjwilliams/scrollstory
+* Copyright (c) 2015 Josh Williams; Licensed MIT 
+*/
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
