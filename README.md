@@ -19,24 +19,38 @@ ScrollStory `items` aren't just DOM nodes. Rather, they’re data objects that h
 
 ## Documentation
 
-### Instantiation
-In its most basic form, ScrollStory takes a container element and searches for `.story` child elements.
+### Download
+* [Development](https://raw.githubusercontent.com/sjwilliams/scrollstory/master/dist/jquery.scrollstory.js)
+* [Production](https://raw.githubusercontent.com/sjwilliams/scrollstory/master/dist/jquery.scrollstory.min.js)
+* `npm install scrollstory`
 
-##### The markup:
+
+### Basic Usage
+
+In its most basic form, ScrollStory takes a container element and searches for `.story` child elements. 
+
+
+##### The code:
 
 ```html
-<div id="container">
-  <div class="story"><h2>Story 1</h2><p>...</p></div>
-  <div class="story"><h2>Story 2</h2><p>...</p></div>
-  ...
-</div>
-```
-##### The JavaScript:
-
-```js
-$(function(){
-  $("#container").scrollStory();
-});
+<body>
+  <!-- Default markup style -->
+  <div id="container">
+    <div class="story"><h2>Story 1</h2><p>...</p></div>
+    <div class="story"><h2>Story 2</h2><p>...</p></div>
+  </div>
+  
+  <!-- include jquery and scrollstory -->
+  <script src="jquery.js"></script>
+  <script src="jquery.scrollstory.js"></script>
+  
+  <script>
+    // Instantiation
+    $(function(){
+      $("#container").scrollStory();
+    });
+  </script>
+</body>
 ```
 
 Internally, ScrollStory turns those elements into `item` objects and assigns them several default properties, like its index position in the list, its `inViewport` status and a `data` object for user data.
@@ -65,16 +79,17 @@ Internally, ScrollStory turns those elements into `item` objects and assigns the
 }
 ```
 
-##### Post-instantiation DOM
-
-In addition to object properties, ScrollStory modifies the DOM in a few ways:
+In addition to creating item objects on instantiation, ScrollStory modifies the DOM to reflect various states.
 
 * A class of `scrollStory` is added to the container element.
 * A class of `scrollStoryActive` is added to the container element if any item is active.
-* A class of `scrollStoryActiveItem-{itemId}` is added to the container element to reflect currently * active item.
+* A class of `scrollStoryActiveItem-{itemId}` is added to the container element to reflect currently "active" item.
 * A class of `scrollStoryItem` is added to every item element.
 * A class of `active` is added to the currently active item element.
 * A class of `inviewport` is added to item elements partially or fully in the viewport.
+* An ID attribute is added to any story item element that didn't have one.
+
+##### Post-instantiation DOM
 
 ```html
 <div id="container" class="scrollStory scrollStoryActive scrollStoryActiveItem-story0-0">
@@ -89,7 +104,7 @@ In addition to object properties, ScrollStory modifies the DOM in a few ways:
 
 Data can be dynamically added to individual item objects by adding it as data attributes in markup. Combined with ScrollStory's API methods, some very dynamic applications can be built.
 
-##### The markup:
+##### The code:
 
 ```html
 <div id="container">
@@ -97,13 +112,11 @@ Data can be dynamically added to individual item objects by adding it as data at
   <div class="story" data-organization="The Washington Post" data-founded="1877"></div>
   ...
 </div>
-```
-##### The JavaScript:
-
-```js
-$(function(){
-  $("#container").scrollStory();
-});
+<script>
+  $(function(){
+    $("#container").scrollStory();
+  });
+</script>
 ```
 
 Internally, ScrollStory turns those elements into item objects and assigns them several default properties, like its index position in the list, its inViewport status and a data object for user data.
@@ -150,12 +163,10 @@ A ScrollStory instance can be built with an array of data objects instead of mar
 
 ##### The Code
 
-```html
-<div id="container"></div>
-```
-
 ```js
 $(function(){
+
+  // data
   var newspapers=[{
     organization: "The New York Times",
     founded: "1851"
@@ -164,9 +175,8 @@ $(function(){
     founded: "1877"
   }];
 
-  $("#container").scrollStory({
-    content: newspapers
-  });
+  // pass in the data
+  $("#container").scrollStory({content: newspapers});
 });
 ```
 
@@ -183,18 +193,12 @@ $(function(){
 
 ### Using Data
 
-Item data can be used in most ScrollStory events and callbacks. For example, you can to use the data to dynamically generate markup during instantiation and when an item becomes active.
+Item data can be used in most ScrollStory events and callbacks. For example, you can to use the data to dynamically generate markup during instantiation.
 
 
 ```js
 $(function(){
-  var newspapers=[{
-    organization: "The New York Times",
-    founded: "1851"
-  },{
-    organization: "The Washington Post",
-    founded: "1877"
-  }];
+  var newspapers=[{organization: "The New York Times", founded: "1851"},{organization: "The Washington Post", founded: "1877"}];
 
   $("#container").scrollStory({
     content: newspapers
@@ -221,12 +225,42 @@ $(function(){
 </div>
 ```
 
+You could also, for example, manipulate the styles of items as they gain and lose focus. Here we'll interact with the same instance as before, but instead of callbacks we'll use events, which are available after instantiation.
 
+```js
+$("container").on('itemfocus', function(item){
+  if(item.index === 0){
+    item.el.css('background-color', 'purple');
+  } else {
+    item.el.css('background-color', 'red');
+  }
+});
+
+$("container").on('itemblurb', function(item){
+  item.el.css('background-color', 'white');
+});
+```
+
+Admittedly this example is a bit contrived as we could have done the same thing in CSS alone:
+```css
+.story{
+  background-color: white;
+}
+
+.story.active{
+  background-color: red;
+}
+
+.scrollStoryActiveItem-story0-0 .story.active{
+  background-color: purple;
+}
+
+```
 
 ### Instantiation Options
 
 #### content
-Type: `jQuery object`, `String`, or `array`
+Type: `jQuery Object`, `String`, or `array`
 Default value: 'null'
 
 ```js
