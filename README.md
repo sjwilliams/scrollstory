@@ -236,7 +236,7 @@ $("container").on('itemfocus', function(item){
   }
 });
 
-$("container").on('itemblurb', function(item){
+$("container").on('itemblur', function(item){
   item.el.css('background-color', 'white');
 });
 ```
