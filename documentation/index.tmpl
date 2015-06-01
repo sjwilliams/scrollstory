@@ -21,12 +21,7 @@
     <script>
       var $html = $('html');
       var $nav = $('header ul');
-
-      $('h2, h1', '.content').each(function(){
-        $(this).nextUntil('h2').wrapAll('<section></section>');
-        $(this).prependTo($(this).next('section'));
-      });
-
+      
       $('.content').scrollStory({
         content: 'section',
         triggerOffset: 60,

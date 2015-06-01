@@ -27,14 +27,16 @@
     "nodemon": "^1.3.7",
     "parallelshell": "^1.1.1",
     "postcss-cli": "^1.3.1",
-    "uglify-js": "^2.4.23"
+    "uglify-js": "^2.4.23",
+    "jquery": "^2.1.4",
+    "jsdom": "^3.1.2"
   },
   "scripts": {
     "clean": "mkdir -p build && rm -rf build/* && mkdir -p build/js && mkdir -p build/css",
     "clean:docsjs": "mkdir -p build/js && rm -rf build/js/*",
     "clean:docscss": "mkdir -p build/css && rm -rf build/css/*",
     "clean:docshtml": "mkdir -p build && rm -f build/index.html",
-    "docs:html": "npm run clean:docshtml && markx --highlight --template documentation/index.tmpl README.md > build/index.html && cp documentation/*.html build/",
+    "docs:html": "npm run clean:docshtml && node bin/buildIndex.js > build/index.html && cp documentation/*.html build/",
     "docs:css": "npm run clean:docscss && cp -R documentation/css build && postcss --use autoprefixer --autoprefixer.browsers '> 5%' -d build/css/ build/css/base-*",
     "docs:js": "npm run clean:docsjs && cp -R documentation/js build && cp jquery.scrollstory.js build/js",
     "watch:docscss": "nodemon -e css --ignore build/ --ignore node_modules -x 'npm run docs:css'",
