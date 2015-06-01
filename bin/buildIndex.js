@@ -1,6 +1,6 @@
 var markx = require('markx');
 var env = require('jsdom').env;
-
+var beautify = require('js-beautify').html;
 
 // convert markdown to HTML, and then 
 // wrap that html in section tags for
@@ -21,7 +21,8 @@ markx({
       });
 
       var html = '<!doctype html>\n' + $('html')[0].outerHTML;
-      console.log(html);
+      // console.log(html);
+      console.log(beautify(html));
     });
   }
 });
