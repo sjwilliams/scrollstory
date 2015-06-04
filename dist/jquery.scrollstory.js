@@ -1,10 +1,8 @@
 /**
-* @preserve ScrollStory - v0.3.1 - 2015-05-28
+* @preserve ScrollStory - v0.3.2 - 2015-06-04
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2015 Josh Williams; Licensed MIT 
 */
-
-console.log('hiya');
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
@@ -232,6 +230,7 @@ console.log('hiya');
       this._previousItems = [];
 
 
+
       /**
        * Attach handlers before any events are dispatched
        */
@@ -247,25 +246,29 @@ console.log('hiya');
       this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
 
 
+
       /**
        * Convert data from outside of widget into
        * items and, if needed, categories of items.
        *
-       * It also updates offsets and sets the active item.
+       * Don't 'handleRepaints' just yet, as that'll
+       * set an active item. We want to do that after
+       * our 'complete' event is triggered.
        */
-      this.addItems(this.options.content);
+      this.addItems(this.options.content, {
+        handleRepaint: false
+      });
 
+      // 1. offsets need to be accurate before 'complete'
+      this.updateOffsets();
 
-      /**
-       * bind and throttle page events
-       */
-      var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
-      var boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
-      $(window, 'body').on('scroll', boundScroll);
+      // 2. handle any user actions
+      this._trigger('complete', null, this);
 
-      // anything that might cause a repaint      
-      var resizeThrottle = debounce(this._handleResize, 100);
-      $(window).on('DOMContentLoaded load resize', resizeThrottle.bind(this));
+      // 3. Set active item, and double check 
+      // scroll position and offsets.
+      this._handleRepaint();
+
 
 
       /**
@@ -290,6 +293,7 @@ console.log('hiya');
       }
 
 
+
       /**
        * Debug UI
        */
@@ -309,8 +313,23 @@ console.log('hiya');
         this.$trigger.appendTo('body');
       }
 
+
+
+      /**
+       * bind and throttle page events. do it after 'complete' trigger
+       * so no items are yes active when those callbacks run.
+       */
+      var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
+      var boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+      $(window, 'body').on('scroll', boundScroll);
+
+      // anything that might cause a repaint      
+      var resizeThrottle = debounce(this._handleResize, 100);
+      $(window).on('DOMContentLoaded load resize', resizeThrottle.bind(this));
+
+
+
       instanceCounter = instanceCounter + 1;
-      this._trigger('complete', null, this);
     },
 
 
@@ -1031,7 +1050,12 @@ console.log('hiya');
      *
      * @param {jQuery Object/String/Array} items
      */
-    addItems: function(items) {
+    addItems: function(items, opts) {
+
+      opts = $.extend(true, {
+        handleRepaint: true
+      }, opts);
+
       // use an existing jQuery selection
       if (items instanceof $) {
         this._prepItemsFromSelection(items);
@@ -1055,7 +1079,9 @@ console.log('hiya');
         throw new Error('addItems found no valid items.');
       }
 
-      this._handleRepaint();
+      if (opts.handleRepaint) {
+        this._handleRepaint();
+      }
     },
 
 
