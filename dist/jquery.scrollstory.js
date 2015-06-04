@@ -4,6 +4,8 @@
 * Copyright (c) 2015 Josh Williams; Licensed MIT 
 */
 
+console.log('hiya');
+
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
     define(['jquery', undefined], factory);
