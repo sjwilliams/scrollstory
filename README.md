@@ -822,6 +822,9 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*0.3.2*
+* Fixed [Issue 20](https://github.com/sjwilliams/scrollstory/issues/20): Item focus should fire after containeractive
+
 *0.3.1 - Rewrite/Breaking changes*
 
 * A complete rewrite that drops jQuery UI and Underscore dependencies, removes many methods, standardizes naming and more.
