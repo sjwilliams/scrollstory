@@ -456,6 +456,18 @@ $('#container').on('itemfocus', function(ev, item){
 
 ```
 
+#### setup
+Fired early in instantiation, before any items are added or offsets calculated. Usefull for manipulating the page before ScrollStory does
+anything.
+
+```js
+$('#container').ScrollStory({
+  setup: function() {
+    // do something
+  }
+})
+```
+
 
 #### itemfocus
 Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index().
@@ -822,8 +834,11 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*0.3.3*
+* Added [Issue 24](https://github.com/sjwilliams/scrollstory/issues/24) New `setup` event.
+
 *0.3.2*
-* Fixed [Issue 20](https://github.com/sjwilliams/scrollstory/issues/20): Item focus should fire after containeractive
+* Fixed [Issue 20](https://github.com/sjwilliams/scrollstory/issues/20): Item focus should fire after containeractive.
 
 *0.3.1 - Rewrite/Breaking changes*
 
