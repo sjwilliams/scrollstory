@@ -65,6 +65,7 @@
     // whether or not the scroll checking is enabled.
     enabled: true,
 
+    setup: $.noop,
     itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
@@ -214,8 +215,7 @@
 
   ScrollStory.prototype = {
     init: function() {
-      this.$el.addClass(pluginName);
-
+      
       /**
        * List of all items, and a quick lockup hash
        * Data populated via _prepItems* methods
@@ -234,6 +234,7 @@
       /**
        * Attach handlers before any events are dispatched
        */
+      this.$el.on('setup', this._onSetup.bind(this));
       this.$el.on('containeractive', this._onContainerActive.bind(this));
       this.$el.on('containerinactive', this._onContainerInactive.bind(this));
       this.$el.on('itemblur', this._onItemBlur.bind(this));
@@ -245,6 +246,13 @@
       this.$el.on('categoryfocus', this._onCategoryFocus.bind(this));
       this.$el.on('triggeroffsetupdate', this._onTriggerOffsetUpdate.bind(this));
 
+
+      /**
+       * Run before any items have been added, allows
+       * for user manipulation of page before ScrollStory
+       * acts on anything.
+       */
+      this._trigger('setup', null, this);
 
 
       /**
@@ -1145,6 +1153,10 @@
 
     // Handlers for public events that maintain state
     // of the ScrollStory instance.
+
+    _onSetup: function() {
+      this.$el.addClass(pluginName);
+    },
 
     _onContainerActive: function() {
       this.$el.addClass(pluginName + 'Active');
