@@ -1,5 +1,5 @@
 /**
-* @preserve ScrollStory - v0.3.3 - 2015-06-09
+* @preserve ScrollStory - v0.3.3 - 2015-07-29
 * https://github.com/sjwilliams/scrollstory
 * Copyright (c) 2015 Josh Williams; Licensed MIT 
 */
@@ -883,7 +883,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         if (exceptions.indexOf(item) === -1) {
-          callback(item);
+          callback(item, i);
         }
       }
     },

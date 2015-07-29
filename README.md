@@ -684,7 +684,7 @@ Iterate over each item, passing the item to a callback.
 * *callback:* Function
 
 ```js
-this.each(function(item){ 
+this.each(function(item, index){ 
   item.el.append('<h2>'+item.id+'</h2>');
 });
 ```
@@ -834,6 +834,9 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*0.3.4*
+* Fixed missing 'index' passed to `.each()` callback that was original added in [Issue 7](https://github.com/sjwilliams/scrollstory/issues/7), but got lost in the 0.3 rewrite.
+
 *0.3.3*
 * Added [Issue 24](https://github.com/sjwilliams/scrollstory/issues/24) New `setup` event.
 

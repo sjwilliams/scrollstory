@@ -883,7 +883,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         if (exceptions.indexOf(item) === -1) {
-          callback(item);
+          callback(item, i);
         }
       }
     },
