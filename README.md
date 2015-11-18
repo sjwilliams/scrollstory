@@ -5,8 +5,11 @@ ScrollStory is a jQuery plugin for building scroll-based stories. Rather than do
 For example, it can help you **update your nav** as you scroll down the page. It can **auto-scroll** to sections of your story on a mouse click or custom event. It can trigger **custom callbacks** that manipulate the page as you scroll, like **lazy loading** media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it **maintains data** associated with all these custom interactions.
 
 ## Examples
+* Triggering video and sticky backgrounds in [10 Years After Katrina](http://www.nytimes.com/interactive/2015/08/26/us/ten-years-after-katrina.html), nytimes.com
+* Triggering video and sticky backgrounds in [The Top Tennis Players in the World Started Here](http://www.nytimes.com/interactive/2015/09/03/sports/tennis/tennis-courts.html), nytimes.com
 * Loading panoramas in [Walking New York](http://www.nytimes.com/interactive/2015/04/22/magazine/new-york-city-walks.html), nytimes.com
-* Triggering info panes in [A Walk Through the Gallery](http://www.nytimes.com/interactive/2015/02/06/arts/a-walk-through-the-gallery-henri-matisse-the-cut-outs-at-the-museum-of-modern-art-in-new-york.html), nytimes.com
+* Revealing text in [A Gift to New York, in Time for the Pope](http://www.nytimes.com/interactive/2015/09/17/nyregion/st-patricks-cathedral-pope-francis-visit.html), nytimes.com
+* Triggering video start/stop and filtering views in [52 Places to Go in 2015](http://www.nytimes.com/interactive/2015/01/11/travel/52-places-to-go-in-2015.html), nytimes.com
 
 ## Overview
 
