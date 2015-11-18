@@ -834,6 +834,9 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*0.3.5*
+* Added [PR 26](https://github.com/sjwilliams/scrollstory/pull/26) Optionally to bind to event other than native scroll.
+
 *0.3.4*
 * Fixed missing 'index' passed to `.each()` callback that was original added in [Issue 7](https://github.com/sjwilliams/scrollstory/issues/7), but got lost in the 0.3 rewrite.
 
