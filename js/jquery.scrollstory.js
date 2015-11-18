@@ -32,6 +32,10 @@
     // Offset from top to trigger a change
     triggerOffset: 0,
 
+    // Event to monitor. Can be a name for an event on the $(window), or
+    // a function that defines custom behavior. Defaults to native scroll event.
+    scrollEvent: 'scroll',
+
     // Automatically activate the first item on load, 
     // regardless of its position relative to the offset
     autoActivateFirstItem: false,
@@ -65,6 +69,7 @@
     // whether or not the scroll checking is enabled.
     enabled: true,
 
+    setup: $.noop,
     itembuild: $.noop,
     itemfocus: $.noop,
     itemblur: $.noop,
@@ -166,8 +171,8 @@
     };
   };
 
-  var $win = $(window);
-  var winHeight = $win.height(); // cached. updated via _handleResize()
+  var $window = $(window);
+  var winHeight = $window.height(); // cached. updated via _handleResize()
 
   /**
    * Given a scroll/trigger offset, determine
@@ -204,18 +209,21 @@
     this.el = element;
     this.$el = $(element);
     this.options = $.extend({}, defaults, options);
+
+    this.useNativeScroll = (typeof this.options.scrollEvent === 'string') && (this.options.scrollEvent.indexOf('scroll') === 0);
+
     this._defaults = defaults;
     this._name = pluginName;
     this._instanceId = (function() {
       return pluginName + '_' + instanceCounter;
     })();
+    
     this.init();
   }
 
   ScrollStory.prototype = {
     init: function() {
-      this.$el.addClass(pluginName);
-
+      
       /**
        * List of all items, and a quick lockup hash
        * Data populated via _prepItems* methods
@@ -229,10 +237,10 @@
       this._activeItem;
       this._previousItems = [];
 
-
       /**
        * Attach handlers before any events are dispatched
        */
+      this.$el.on('setup', this._onSetup.bind(this));
       this.$el.on('containeractive', this._onContainerActive.bind(this));
       this.$el.on('containerinactive', this._onContainerInactive.bind(this));
       this.$el.on('itemblur', this._onItemBlur.bind(this));
@@ -246,24 +254,35 @@
 
 
       /**
-       * Convert data from outside of widget into
-       * items and, if needed, categories of items.
-       *
-       * It also updates offsets and sets the active item.
+       * Run before any items have been added, allows
+       * for user manipulation of page before ScrollStory
+       * acts on anything.
        */
-      this.addItems(this.options.content);
+      this._trigger('setup', null, this);
 
 
       /**
-       * bind and throttle page events
+       * Convert data from outside of widget into
+       * items and, if needed, categories of items.
+       *
+       * Don't 'handleRepaints' just yet, as that'll
+       * set an active item. We want to do that after
+       * our 'complete' event is triggered.
        */
-      var scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
-      var boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
-      $(window, 'body').on('scroll', boundScroll);
+      this.addItems(this.options.content, {
+        handleRepaint: false
+      });
 
-      // anything that might cause a repaint      
-      var resizeThrottle = debounce(this._handleResize, 100);
-      $(window).on('DOMContentLoaded load resize', resizeThrottle.bind(this));
+      // 1. offsets need to be accurate before 'complete'
+      this.updateOffsets();
+
+      // 2. handle any user actions
+      this._trigger('complete', null, this);
+
+      // 3. Set active item, and double check 
+      // scroll position and offsets.
+      this._handleRepaint();
+
 
 
       /**
@@ -288,6 +307,7 @@
       }
 
 
+
       /**
        * Debug UI
        */
@@ -307,8 +327,69 @@
         this.$trigger.appendTo('body');
       }
 
+
+      /**
+       * Watch either native scroll events, throttled by 
+       * this.options.scrollSensitivity, or a custom event 
+       * that implements its own throttling.
+       *
+       * Bind these events after 'complete' trigger so no
+       * items are active when those callbacks runs.
+       */
+      
+      var scrollThrottle, scrollHandler;
+
+      if(this.useNativeScroll){
+
+        // bind and throttle native scroll
+        scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
+        scrollHandler = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+        $window.on('scroll', scrollHandler);
+      } else {
+
+        // bind but don't throttle custom event
+        scrollHandler = this._handleScroll.bind(this);
+
+        // if custom event is a function, it'll need
+        // to call the scroll handler manually, like so:
+        //
+        //  $container.scrollStory({
+        //    scrollEvent: function(cb){
+        //      // custom scroll event on nytimes.com
+        //      PageManager.on('nyt:page-scroll', function(){
+        //       // do something interesting if you like
+        //       // and then call the passed in handler();
+        //       cb();
+        //     });
+        //    }
+        //  });
+        //
+        //
+        // Otherwise, it's a string representing an event on the
+        // window to subscribe to, like so:
+        //
+        // // some code dispatching throttled events
+        // $window.trigger('nytg-scroll');
+        // 
+        //  $container.scrollStory({
+        //    scrollEvent: 'nytg-scroll'
+        //  });
+        //
+
+        if (typeof this.options.scrollEvent === 'function') {
+          this.options.scrollEvent(scrollHandler);
+        } else {
+          $window.on(this.options.scrollEvent, function(){
+            scrollHandler();
+          });
+        }
+      }
+
+      // anything that might cause a repaint      
+      var resizeThrottle = debounce(this._handleResize, 100);
+      $window.on('DOMContentLoaded load resize', resizeThrottle.bind(this));
+
       instanceCounter = instanceCounter + 1;
-      this._trigger('complete', null, this);
     },
 
 
@@ -854,7 +935,7 @@
       for (i = 0; i < length; i++) {
         item = items[i];
         if (exceptions.indexOf(item) === -1) {
-          callback(item);
+          callback(item, i);
         }
       }
     },
@@ -1029,7 +1110,12 @@
      *
      * @param {jQuery Object/String/Array} items
      */
-    addItems: function(items) {
+    addItems: function(items, opts) {
+
+      opts = $.extend(true, {
+        handleRepaint: true
+      }, opts);
+
       // use an existing jQuery selection
       if (items instanceof $) {
         this._prepItemsFromSelection(items);
@@ -1053,7 +1139,9 @@
         throw new Error('addItems found no valid items.');
       }
 
-      this._handleRepaint();
+      if (opts.handleRepaint) {
+        this._handleRepaint();
+      }
     },
 
 
@@ -1098,7 +1186,7 @@
      * Keep state correct while resizing
      */
     _handleResize: function() {
-      winHeight = $win.height();
+      winHeight = $window.height();
       
       if (this.options.enabled && this.options.autoUpdateOffsets) {
 
@@ -1117,6 +1205,10 @@
 
     // Handlers for public events that maintain state
     // of the ScrollStory instance.
+
+    _onSetup: function() {
+      this.$el.addClass(pluginName);
+    },
 
     _onContainerActive: function() {
       this.$el.addClass(pluginName + 'Active');
