@@ -337,18 +337,18 @@
        * items are active when those callbacks runs.
        */
       
-      var scrollThrottle, boundScroll;
+      var scrollThrottle, scrollHandler;
 
       if(this.useNativeScroll){
 
         // bind and throttle native scroll
         scrollThrottle = (this.options.throttleType === 'throttle') ? throttle : debounce;
-        boundScroll = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
-        $window.on('scroll', boundScroll);
+        scrollHandler = scrollThrottle(this._handleScroll.bind(this), this.options.scrollSensitivity, this.options.throttleTypeOptions);
+        $window.on('scroll', scrollHandler);
       } else {
 
         // bind but don't throttle custom event
-        boundScroll = this._handleScroll.bind(this);
+        scrollHandler = this._handleScroll.bind(this);
 
         // if custom event is a function, it'll need
         // to call the scroll handler manually, like so:
@@ -377,10 +377,10 @@
         //
 
         if (typeof this.options.scrollEvent === 'function') {
-          this.options.scrollEvent(boundScroll);
+          this.options.scrollEvent(scrollHandler);
         } else {
           $window.on(this.options.scrollEvent, function(){
-            boundScroll();
+            scrollHandler();
           });
         }
       }
