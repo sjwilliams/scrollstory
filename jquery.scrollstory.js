@@ -1052,17 +1052,13 @@
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
 
         // percent through this item's active scroll. expressed 0 - 1;
-        item.percentScrollComplete = (function(){
-          var percentScrollComplete;
-          if (item.distanceToOffset >= 0) {
-            percentScrollComplete = 0;
-          } else if (Math.abs(item.distanceToOffset) >= rect.height){
-            percentScrollComplete = 100;
-          } else {
-            percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
-          }
-          return percentScrollComplete;
-        })();
+        if (item.distanceToOffset >= 0) {
+          item.percentScrollComplete = 0;
+        } else if (Math.abs(item.distanceToOffset) >= rect.height){
+          item.percentScrollComplete = 100;
+        } else {
+          item.percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
+        }
 
         // track viewport status
         previouslyInViewport = item.inViewport;
