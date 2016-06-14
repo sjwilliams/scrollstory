@@ -1051,6 +1051,19 @@
         item.distanceToOffset = Math.floor(item.topOffset - scrollTop - triggerOffset); // floor to prevent some off-by-fractional px in determining active item
         item.adjustedDistanceToOffset = (item.triggerOffset === false) ? item.distanceToOffset : item.topOffset - scrollTop - item.triggerOffset;
 
+        // percent through this item's active scroll. expressed 0 - 1;
+        item.percentScrollComplete = (function(){
+          var percentScrollComplete;
+          if (item.distanceToOffset >= 0) {
+            percentScrollComplete = 0;
+          } else if (Math.abs(item.distanceToOffset) >= rect.height){
+            percentScrollComplete = 100;
+          } else {
+            percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
+          }
+          return percentScrollComplete;
+        })();
+
         // track viewport status
         previouslyInViewport = item.inViewport;
         item.inViewport = rect.bottom > 0 && rect.right > 0 && rect.left < wWidth && rect.top < wHeight;
