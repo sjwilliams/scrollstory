@@ -267,7 +267,7 @@ Type: `jQuery Object`, `String`, or `array`
 Default value: 'null'
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     content: [{name:'Josh', town: 'San Francisco'}]
 });
 ```
@@ -278,7 +278,7 @@ Type: `String`
 Default value: '.story'
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     contentSelector: '.story'
 });
 ```
@@ -289,7 +289,7 @@ Type: `Boolean`
 Default value: true
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     keyboard: true
 });
 ```
@@ -300,7 +300,7 @@ Type: `Number`
 Default value: 0
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     triggerOffset: 0
 });
 ```
@@ -312,7 +312,7 @@ Type: `Number`
 Default value: 0
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     scrollOffset: 0
 });
 ```
@@ -324,7 +324,7 @@ Type: `Boolean`
 Default value: false
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     autoActivateFirstItem: false
 });
 ```
@@ -335,7 +335,7 @@ Type: `Boolean`
 Default value: true
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     disablePastLastItem: true
 });
 ```
@@ -347,7 +347,7 @@ Type: `Number`
 Default value: 800
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     speed: 800
 });
 ```
@@ -359,7 +359,7 @@ Type: `String`
 Default value: 'swing'
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     easing: 'swing'
 });
 ```
@@ -372,7 +372,7 @@ Type: `Number`
 Default value: 100
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     scrollSensitivity: 100
 });
 ```
@@ -384,7 +384,7 @@ Type: `String`
 Default value: 'debounce'
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     throttleType: 'debounce' // debounce or throttle
 });
 ```
@@ -396,7 +396,7 @@ Type: `Boolean\Object`
 Default value: null
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     throttleTypeOptions: null
 });
 ```
@@ -408,7 +408,7 @@ Type: `Boolean`
 Default value: true
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     autoUpdateOffsets: true
 });
 ```
@@ -420,7 +420,7 @@ Type: `Boolean`
 Default value: true
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     enabled: true
 });
 ```
@@ -432,7 +432,7 @@ Type: `Boolean`
 Default value: false
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
     debug: true
 });
 ```
@@ -446,7 +446,7 @@ Most of ScrollStory's functionality is available via callbacks and events.
 ```js
 
 // via callbacks on instantiation
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemfocus: function(ev, item) {
     // do something
   }
@@ -464,7 +464,7 @@ Fired early in instantiation, before any items are added or offsets calculated. 
 anything.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   setup: function() {
     // do something
   }
@@ -476,7 +476,7 @@ $('#container').ScrollStory({
 Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index().
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemfocus: function(ev, item) {
     // do something
   }
@@ -487,7 +487,7 @@ $('#container').ScrollStory({
 Fired when an item loses 'focus'.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemblur: function(ev, item) {
     // do something
   }
@@ -498,7 +498,7 @@ $('#container').ScrollStory({
 Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css rules.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemfilter: function(ev, item) {
     // do something
   }
@@ -509,7 +509,7 @@ $('#container').ScrollStory({
 Fired when an item is unfiltered.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemunfilter: function(ev, item) {
     // do something
   }
@@ -520,7 +520,7 @@ $('#container').ScrollStory({
 Fired when an item enters the visible portion of the screen. This is useful for triggering things like lazy loads.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itementerviewport: function(ev, item) {
     // do something
   }
@@ -531,7 +531,7 @@ $('#container').ScrollStory({
 Fired when an item leaves the visible portion of the screen.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itemexitviewport: function(ev, item) {
     // do something
   }
@@ -542,7 +542,7 @@ $('#container').ScrollStory({
 Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item here, as the item hasn't yet been added to the page and the render will be faster.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   itembuild: function(ev, item) {
     item.el.html('<p>My new content!</p>');
   }
@@ -553,7 +553,7 @@ $('#container').ScrollStory({
 Fired when new active item is in a different category than previously active item.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   categoryfocus: function(ev, category) {
     // do something
   }
@@ -565,7 +565,7 @@ $('#container').ScrollStory({
 Fired when the instance changes states from having no active item to an active item. Depending on instantiation options, this may or not be on instantiation.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   containeractive: function() {
     // do something
   }
@@ -576,7 +576,7 @@ $('#container').ScrollStory({
 Fired when the instance changes states from having an active item to not having an active item.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   containerinactive: function() {
     // do something   
   }
@@ -587,7 +587,7 @@ $('#container').ScrollStory({
 Throttled scroll event.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   containerscroll: function() {
     // do something
   }
@@ -598,7 +598,7 @@ $('#container').ScrollStory({
 Fired after offsets have been updated.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   updateoffsets: function() {
     // do something
   }
@@ -609,7 +609,7 @@ $('#container').ScrollStory({
 Fired after a trigger offset as been updated via `.updateTriggerOffset()`
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   triggeroffsetupdate: function() {
     // do something
   }
@@ -620,7 +620,7 @@ $('#container').ScrollStory({
 Fired after a scroll offset as been updated via `.updateScrollOffset()`
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   scrolloffsetupdate: function() {
     // do something
   }
@@ -631,7 +631,7 @@ $('#container').ScrollStory({
 Fired when object's instantiation is complete.
 
 ```js
-$('#container').ScrollStory({
+$('#container').scrollStory({
   complete: function() {
     // do something
   }
@@ -644,14 +644,14 @@ ScrollStory exposes many methods for interacting with the instance.
 
 ```js
 // save instance object
-var scrollStory = $('#container').ScrollStory().data('plugin_scrollStory');
+var scrollStory = $('#container').scrollStory().data('plugin_scrollStory');
 
 // scroll to fourth item
 scrollStory.index(3); 
 
 
 // or access the methods from within the object
-$('#container').ScrollStory({
+$('#container').scrollStory({
   complete: function() {
     this.index(3); // scroll to fourth item
   }
