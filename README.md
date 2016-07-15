@@ -837,6 +837,9 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*0.3.7*
+* Fixed critical typos in documentation.
+
 *0.3.6*
 * Added [PR 27](https://github.com/sjwilliams/scrollstory/pull/27) Calculate item's active scroll percent complete.
 
