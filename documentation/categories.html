@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Categories</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="status">Active item index: <span id="activeIndex"></span><br>Category: <span id="category"></span=></div>
+    <div id="container">
+        <p class="about">Each story item turns blue when it enters the viewport and green when it becomes "active" at the triggerpoint (red line), which by default is the top of the viewport. "Active" is exclusive, so only one item can be active at a time.</p>
+        <code>
+            Our code here
+        </code>
+        <div class="stories">
+           <div class="story" data-category="fruit"><span>Apple</span></div>
+           <div class="story" data-category="fruit"><span>Orange</span></div>
+           <div class="story" data-category="fruit"><span>Bananna</span></div>
+           <div class="story" data-category="fruit"><span>Pear</span></div>
+           <div class="story" data-category="fruit"><span>Peach</span></div>
+           <div class="story" data-category="vegetable"><span>Squash</span></div>
+           <div class="story" data-category="vegetable"><span>Broccoli</span></div>
+           <div class="story" data-category="vegetable"><span>Spinach</span></div>
+           <div class="story" data-category="vegetable"><span>Carrots</span></div>
+           <div class="story" data-category="yummy"><span>Pizza</span></div>
+           <div class="story" data-category="yummy"><span>Pancakes</span></div>
+           <div class="story" data-category="yummy"><span>Subs</span></div>
+           <div class="story" data-category="yummy"><span>Cake</span></div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        // make existing elements 60% of window height
+        $('.story').css({'height': $(window).height() * 0.6});
+
+        var $activeIndex = $('#activeIndex');
+        var $category = $('#category');
+
+        var scrollStory = window.SS = $('.stories').scrollStory({
+            debug: true,
+            triggerOffset: 30,
+            itemfocus: function(ev, item){
+                $activeIndex.html(item.index);
+            },
+            categoryfocus: function(ev, category){
+                $category.html(category);
+            }
+        }).data('plugin_scrollStory');
+
+
+    })(jQuery);
+    </script>
+</body>
+</html>

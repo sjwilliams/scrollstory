@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Events and Callbacks</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="status">
+      Item (callback): <span id="activeIndex"></span><br>
+      Category (event): <span id="category"></span=>
+    </div>
+    <div id="container">
+        <p class="about"></p>
+        <code>
+            Our code here
+        </code>
+        <div class="stories">
+           <div class="story" data-category="fruit"><span>Apple</span></div>
+           <div class="story" data-category="fruit"><span>Orange</span></div>
+           <div class="story" data-category="fruit"><span>Bananna</span></div>
+           <div class="story" data-category="fruit"><span>Pear</span></div>
+           <div class="story" data-category="fruit"><span>Peach</span></div>
+           <div class="story" data-category="vegetable"><span>Squash</span></div>
+           <div class="story" data-category="vegetable"><span>Broccoli</span></div>
+           <div class="story" data-category="vegetable"><span>Spinach</span></div>
+           <div class="story" data-category="vegetable"><span>Carrots</span></div>
+           <div class="story" data-category="yummy"><span>Pizza</span></div>
+           <div class="story" data-category="yummy"><span>Pancakes</span></div>
+           <div class="story" data-category="yummy"><span>Subs</span></div>
+           <div class="story" data-category="yummy"><span>Cake</span></div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        // make existing elements 60% of window height
+        $('.story').css({'height': $(window).height() * 0.6});
+
+        var $activeIndex = $('#activeIndex');
+        var $category = $('#category');
+
+        // callback
+        $('.stories').scrollStory({
+            debug: true,
+            triggerOffset: 30,
+            itemfocus: function(ev, item){
+              $activeIndex.html(item.index);
+            }
+        });
+
+        // event
+        $('.stories').on('categoryfocus', function(ev, category){
+          $category.html(category);
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>

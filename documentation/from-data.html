@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: External data</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="container">
+        <p class="about">Generate elements from data.</p>
+        <code>
+            Our code here
+        </code>
+        <div class="stories">
+
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        $.getJSON('http://www.filltext.com/?callback=?', {
+            'rows': 36,
+            'fname': '{firstName}',
+            'lname': '{lastName}',
+            'zip': '{zip}'
+        })
+        .done(function( data ) {
+            $('.stories').scrollStory({
+                debug: true,
+                triggerOffset: '35%',
+                content: data,
+                itembuild: function(ev, item) {
+                    item.el
+                        .css({'height': $(window).height() * 0.6})
+                        .html('<span>' + item.index + ' ' + item.data.fname + ' ' +item.data.lname +', '+item.data.zip + '</span>');
+                }
+            });
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>

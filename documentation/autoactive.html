@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>ScrollStory: Auto Activate First</title>
+    <link rel="stylesheet" href="css/base-examples.css">
+</head>
+
+<body>
+    <div id="status"></div>
+    <div id="container">
+        <p class="about">You can set the first item active, even if it's below the trigger point.</p>
+        <div class="stories">
+            <div class="story"><span>1</span></div>
+            <div class="story"><span>2</span></div>
+            <div class="story"><span>3</span></div>
+            <div class="story"><span>4</span></div>
+            <div class="story"><span>5</span></div>
+            <div class="story"><span>6</span></div>
+            <div class="story"><span>7</span></div>
+            <div class="story"><span>8</span></div>
+            <div class="story"><span>9</span></div>
+            <div class="story"><span>10</span></div>
+            <div class="story"><span>11</span></div>
+            <div class="story"><span>12</span></div>
+            <div class="story"><span>13</span></div>
+        </div>
+    </div>
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.scrollstory.js"></script>
+    <script>
+    (function($) {
+        $('#status').hide();
+        $('.story').css({'height': $(window).height() * 0.6 });
+
+        $('.stories').scrollStory({
+            autoActivateFirstItem: true,
+            debug: true,
+            triggerOffset: 30,
+            itemfocus: function(ev, item){
+                $('#status').show().html('Active item index: ' + item.index);
+            },
+            containerinactive: function(){
+                $('#status').hide();
+            }
+        });
+    })(jQuery);
+    </script>
+</body>
+</html>
