@@ -239,7 +239,7 @@ $("container").on('itemfocus', function(item){
   }
 });
 
-$("container").on('itemblur', function(item){
+$("container").on('itemblur', function(ev, item){
   item.el.css('background-color', 'white');
 });
 ```
@@ -838,7 +838,8 @@ Enable scroll updates.
 
 ### Release History
 *0.3.8*
-* Fixed [Issue 24](https://github.com/sjwilliams/scrollstory/issues/30): Uneeded `undefined` in module setup.
+* Fixed [Issue 30](https://github.com/sjwilliams/scrollstory/issues/30): Uneeded `undefined` in module setup.
+* Fixed [Issue 28](https://github.com/sjwilliams/scrollstory/issues/28): Typo in documentation.
 
 *0.3.7*
 * Fixed critical typos in documentation.
