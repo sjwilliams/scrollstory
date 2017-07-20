@@ -6,9 +6,9 @@
 
 (function(factory) {
   if (typeof define === 'function' && define.amd) {
-    define(['jquery', undefined], factory);
+    define(['jquery'], factory);
   } else {
-    factory(jQuery, undefined);
+    factory(jQuery);
   }
 }(function($, undefined) {
 
