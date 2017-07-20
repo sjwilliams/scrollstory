@@ -1,5 +1,5 @@
 var markx = require('markx');
-var env = require('jsdom').env;
+var env = require('jsdom/lib/old-api.js').env;
 var beautify = require('js-beautify').html;
 
 // convert markdown to HTML, and then 
