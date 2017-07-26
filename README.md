@@ -838,6 +838,10 @@ Disable scroll updates. This is useful in the rare case when you want to manipul
 Enable scroll updates.
 
 ### Release History
+*1.0.0*
+
+* Bump to 1.0 release.
+
 *0.3.8*
 
 * Fixed [Issue 30](https://github.com/sjwilliams/scrollstory/issues/30): Uneeded `undefined` in module setup.
