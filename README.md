@@ -838,25 +838,32 @@ Enable scroll updates.
 
 ### Release History
 *0.3.8*
+
 * Fixed [Issue 30](https://github.com/sjwilliams/scrollstory/issues/30): Uneeded `undefined` in module setup.
 * Fixed [Issue 28](https://github.com/sjwilliams/scrollstory/issues/28): Typo in documentation.
 
 *0.3.7*
+
 * Fixed critical typos in documentation.
 
 *0.3.6*
+
 * Added [PR 27](https://github.com/sjwilliams/scrollstory/pull/27) Calculate item's active scroll percent complete.
 
 *0.3.5*
+
 * Added [PR 26](https://github.com/sjwilliams/scrollstory/pull/26) Optionally to bind to event other than native scroll.
 
 *0.3.4*
+
 * Fixed missing 'index' passed to `.each()` callback that was original added in [Issue 7](https://github.com/sjwilliams/scrollstory/issues/7), but got lost in the 0.3 rewrite.
 
 *0.3.3*
+
 * Added [Issue 24](https://github.com/sjwilliams/scrollstory/issues/24) New `setup` event.
 
 *0.3.2*
+
 * Fixed [Issue 20](https://github.com/sjwilliams/scrollstory/issues/20): Item focus should fire after containeractive.
 
 *0.3.1 - Rewrite/Breaking changes*
