@@ -5,11 +5,12 @@ ScrollStory is a jQuery plugin for building scroll-based stories. Rather than do
 For example, it can help you **update your nav** as you scroll down the page. It can **auto-scroll** to sections of your story on a mouse click or custom event. It can trigger **custom callbacks** that manipulate the page as you scroll, like **lazy loading** media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it **maintains data** associated with all these custom interactions.
 
 ## Examples
-* Triggering video and sticky backgrounds in [10 Years After Katrina](http://www.nytimes.com/interactive/2015/08/26/us/ten-years-after-katrina.html), nytimes.com
-* Triggering video and sticky backgrounds in [The Top Tennis Players in the World Started Here](http://www.nytimes.com/interactive/2015/09/03/sports/tennis/tennis-courts.html), nytimes.com
-* Loading panoramas in [Walking New York](http://www.nytimes.com/interactive/2015/04/22/magazine/new-york-city-walks.html), nytimes.com
+* Controlling scroll-based graphic in [111 N.F.L. Brains. All But One Had C.T.E.](https://www.nytimes.com/interactive/2017/07/25/sports/football/nfl-cte.html), nytimes.com
+* Triggering zoomy photo in [Fleeing Boko Haram, Thousands Cling to a Road to Nowhere](https://www.nytimes.com/interactive/2017/03/30/world/africa/the-road-to-nowhere-niger.html), nytimes.com
+* Triggering animations in the desktop version of [This Is Your Life, Brought to You by Private Equity](https://www.nytimes.com/interactive/2016/08/02/business/dealbook/this-is-your-life-private-equity.html), nytimes.com
+* ScrollStory compared in [How to implement scrollytelling with six different libraries](https://pudding.cool/process/how-to-implement-scrollytelling/demo/scrollstory/), pudding.cool
+* Lazy loading 360º video in [52 Places to Go in 2017](https://www.nytimes.com/interactive/2017/travel/places-to-visit.html), nytimes.com
 * Revealing text in [A Gift to New York, in Time for the Pope](http://www.nytimes.com/interactive/2015/09/17/nyregion/st-patricks-cathedral-pope-francis-visit.html), nytimes.com
-* Triggering video start/stop and filtering views in [52 Places to Go in 2015](http://www.nytimes.com/interactive/2015/01/11/travel/52-places-to-go-in-2015.html), nytimes.com
 
 ## Overview
 
