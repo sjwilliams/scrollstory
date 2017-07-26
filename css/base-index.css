@@ -11,8 +11,7 @@ body{
   font-family: Georgia, Times, serif;
   color: #000;
   background-color: #FFFDEE;
-  -webkit-transition: color 0.3s ease, background-color 0.3s ease;
-          transition: color 0.3s ease, background-color 0.3s ease;
+  transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .page-active body{
@@ -38,8 +37,7 @@ header{
   text-align: center;
 
   opacity: 0;
-  -webkit-transition: 0.3s opacity ease;
-          transition: 0.3s opacity ease;
+  transition: 0.3s opacity ease;
   -webkit-transform: translate3d(0,0,0);
           transform: translate3d(0,0,0);
 }
@@ -55,8 +53,7 @@ header li{
   border-radius: 3px;
   background-color: #353535;
   cursor: pointer;
-  -webkit-transition: 0.3s background-color ease;
-          transition: 0.3s background-color ease;
+  transition: 0.3s background-color ease;
 
   font-size: 12px;
   text-transform: uppercase;

@@ -18,8 +18,6 @@ body {
   background-color: #000;
   color: #fff;
   -webkit-user-select: none;
-     -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 
@@ -66,13 +64,11 @@ body {
 .story.inviewport,
 .custom-selector.inviewport {
   background-color: #92BDCA;
-  -webkit-transition: background-color 500ms ease;
-          transition: background-color 500ms ease;
+  transition: background-color 500ms ease;
 }
 
 .story.active,
 .custom-selector.active {
   background-color: #1B6F00;
-  -webkit-transition: background-color 0 ease;
-          transition: background-color 0 ease;
+  transition: background-color 0 ease;
 }

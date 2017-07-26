@@ -73,7 +73,8 @@
 
 
             </p>
-            <h5>The code:</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">body</span>&gt;</span>
+            <h5>The code:</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">body</span>&gt;</span>
   <span class="comment">&lt;!-- Default markup style --&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"story"</span>&gt;</span><span class="tag">&lt;<span class="title">h2</span>&gt;</span>Story 1<span class="tag">&lt;/<span class="title">h2</span>&gt;</span><span class="tag">&lt;<span class="title">p</span>&gt;</span>...<span class="tag">&lt;/<span class="title">p</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
@@ -94,7 +95,8 @@
             <p>Internally, ScrollStory turns those elements into <code>item</code> objects and assigns them several default properties, like its index position in the list, its <code>inViewport</code> status and a <code>data</code> object for user data.
 
             </p>
-            <h5>The item object:</h5><pre><code class="lang-js">{
+            <h5>The item object:</h5>
+            <pre><code class="lang-js">{
   <span class="attribute">id</span>: <span class="string">'story0-2'</span>, <span class="regexp">//</span> globally unique across every instance <span class="keyword">of</span> ScrollStory. User-assigned <span class="keyword">or</span> auto generated.
   <span class="attribute">index</span>: <span class="number">0</span>, <span class="regexp">//</span> zero-based index <span class="keyword">for</span> <span class="keyword">this</span> item within <span class="keyword">this</span> instance <span class="keyword">of</span> ScrollStory
   <span class="attribute">el</span>: $(), <span class="regexp">//</span> jQuery object containing the item node
@@ -125,7 +127,8 @@
                 <li>A class of <code>inviewport</code> is added to item elements partially or fully in the viewport.</li>
                 <li>An ID attribute is added to any story item element that didn't have one.</li>
             </ul>
-            <h5>Post-instantiation DOM</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
+            <h5>Post-instantiation DOM</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-0"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem inviewport active "</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-1"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem inviewport"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-2"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
@@ -135,7 +138,8 @@
             <p>Data can be dynamically added to individual item objects by adding it as data attributes in markup. Combined with ScrollStory's API methods, some very dynamic applications can be built.
 
             </p>
-            <h5>The code:</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>
+            <h5>The code:</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"story"</span> <span class="attribute">data-organization</span>=<span class="value">"The New York Times"</span> <span class="attribute">data-founded</span>=<span class="value">"1851"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">class</span>=<span class="value">"story"</span> <span class="attribute">data-organization</span>=<span class="value">"The Washington Post"</span> <span class="attribute">data-founded</span>=<span class="value">"1877"</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   ...
@@ -148,7 +152,8 @@
             <p>Internally, ScrollStory turns those elements into item objects and assigns them several default properties, like its index position in the list, its inViewport status and a data object for user data.
 
             </p>
-            <h5>The <span code="">item</span> objects:</h5><pre><code class="lang-js">[{
+            <h5>The <span code="">item</span> objects:</h5>
+            <pre><code class="lang-js">[{
   id: <span class="string">'story0-0'</span>,
   index: <span class="number">0</span>
   inViewport: true,
@@ -169,7 +174,8 @@
     founded: <span class="string">"1877"</span>
   }
 }]</code></pre>
-            <h5>Post-instantiation</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
+            <h5>Post-instantiation</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-0"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem inviewport active"</span> <span class="attribute">data-organization</span>=<span class="value">"The New York Times"</span> <span class="attribute">data-founded</span>=<span class="value">"1851"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-1"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem"</span> <span class="attribute">data-organization</span>=<span class="value">"The Washington Post"</span> <span class="attribute">data-founded</span>=<span class="value">"1877"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
@@ -177,7 +183,8 @@
             <p>A ScrollStory instance can be built with an array of data objects instead of markup, which will be used to generate all the ScrollStory items and elements on the page. The items array and rendered markup are idential to the example above.
 
             </p>
-            <h5>The Code</h5><pre><code class="lang-js">$(<span class="reserved">function</span>(){
+            <h5>The Code</h5>
+            <pre><code class="lang-js">$(<span class="reserved">function</span>(){
 
   <span class="regexp">//</span> data
   <span class="reserved">var</span> newspapers=[{
@@ -191,7 +198,8 @@
   <span class="regexp">//</span> pass <span class="keyword">in</span> the data
   $(<span class="string">"#container"</span>).scrollStory({<span class="attribute">content</span>: newspapers});
 });</code></pre>
-            <h5>Post-instantiation DOM</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
+            <h5>Post-instantiation DOM</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-0"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem inviewport active"</span> <span class="attribute">data-organization</span>=<span class="value">"The New York Times"</span> <span class="attribute">data-founded</span>=<span class="value">"1851"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-1"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem"</span> <span class="attribute">data-organization</span>=<span class="value">"The Washington Post"</span> <span class="attribute">data-founded</span>=<span class="value">"1877"</span>&gt;</span>...<span class="tag">&lt;/<span class="title">div</span>&gt;</span>
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
@@ -199,7 +207,8 @@
             <p>Item data can be used in most ScrollStory events and callbacks. For example, you can to use the data to dynamically generate markup during instantiation.
 
 
-            </p><pre><code class="lang-js">$(function(){
+            </p>
+            <pre><code class="lang-js">$(function(){
   var newspapers=[{organization: <span class="string">"The New York Times"</span>, founded: <span class="string">"1851"</span>},{organization: <span class="string">"The Washington Post"</span>, founded: <span class="string">"1877"</span>}]<span class="comment">;</span>
 
   $(<span class="string">"#container"</span>)<span class="preprocessor">.scrollStory</span>({
@@ -212,7 +221,8 @@
     }
   })<span class="comment">;</span>
 })<span class="comment">;</span></code></pre>
-            <h5>Post-instantiation DOM</h5><pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
+            <h5>Post-instantiation DOM</h5>
+            <pre><code class="lang-html"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"container"</span> <span class="attribute">class</span>=<span class="value">"scrollStory scrollStoryActive scrollStoryActiveItem-story0-0"</span>&gt;</span>
   <span class="tag">&lt;<span class="title">div</span> <span class="attribute">id</span>=<span class="value">"story0-0"</span> <span class="attribute">class</span>=<span class="value">"story scrollStoryItem inviewport active"</span> <span class="attribute">data-organization</span>=<span class="value">"The New York Times"</span> <span class="attribute">data-founded</span>=<span class="value">"1851"</span>&gt;</span>
     <span class="tag">&lt;<span class="title">h2</span>&gt;</span>The New York Times<span class="tag">&lt;/<span class="title">h2</span>&gt;</span>
   <span class="tag">&lt;/<span class="title">div</span>&gt;</span>
@@ -222,7 +232,8 @@
 <span class="tag">&lt;/<span class="title">div</span>&gt;</span></code></pre>
             <p>You could also, for example, manipulate the styles of items as they gain and lose focus. Here we'll interact with the same instance as before, but instead of callbacks we'll use events, which are available after instantiation.
 
-            </p><pre><code class="lang-js">$(<span class="string">"container"</span>).<span class="function_start"><span class="keyword">on</span><span class="params">('itemfocus', function<span class="params">(item)</span>{
+            </p>
+            <pre><code class="lang-js">$(<span class="string">"container"</span>).<span class="function_start"><span class="keyword">on</span><span class="params">('itemfocus', function<span class="params">(item)</span>{
   if<span class="params">(item.index === <span class="number">0</span>)</span>{
     item.el.css<span class="params">('background-color', 'purple')</span>;
   } else {
@@ -230,11 +241,12 @@
   }
 })</span></span>;
 
-$(<span class="string">"container"</span>).<span class="function_start"><span class="keyword">on</span><span class="params">('itemblur', function<span class="params">(item)</span>{
+$(<span class="string">"container"</span>).<span class="function_start"><span class="keyword">on</span><span class="params">('itemblur', function<span class="params">(ev, item)</span>{
   item.el.css<span class="params">('background-color', 'white')</span>;
 })</span></span>;</code></pre>
             <p>Admittedly this example is a bit contrived as we could have done the same thing in CSS alone:
-            </p><pre><code class="lang-css"><span class="class">.story</span><span class="rules">{
+            </p>
+            <pre><code class="lang-css"><span class="class">.story</span><span class="rules">{
   <span class="rule"><span class="attribute">background-color</span>:<span class="value"> white</span></span>;
 <span class="rule">}</span></span>
 
@@ -249,7 +261,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>content</h4>
             <p>Type: <code>jQuery Object</code>, <code>String</code>, or <code>array</code> Default value: 'null'
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">content:</span> [{<span class="method">name:</span><span class="string">'Josh'</span>, <span class="method">town:</span> <span class="string">'San Francisco'</span>}]
 });</code></pre>
             <p>If given a jQuery object, class selector string, or array of values, use the cooresponding data to build items in this instance.
@@ -258,7 +271,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>contentSelector</h4>
             <p>Type: <code>String</code> Default value: '.story'
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">contentSelector:</span> <span class="string">'.story'</span>
 });</code></pre>
             <p>A jQuery selector to find story items within your widget.
@@ -267,7 +281,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>keyboard</h4>
             <p>Type: <code>Boolean</code> Default value: true
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">keyboard:</span> <span class="keyword">true</span>
 });</code></pre>
             <p>Enable left and right arrow keys to move between story items.
@@ -276,7 +291,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>triggerOffset</h4>
             <p>Type: <code>Number</code> Default value: 0
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">triggerOffset:</span> <span class="number">0</span>
 });</code></pre>
             <p>The trigger offset is the distance from the top of the page used to determine which item is active.
@@ -286,7 +302,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>scrollOffset</h4>
             <p>Type: <code>Number</code> Default value: 0
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">scrollOffset:</span> <span class="number">0</span>
 });</code></pre>
             <p>When programatically scrolled, this is the position in pixels from the top the item is scrolled to.
@@ -298,7 +315,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: false
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">autoActivateFirstItem:</span> <span class="keyword">false</span>
 });</code></pre>
             <p>Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need
@@ -308,7 +326,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h4>disablePastLastItem</h4>
             <p>Type: <code>Boolean</code> Default value: true
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">disablePastLastItem:</span> <span class="keyword">true</span>
 });</code></pre>
             <p>Disable last item -- and the entire widget -- once the last item has scrolled beyond the trigger point.
@@ -320,7 +339,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: 800
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">speed:</span> <span class="number">800</span>
 });</code></pre>
             <p>Automated scroll speed in ms. Set to 0 to remove animation.
@@ -332,7 +352,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: 'swing'
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">easing:</span> <span class="string">'swing'</span>
 });</code></pre>
             <p>The easing, 'swing' or 'linear', to use during programatic scrolls.
@@ -345,7 +366,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: 100
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">scrollSensitivity:</span> <span class="number">100</span>
 });</code></pre>
             <p>How often in milliseconds to check for the active item during a scroll. Use a higher number if performance becomes an issue.
@@ -357,7 +379,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: 'debounce'
 
-            </p><pre><code class="lang-js">$('<span class="preprocessor">#container').scrollStory({</span>
+            </p>
+            <pre><code class="lang-js">$('<span class="preprocessor">#container').scrollStory({</span>
     throttleType: 'debounce' <span class="comment">// debounce or throttle</span>
 });</code></pre>
             <p>Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's <a href="http://underscorejs.org/#throttle">throttle</a> and <a href="http://underscorejs.org/#debounce">debounce</a>                functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' to trigger on the trailing edge.
@@ -369,7 +392,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: null
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">throttleTypeOptions:</span> null
 });</code></pre>
             <p>Options to pass to Underscore's throttle or debounce for scroll. Type/functionality dependent on 'throttleType'
@@ -381,7 +405,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: true
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">autoUpdateOffsets:</span> <span class="keyword">true</span>
 });</code></pre>
             <p>Update offsets after likely repaints, like window resizes and filters. If updates aren't offset, the triggering of scroll events may be inaccurate.
@@ -393,7 +418,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: true
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">enabled:</span> <span class="keyword">true</span>
 });</code></pre>
             <p>Whether or not the scroll checking is enabled.
@@ -405,7 +431,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             </p>
             <p>Default value: false
 
-            </p><pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">debug:</span> <span class="keyword">true</span>
 });</code></pre>
             <p>Whether or not the scroll trigger point should be visible on the page.
@@ -415,7 +442,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <h3>Events and Callbacks</h3>
             <p>Most of ScrollStory's functionality is available via callbacks and events.
 
-            </p><pre><code class="lang-js">
+            </p>
+            <pre><code class="lang-js">
 <span class="comment">// via callbacks on instantiation</span>
 $(<span class="string">'#container'</span>).scrollStory({
   itemfocus: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
@@ -430,7 +458,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>setup</h4>
             <p>Fired early in instantiation, before any items are added or offsets calculated. Usefull for manipulating the page before ScrollStory does anything.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   setup: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -438,7 +467,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>itemfocus</h4>
             <p>Fired when an item gains 'focus', which can happen from a scroll-based activation (most commonly), or externally via this.index().
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itemfocus: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -446,7 +476,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>itemblur</h4>
             <p>Fired when an item loses 'focus'.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itemblur: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -455,7 +486,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <p>Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css
                 rules.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itemfilter: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -463,7 +495,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>itemunfilter</h4>
             <p>Fired when an item is unfiltered.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itemunfilter: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -471,7 +504,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>itementerviewport</h4>
             <p>Fired when an item enters the visible portion of the screen. This is useful for triggering things like lazy loads.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itementerviewport: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -479,7 +513,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>itemexitviewport</h4>
             <p>Fired when an item leaves the visible portion of the screen.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   itemexitviewport: <span class="function"><span class="keyword">function</span><span class="params">(ev, item)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -488,7 +523,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <p>Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to
                 the item here, as the item hasn't yet been added to the page and the render will be faster.
 
-            </p><pre><code class="lang-js">$(<span class="comment">'#container').scrollStory({</span>
+            </p>
+            <pre><code class="lang-js">$(<span class="comment">'#container').scrollStory({</span>
   itembuild: <span class="keyword">function</span>(ev, item) {
     item.el.html(<span class="comment">'<span class="xmlDocTag">&lt;p&gt;</span>My new content!<span class="xmlDocTag">&lt;/p&gt;</span>');</span>
   }
@@ -496,7 +532,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>categoryfocus</h4>
             <p>Fired when new active item is in a different category than previously active item.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   categoryfocus: <span class="function"><span class="keyword">function</span><span class="params">(ev, category)</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -504,7 +541,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>containeractive</h4>
             <p>Fired when the instance changes states from having no active item to an active item. Depending on instantiation options, this may or not be on instantiation.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   containeractive: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -512,7 +550,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>containerinactive</h4>
             <p>Fired when the instance changes states from having an active item to not having an active item.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   containerinactive: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something   </span>
   }
@@ -520,7 +559,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>containerscroll</h4>
             <p>Throttled scroll event.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   containerscroll: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -528,7 +568,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>updateoffsets</h4>
             <p>Fired after offsets have been updated.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   updateoffsets: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -536,7 +577,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>triggeroffsetupdate</h4>
             <p>Fired after a trigger offset as been updated via <code>.updateTriggerOffset()</code>
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   triggeroffsetupdate: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -544,7 +586,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>scrolloffsetupdate</h4>
             <p>Fired after a scroll offset as been updated via <code>.updateScrollOffset()</code>
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   scrolloffsetupdate: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -552,7 +595,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h4>complete</h4>
             <p>Fired when object's instantiation is complete.
 
-            </p><pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
+            </p>
+            <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
   complete: <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="comment">// do something</span>
   }
@@ -560,7 +604,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
             <h3>API</h3>
             <p>ScrollStory exposes many methods for interacting with the instance.
 
-            </p><pre><code class="lang-js"><span class="comment">// save instance object</span>
+            </p>
+            <pre><code class="lang-js"><span class="comment">// save instance object</span>
 <span class="keyword">var</span> scrollStory = $(<span class="string">'#container'</span>).scrollStory().data(<span class="string">'plugin_scrollStory'</span>);
 
 <span class="comment">// scroll to fourth item</span>
@@ -606,7 +651,8 @@ $(<span class="string">'#container'</span>).scrollStory({
             <h6>Arguments</h6>
             <ul>
                 <li><em>callback:</em> Function</li>
-            </ul><pre><code class="lang-js"><span class="transposed_variable">this.</span>each(<span class="function"><span class="keyword">function</span><span class="params">(item, index)</span>{ </span>
+            </ul>
+            <pre><code class="lang-js"><span class="transposed_variable">this.</span>each(<span class="function"><span class="keyword">function</span><span class="params">(item, index)</span>{ </span>
   <span class="transposed_variable">item.</span><span class="transposed_variable">el.</span>append(<span class="string">'&lt;h2&gt;'</span>+<span class="transposed_variable">item.</span>id+<span class="string">'&lt;/h2&gt;'</span>);
 });</code></pre>
             <h4>getActiveItem()</h4>
@@ -671,7 +717,8 @@ $(<span class="string">'#container'</span>).scrollStory({
             <h6>Arguments</h6>
             <ul>
                 <li><em>truthTest:</em> Function - The function to check all items against</li>
-            </ul><pre><code class="lang-js"><span class="transposed_variable">this.</span>getItemsBy(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
+            </ul>
+            <pre><code class="lang-js"><span class="transposed_variable">this.</span>getItemsBy(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
   <span class="keyword">return</span> <span class="transposed_variable">item.</span><span class="transposed_variable">data.</span>slug==<span class="string">'josh_williams'</span>;
 });</code></pre>
             <h4>getItemsWhere(properties)</h4>
@@ -681,7 +728,8 @@ $(<span class="string">'#container'</span>).scrollStory({
             <h6>Arguments</h6>
             <ul>
                 <li><em>properties:</em> Object </li>
-            </ul><pre><code class="lang-js"><span class="comment">// Values</span>
+            </ul>
+            <pre><code class="lang-js"><span class="comment">// Values</span>
 <span class="keyword">this</span>.getItemsWhere({index:<span class="number">2</span>});
 <span class="keyword">this</span>.getItemsWhere({filtered:<span class="literal">false</span>});
 <span class="keyword">this</span>.getItemsWhere({category:<span class="string">'cats'</span>, width: <span class="number">300</span>});
@@ -743,7 +791,8 @@ $(<span class="string">'#container'</span>).scrollStory({
             <ul>
                 <li><em>truthTest:</em> Function - The function to check all items against</li>
                 <li><em>callback:</em> (optional Function) - Post-filter callback</li>
-            </ul><pre><code class="lang-js"><span class="transposed_variable">scrollStory.</span>filterBy(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
+            </ul>
+            <pre><code class="lang-js"><span class="transposed_variable">scrollStory.</span>filterBy(<span class="function"><span class="keyword">function</span><span class="params">(item)</span>{</span>
     <span class="keyword">return</span> <span class="transposed_variable">item.</span><span class="transposed_variable">data.</span>slug==<span class="string">'josh_williams'</span>;
 });</code></pre>
             <h4>filterAllItems([callback])</h4>
@@ -771,24 +820,49 @@ $(<span class="string">'#container'</span>).scrollStory({
 
             </p>
             <h3>Release History</h3>
-            <p><em>0.3.7</em> * Fixed critical typos in documentation.
+            <p><em>0.3.8</em>
 
             </p>
-            <p><em>0.3.6</em> * Added <a href="https://github.com/sjwilliams/scrollstory/pull/27">PR 27</a> Calculate item's active scroll percent complete.
+            <ul>
+                <li>Fixed <a href="https://github.com/sjwilliams/scrollstory/issues/30">Issue 30</a>: Uneeded <code>undefined</code> in module setup.</li>
+                <li>Fixed <a href="https://github.com/sjwilliams/scrollstory/issues/28">Issue 28</a>: Typo in documentation.</li>
+            </ul>
+            <p><em>0.3.7</em>
 
             </p>
-            <p><em>0.3.5</em> * Added <a href="https://github.com/sjwilliams/scrollstory/pull/26">PR 26</a> Optionally to bind to event other than native scroll.
+            <ul>
+                <li>Fixed critical typos in documentation.</li>
+            </ul>
+            <p><em>0.3.6</em>
 
             </p>
-            <p><em>0.3.4</em> * Fixed missing 'index' passed to <code>.each()</code> callback that was original added in <a href="https://github.com/sjwilliams/scrollstory/issues/7">Issue 7</a>, but got lost in the 0.3 rewrite.
+            <ul>
+                <li>Added <a href="https://github.com/sjwilliams/scrollstory/pull/27">PR 27</a> Calculate item's active scroll percent complete.</li>
+            </ul>
+            <p><em>0.3.5</em>
 
             </p>
-            <p><em>0.3.3</em> * Added <a href="https://github.com/sjwilliams/scrollstory/issues/24">Issue 24</a> New <code>setup</code> event.
+            <ul>
+                <li>Added <a href="https://github.com/sjwilliams/scrollstory/pull/26">PR 26</a> Optionally to bind to event other than native scroll.</li>
+            </ul>
+            <p><em>0.3.4</em>
 
             </p>
-            <p><em>0.3.2</em> * Fixed <a href="https://github.com/sjwilliams/scrollstory/issues/20">Issue 20</a>: Item focus should fire after containeractive.
+            <ul>
+                <li>Fixed missing 'index' passed to <code>.each()</code> callback that was original added in <a href="https://github.com/sjwilliams/scrollstory/issues/7">Issue 7</a>, but got lost in the 0.3 rewrite.</li>
+            </ul>
+            <p><em>0.3.3</em>
 
             </p>
+            <ul>
+                <li>Added <a href="https://github.com/sjwilliams/scrollstory/issues/24">Issue 24</a> New <code>setup</code> event.</li>
+            </ul>
+            <p><em>0.3.2</em>
+
+            </p>
+            <ul>
+                <li>Fixed <a href="https://github.com/sjwilliams/scrollstory/issues/20">Issue 20</a>: Item focus should fire after containeractive.</li>
+            </ul>
             <p><em>0.3.1 - Rewrite/Breaking changes</em>
 
             </p>
@@ -875,7 +949,7 @@ $(<span class="string">'#container'</span>).scrollStory({
                             var that = this;
                             $nav.on('click', 'li', function() {
                                 that.index($('li', $nav).index($(this)));
-                            })
+                            });
 
                             // code blocks
                             $('pre code').each(function(i, block) {
@@ -888,6 +962,14 @@ $(<span class="string">'#container'</span>).scrollStory({
 
             </div>
         </section>
+
+
+
+
+
+
+
+
 
 
 
