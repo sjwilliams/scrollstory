@@ -1,7 +1,7 @@
 /**
-* @preserve ScrollStory - v0.3.8 - 2017-07-20
+* @preserve ScrollStory - v0.3.8 - 2017-07-26
 * https://github.com/sjwilliams/scrollstory
-* Copyright (c) 2016 Josh Williams; Licensed MIT 
+* Copyright (c) 2017 Josh Williams; Licensed MIT 
 */
 
 (function(factory) {
