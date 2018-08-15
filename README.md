@@ -205,7 +205,7 @@ $(function(){
   var newspapers=[{organization: "The New York Times", founded: "1851"},{organization: "The Washington Post", founded: "1877"}];
 
   $("#container").scrollStory({
-    content: newspapers
+    content: newspapers,
     itembuild: function(ev, item){
       item.el.append("<h2>"+item.data.organization+"</h2>");
     },
