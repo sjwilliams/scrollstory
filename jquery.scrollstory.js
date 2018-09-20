@@ -1055,7 +1055,7 @@
         if (item.distanceToOffset >= 0) {
           item.percentScrollComplete = 0;
         } else if (Math.abs(item.distanceToOffset) >= rect.height){
-          item.percentScrollComplete = 100;
+          item.percentScrollComplete = 1;
         } else {
           item.percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
         }
