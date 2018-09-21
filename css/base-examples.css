@@ -33,8 +33,7 @@ body {
   right: 5%;
   top: 10px;
   z-index: 11;
-  -webkit-transform: translateZ(0);
-          transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .about {

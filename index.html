@@ -22,8 +22,7 @@
             <p>ScrollStory is a jQuery plugin for building scroll-based stories. Rather than doing a specific task, it aims to be a tool to help solve general problems.
 
             </p>
-            <p>For example, it can help you <strong>update your nav</strong> as you scroll down the page. It can <strong>auto-scroll</strong> to sections of your story on a mouse click or custom event. It can trigger <strong>custom callbacks</strong> that
-                manipulate the page as you scroll, like <strong>lazy loading</strong> media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it <strong>maintains data</strong>                associated with all these custom interactions.
+            <p>For example, it can help you <strong>update your nav</strong> as you scroll down the page. It can <strong>auto-scroll</strong> to sections of your story on a mouse click or custom event. It can trigger <strong>custom callbacks</strong> that manipulate the page as you scroll, like <strong>lazy loading</strong> media. It can dynamically insert markup into the page using an array of data on instantiation, or use pre-existing markup. Additionally, it <strong>maintains data</strong> associated with all these custom interactions.
 
             </p>
         </section>
@@ -43,17 +42,13 @@
 
         <section>
             <h2>Overview</h2>
-            <p>ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader’s focus. These elements — or <code>items</code> in ScrollStory speak — can be anything: sections of
-                text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.
+            <p>ScrollStory is built on the idea that scrolling stories often comprise discrete elements stacked on a page that exclusively require a reader’s focus. These elements — or <code>items</code> in ScrollStory speak — can be anything: sections of text (like the sections of this page), a video, a photo and caption, or any HTML element that can be scrolled to.
 
             </p>
-            <p>ScrollStory follows these items, internally tracking the scroll distance until an item requires the reader’s focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background
-                color on this page. Additionally, custom code can be run whenever any <code>item</code> enters the viewport; any <code>item</code> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is <code>filtered</code>,
-                a ScrollStory construct meaning it is no longer an active part of a collection; or any of <strong>17 custom events</strong>.
+            <p>ScrollStory follows these items, internally tracking the scroll distance until an item requires the reader’s focus, at which point custom code can be executed to manipulate the experience, like updating the navigation bar and fading the background color on this page. Additionally, custom code can be run whenever any <code>item</code> enters the viewport; any <code>item</code> within a ScrollStory collection is activated (or, inversely, when none are activated); when an item is <code>filtered</code>, a ScrollStory construct meaning it is no longer an active part of a collection; or any of <strong>17 custom events</strong>.
 
             </p>
-            <p>ScrollStory <code>items</code> aren't just DOM nodes. Rather, they’re data objects that have a corresponding representation in the DOM. ScrollStory instances maintain data about each <code>item</code> object in a collection and provides numerous
-                methods of accessing, querying and modifying that data.
+            <p>ScrollStory <code>items</code> aren't just DOM nodes. Rather, they’re data objects that have a corresponding representation in the DOM. ScrollStory instances maintain data about each <code>item</code> object in a collection and provides numerous methods of accessing, querying and modifying that data.
 
 
             </p>
@@ -213,7 +208,7 @@
   var newspapers=[{organization: <span class="string">"The New York Times"</span>, founded: <span class="string">"1851"</span>},{organization: <span class="string">"The Washington Post"</span>, founded: <span class="string">"1877"</span>}]<span class="comment">;</span>
 
   $(<span class="string">"#container"</span>)<span class="preprocessor">.scrollStory</span>({
-    content: newspapers
+    content: newspapers,
     itembuild: function(ev, item){
       item<span class="preprocessor">.el</span><span class="preprocessor">.append</span>(<span class="string">"&lt;h2&gt;"</span>+item<span class="preprocessor">.data</span><span class="preprocessor">.organization</span>+<span class="string">"&lt;/h2&gt;"</span>)<span class="comment">;</span>
     },
@@ -260,7 +255,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
 <span class="rule">}</span></span></code></pre>
             <h3>Instantiation Options</h3>
             <h4>content</h4>
-            <p>Type: <code>jQuery Object</code>, <code>String</code>, or <code>array</code> Default value: 'null'
+            <p>Type: <code>jQuery Object</code>, <code>String</code>, or <code>array</code>
+                Default value: 'null'
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -270,7 +266,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
 
             </p>
             <h4>contentSelector</h4>
-            <p>Type: <code>String</code> Default value: '.story'
+            <p>Type: <code>String</code>
+                Default value: '.story'
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -280,7 +277,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
 
             </p>
             <h4>keyboard</h4>
-            <p>Type: <code>Boolean</code> Default value: true
+            <p>Type: <code>Boolean</code>
+                Default value: true
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -290,7 +288,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
 
             </p>
             <h4>triggerOffset</h4>
-            <p>Type: <code>Number</code> Default value: 0
+            <p>Type: <code>Number</code>
+                Default value: 0
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -301,7 +300,8 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
 
             </p>
             <h4>scrollOffset</h4>
-            <p>Type: <code>Number</code> Default value: 0
+            <p>Type: <code>Number</code>
+                Default value: 0
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -320,12 +320,12 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
     <span class="method">autoActivateFirstItem:</span> <span class="keyword">false</span>
 });</code></pre>
-            <p>Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need
-                the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
+            <p>Automatically activate the first item on page load, regardless of its position relative to the offset and the 'preOffsetActivation' setting. Common case: you want to disable 'preOffsetActivation' to ensure late scroll activations but need the first item to be enabled on load. With 'preOffsetActivation:true', this is ignored.
 
             </p>
             <h4>disablePastLastItem</h4>
-            <p>Type: <code>Boolean</code> Default value: true
+            <p>Type: <code>Boolean</code>
+                Default value: true
 
             </p>
             <pre><code class="lang-js"><span class="char">$(</span><span class="string">'#container'</span>).scrollStory({
@@ -384,7 +384,7 @@ $(<span class="string">"container"</span>).<span class="function_start"><span cl
             <pre><code class="lang-js">$('<span class="preprocessor">#container').scrollStory({</span>
     throttleType: 'debounce' <span class="comment">// debounce or throttle</span>
 });</code></pre>
-            <p>Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's <a href="http://underscorejs.org/#throttle">throttle</a> and <a href="http://underscorejs.org/#debounce">debounce</a>                functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' to trigger on the trailing edge.
+            <p>Set the throttle -- or rate-limiting -- method used when testing items' active state. These are wrappers around Underscore's <a href="http://underscorejs.org/#throttle">throttle</a> and <a href="http://underscorejs.org/#debounce">debounce</a> functions. Use 'throttle' to trigger active state on the leading edge of the scroll event. Use 'debounce' to trigger on the trailing edge.
 
             </p>
             <h4>throttleTypeOptions</h4>
@@ -457,7 +457,8 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
   <span class="comment">// do something</span>
 });</code></pre>
             <h4>setup</h4>
-            <p>Fired early in instantiation, before any items are added or offsets calculated. Usefull for manipulating the page before ScrollStory does anything.
+            <p>Fired early in instantiation, before any items are added or offsets calculated. Usefull for manipulating the page before ScrollStory does
+                anything.
 
             </p>
             <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
@@ -484,8 +485,7 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
   }
 })</code></pre>
             <h4>itemfilter</h4>
-            <p>Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css
-                rules.
+            <p>Fired when an item is filtered, which means it is no longer considered when ScrollStory determines which item is currently active. By default, there is no visual change on filter, but you can achive visual changes through this event and css rules.
 
             </p>
             <pre><code class="lang-js">$(<span class="string">'#container'</span>).scrollStory({
@@ -521,8 +521,7 @@ $(<span class="string">'#container'</span>).on(<span class="string">'itemfocus'<
   }
 })</code></pre>
             <h4>itembuild</h4>
-            <p>Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to
-                the item here, as the item hasn't yet been added to the page and the render will be faster.
+            <p>Fired when the widget is made aware of an individual item during instantiation. This is a good time to add additional properties to the object. If you're passing in data to build the DOM via the 'content' property, you should append HTML to the item here, as the item hasn't yet been added to the page and the render will be faster.
 
             </p>
             <pre><code class="lang-js">$(<span class="comment">'#container').scrollStory({</span>
@@ -624,8 +623,7 @@ $(<span class="string">'#container'</span>).scrollStory({
 
             </p>
             <h4>updateOffsets()</h4>
-            <p>Update the object's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position
-                on the page, like when filtering changes the size of an element.
+            <p>Update the object's awareness of each item's distance to the trigger. This method is called internally after instantiation and automatically on window resize. It should also be called externally anytime DOM changes affect your items' position on the page, like when filtering changes the size of an element.
 
             </p>
             <h4>index([index])</h4>
@@ -921,7 +919,8 @@ $(<span class="string">'#container'</span>).scrollStory({
                 <li>Initial release</li>
             </ul>
             <h3>License</h3>
-            <p>ScrollStory is licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.</p>
+            <p>ScrollStory is licensed under the <a href="http://opensource.org/licenses/MIT">MIT license</a>.
+            </p>
             <div>
                 <script src="js/jquery.min.js"></script>
                 <script src="js/highlight.pack.js"></script>
