@@ -13,16 +13,13 @@
     "scrolling"
   ],
   "license": "MIT",
-  "author": [
-    {
-      "name": "Josh Williams",
-      "email": "contact@joshwilliams.com"
-    }
-  ],
+  "author": [{
+    "name": "Josh Williams",
+    "email": "contact@joshwilliams.com"
+  }],
   "devDependencies": {
     "autoprefixer": "^5.2.0",
     "http-server": "^0.8.0",
-    "jquery": "^2.1.4",
     "js-beautify": "^1.5.6",
     "jsdom": "^11.1.0",
     "jshint": "^2.7.0",
