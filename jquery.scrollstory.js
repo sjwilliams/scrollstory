@@ -660,7 +660,7 @@
      *
      * 0 means the first item isn't yet active,
      * and 1 means the last item is active, or 
-     * has already be scrolled beyond.
+     * has already been scrolled beyond active.
      * 
      * @return {[type]} [description]
      */
@@ -668,6 +668,15 @@
       return this._percentScrollToLastItem || 0;
     },
 
+
+    /**
+     * Progress of the entire scroll distance, from the start 
+     * of the first item a '0', until the very end of the last
+     * item, which is '1';
+     */
+    getScrollComplete: function() {
+      return this._totalScrollComplete || 0;
+    },
 
     /**
      * Return an array of all filtered items.
@@ -1085,6 +1094,9 @@
       var rect;
       var previouslyInViewport;
 
+      // track total scroll across all items
+      var totalScrollComplete = 0;
+
       for (i = 0; i < length; i++) {
         item = items[i];
         rect = item.el[0].getBoundingClientRect();
@@ -1099,6 +1111,9 @@
         } else {
           item.percentScrollComplete = Math.abs(item.distanceToOffset) / rect.height;
         }
+
+        // track percent scroll 
+        totalScrollComplete = totalScrollComplete + item.percentScrollComplete;
 
         // track viewport status
         previouslyInViewport = item.inViewport;
@@ -1128,6 +1143,8 @@
       }
 
       this._percentScrollToLastItem = percentScrollToLastItem;
+
+      this._totalScrollComplete = totalScrollComplete / length;
     },
 
 
