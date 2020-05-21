@@ -1444,8 +1444,8 @@ function scrollStory(options) {
     },
 
     _onItemBlur: function(e) {
-      const item = e.detail;
-      const el = item.el;
+      var item = e.detail;
+      var el = item.el;
 
       this._previousItems.unshift(item);
       el.classList.remove('active');
@@ -1474,7 +1474,7 @@ function scrollStory(options) {
     },
 
     _onCategoryFocus: function(ev) {
-      const category = ev.detail;
+      var category = ev.detail;
       this._manageContainerClasses('scrollStoryActiveCategory-',category);
     },
 
