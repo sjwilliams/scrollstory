@@ -1423,29 +1423,32 @@ function scrollStory(options) {
       this.el.classList.remove(pluginName + "Active");
     },
 
-    _onItemFocus: function (e) {
-      const item = e.detail.el;
-      item.classList.add("active");
-      this._manageContainerClasses("scrollStoryActiveItem-", item.id);
+    _onItemFocus: function(e) {
+      var item = e.detail;
+      var el = item.el;
 
-      // VANILLA_FIXME: implement categories somewhat
+      el.classList.add('active');
+      this._manageContainerClasses('scrollStoryActiveItem-', el.id);
+
       // trigger catgory change if not previously active or
       // this item's category is different from the last
-      // if (item.category) {
-      //   if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
-      //     this._trigger('categoryfocus', null, item.category);
+      if (item.category) {
+        if ( (this.getPreviousItem() && this.getPreviousItem().category !== item.category) || !this.isContainerActive()) {
+          this._trigger('categoryfocus', null, item.category);
 
-      //     if (this.getPreviousItem()) {
-      //       this._trigger('categoryblur', null, this.getPreviousItem().category);
-      //     }
-      //   }
-      // }
+          if (this.getPreviousItem()) {
+            this._trigger('categoryblur', null, this.getPreviousItem().category);
+          }
+        }
+      }
     },
 
-    _onItemBlur: function (e) {
-      const item = e.detail.el;
+    _onItemBlur: function(e) {
+      const item = e.detail;
+      const el = item.el;
+
       this._previousItems.unshift(item);
-      item.classList.remove("active");
+      el.classList.remove('active');
     },
 
     _onItemEnterViewport: function (e) {
@@ -1470,8 +1473,9 @@ function scrollStory(options) {
       }
     },
 
-    _onCategoryFocus: function (ev, category) {
-      this._manageContainerClasses("scrollStoryActiveCategory-", category);
+    _onCategoryFocus: function(ev) {
+      const category = ev.detail;
+      this._manageContainerClasses('scrollStoryActiveCategory-',category);
     },
 
     _onTriggerOffsetUpdate: function (ev, offset) {
